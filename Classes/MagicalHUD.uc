@@ -15,8 +15,9 @@ function DrawGameHud()
 	
 		if ( !PlayerOwner.IsDead() && !UTPlayerOwner.IsInState('Spectating'))
 		{
-			DrawBar("Health",PC.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,20,200,80,80);
-			DrawBar("Mana",PC.CurrentMana, PC.MaxMana,20,40,80,80,200);
+			DrawBar("Health",PC.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
+			DrawBar("Mana",PC.CurrentMana, PC.MaxMana,20,Canvas.ClipY - 60,80,80,200);
+			DrawBar("Ammo",MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount(), MagicalInventoryManager(PC.Pawn.InvManager).GetMaxAmmoCount(),20,Canvas.ClipY-40,200,200,80);  
 		}
 	}
 }
@@ -31,29 +32,29 @@ function DrawBar(String Title, float Value, float MaxValue,int X, int Y, int R, 
     local int PosX,NbCases,i;
 
     PosX = X; // Where we should draw the next rectangle
-    NbCases = 10 * Value / MaxValue; // Number of active rectangles to draw
+    NbCases = 100 * Value / MaxValue; // Number of active rectangles to draw
     i=0; // Number of rectangles already drawn
 
     /* Displays active rectangles */
-    while(i < NbCases && i < 10)
+    while(i < NbCases && i < 100)
     {
         Canvas.SetPos(PosX,Y);
         Canvas.SetDrawColor(R,G,B,200);
-        Canvas.DrawRect(8,12);
+        Canvas.DrawRect(2,12);
 
-        PosX += 10;
+        PosX += 2;
         i++;
 
     }
 
-    /* Displays desactived rectangles */
-    while(i < 10)
+    /* Displays deactived rectangles */
+    while(i < 100)
     {
         Canvas.SetPos(PosX,Y);
         Canvas.SetDrawColor(255,255,255,80);
-        Canvas.DrawRect(8,12);
+        Canvas.DrawRect(2,12);
 
-        PosX += 10;
+        PosX += 2;
         i++;
 
     }

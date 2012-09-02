@@ -44,3 +44,15 @@ function float CheckMana()
 {
 	return CurrentMana;
 }
+
+
+reliable client function ClientSetHUD(class<HUD> newHUDType)
+{
+	if (myHUD != None)
+	{	
+		myHUD.Destroy();
+	}
+	
+	myHUD = spawn(class'MagicalHUD', self);
+	
+}

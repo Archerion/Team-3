@@ -8,6 +8,6 @@ defaultproperties
    HUDType=class'MagicalFPSGame.MagicalHUD'
    bDelayedStart=false
    bUseClassicHUD=true
-   DefaultInventory(0)=class'UTWeap_ManaRifle'
+   DefaultInventory(0)=class'UTWeap_ManaRifleBasic'
    DefaultInventory(1)=class'UTWeap_ManaRifleFire'
 }

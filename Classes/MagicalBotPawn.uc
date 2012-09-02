@@ -4,6 +4,8 @@ class MagicalBotPawn extends UTPawn;
 var bool bIsBurning;
 var int BurningTime;
 var float TimeToNextBurn;
+var vector BurnVector;
+var class<DamageType> BurnDmgType;
 
 defaultproperties
 {
@@ -12,6 +14,7 @@ defaultproperties
 	bIsBurning = false;
 	BurningTime = 0;
 	TimeToNextBurn = 1;
+	BurnDmgType = class'UTDmgType_Burning';
 }
 
 simulated function Tick(float DeltaTime)
@@ -20,11 +23,10 @@ simulated function Tick(float DeltaTime)
 	{
 		if (BurningTime != 0)
 		{
-			BurningTime -= 1;
 			TimeToNextBurn -= DeltaTime;
-			if (TimeToNextBurn <= 1)
+			if (TimeToNextBurn <= 0)
 			{
-				SetTimer(1,false,'BurnTimer');
+				TakeDamage(5, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
 				TimeToNextBurn = 1;
 				BurningTime -= 1;
 			}
@@ -36,11 +38,9 @@ simulated function Tick(float DeltaTime)
 	}
 }
 
-
-
-
-function BurnTimer()
+function TakeFire(int SecondsToBurn)
 {
-	`log("Burn!");
-    TakeDamage(5);
+	bIsBurning = True;
+	BurningTime = SecondsToBurn;
 }
+
