@@ -18,6 +18,7 @@ defaultproperties
 	CrouchHeight=29.0
 	CrouchRadius=21.0
 	WalkableFloorZ=0.78
+<<<<<<< HEAD
 	SS = 0.0;
 	SSMax = 100.0;
 }
