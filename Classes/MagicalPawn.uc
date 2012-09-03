@@ -1,5 +1,8 @@
 class MagicalPawn extends UTPawn;
 
+var float SS;
+var float SSMax;
+
 defaultproperties
 {
 	InventoryManagerClass = class'MagicalFPSGame.MagicalInventoryManager'
@@ -14,15 +17,14 @@ defaultproperties
 	JumpZ=322.0
 	CrouchHeight=29.0
 	CrouchRadius=21.0
-
 	WalkableFloorZ=0.78
+	SS = 0.0;
+	SSMax = 100.0;
 }
-
 
 simulated function Tick(float DeltaTime)
 {
 	local MagicalPlayerController PC;
-
 	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
 	{
 	
@@ -33,4 +35,41 @@ simulated function Tick(float DeltaTime)
 			PC.TimeSinceRecharged = 0.0;
 		}
 	}
+}
+
+
+function int ShieldAbsorb( int Damage )
+{
+	if ( Health <= 0 )
+	{
+		return damage;
+	}
+
+	if ( SS > 0 )
+	{
+		bShieldAbsorb = true;
+		SS = AbsorbDamage(Damage, SS, 0.75);
+		if ( Damage == 0 )
+		{
+			return 0;
+		}
+	}
+	return Damage;
+}
+
+function ActivateFrostShield(float AddShieldStrength, float ShieldDuration)
+{
+	
+	if (AddShieldStrength < 0)
+	{
+		AddShieldStrength = 0;
+	}
+	SS = SS + AddShieldStrength > SSMax ? SSMax : SS+AddShieldStrength;
+	SetTimer(ShieldDuration, false, 'DeactivateFrostShield');
+	
+}
+
+function DeactivateFrostShield()
+{
+	SS = 0;
 }

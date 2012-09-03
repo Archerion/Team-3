@@ -85,7 +85,7 @@ defaultproperties
 	InventoryGroup=1
 	GroupWeight=0.5
 	
-	TimeToUpdateAmmo = 0.5
+	TimeToUpdateAmmo = 1.5
 	
 	WeaponManaCost=(Primary=0, Secondary=0);
 	
@@ -130,14 +130,12 @@ simulated function Tick(float DeltaTime)
 	local int CurrentAmmo;
 	if (TimeToUpdateAmmo <= 0)
 	{
-		`log("Updating ammo!");
-
 		CurrentAmmo	= GetAmmoCount();
 		if(AmmoCount != CurrentAmmo)
 		{
 			AmmoCount = CurrentAmmo;
 		}
-		TimeToUpdateAmmo = 0.5;
+		TimeToUpdateAmmo = 1.5;
 	}
 	else 
 	{

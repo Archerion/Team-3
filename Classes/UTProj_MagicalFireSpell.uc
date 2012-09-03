@@ -1,8 +1,23 @@
 class UTProj_MagicalFireSpell extends UTProjectile;
 
+simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
+{
+	local MagicalBotPawn MBP;
+	if ( Other != Instigator )
+	{
+		if(Other.IsA('MagicalBotPawn'))
+		{
+				MBP = MagicalBotPawn(Other);
+				MBP.TakeFire(5);
+		}
+	}
+
+	Super.ProcessTouch(Other, HitLocation, HitNormal);
+}
+
 defaultproperties
 {
-	MyDamageType=class'UTDmgType_ScorpionGlob'
+	MyDamageType=class'UTDmgType_Burning'
 
 	ProjFlightTemplate=ParticleSystem'VH_Scorpion.Effects.P_Scorpion_Bounce_Projectile'
 	ProjExplosionTemplate=ParticleSystem'VH_Scorpion.Effects.PS_Scorpion_Gun_Impact'

@@ -11,13 +11,15 @@ function DrawGameHud()
 	
 	
 	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
+	
 	{
 	
 		if ( !PlayerOwner.IsDead() && !UTPlayerOwner.IsInState('Spectating'))
 		{
-			DrawBar("Health",PC.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
+			DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
+			DrawBar("Ammo",MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount(), MagicalInventoryManager(PC.Pawn.InvManager).GetMaxAmmoCount(),20,Canvas.ClipY-40,200,200,80); 
 			DrawBar("Mana",PC.CurrentMana, PC.MaxMana,20,Canvas.ClipY - 60,80,80,200);
-			DrawBar("Ammo",MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount(), MagicalInventoryManager(PC.Pawn.InvManager).GetMaxAmmoCount(),20,Canvas.ClipY-40,200,200,80);  
+			DrawBar("Shield",MagicalPawn(PC.Pawn).SS,MagicalPawn(PC.Pawn).SSMax, 20, Canvas.ClipY - 80, 80, 200, 80);
 		}
 	}
 }
@@ -26,17 +28,16 @@ defaultproperties
 {
 }
 
-function DrawBar(String Title, float Value, float MaxValue,int X, int Y, int R, int G, int B)
+function DrawBar(String s, float v, float mv,int X, int Y, int R, int G, int B)
 {
 
-    local int PosX,NbCases,i;
+    local int PosX,TotalRects,i;
 
-    PosX = X; // Where we should draw the next rectangle
-    NbCases = 100 * Value / MaxValue; // Number of active rectangles to draw
-    i=0; // Number of rectangles already drawn
+    PosX = X;
+    TotalRects = 100 * v / mv;
+    i=0;
 
-    /* Displays active rectangles */
-    while(i < NbCases && i < 100)
+    while(i < TotalRects && i < 100)
     {
         Canvas.SetPos(PosX,Y);
         Canvas.SetDrawColor(R,G,B,200);
@@ -47,7 +48,6 @@ function DrawBar(String Title, float Value, float MaxValue,int X, int Y, int R, 
 
     }
 
-    /* Displays deactived rectangles */
     while(i < 100)
     {
         Canvas.SetPos(PosX,Y);
@@ -59,10 +59,9 @@ function DrawBar(String Title, float Value, float MaxValue,int X, int Y, int R, 
 
     }
 
-    /* Displays a title */
     Canvas.SetPos(PosX + 5,Y);
     Canvas.SetDrawColor(R,G,B,200);
     Canvas.Font = class'Engine'.static.GetSmallFont();
-    Canvas.DrawText(Title);
+    Canvas.DrawText(s);
 
 } 

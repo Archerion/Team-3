@@ -19,8 +19,8 @@ simulated function SpawnFlightEffects()
 {
 	local vector FXColor;
 	FXColor.x = 1;
-	FXColor.y = 0.1;
-	FXColor.z = 0.1;
+	FXColor.y = 0.2;
+	FXColor.z = 0.2;
 	
 	Super.SpawnFlightEffects();
 	if (ProjEffects != None)
