@@ -6,7 +6,6 @@ var float TimeSinceRecharged;
 var float CurrentMana;
 var float MaxMana;
 
-
 defaultproperties
 {
    bUsesMana = True;
@@ -14,8 +13,7 @@ defaultproperties
    TimeSinceRecharged = 0.0;
    CurrentMana = 100;   
    MaxMana = 100;
-   
-   CameraClass=class'MagicalFPSGame.MagicalPlayerCamera'
+   CameraClass=class'MagicalFPSGame.MagicalCamera'
 }
 
 
@@ -43,16 +41,4 @@ function float TakeMana(float Amount)
 function float CheckMana()
 {
 	return CurrentMana;
-}
-
-
-reliable client function ClientSetHUD(class<HUD> newHUDType)
-{
-	if (myHUD != None)
-	{	
-		myHUD.Destroy();
-	}
-	
-	myHUD = spawn(class'MagicalHUD', self);
-	
 }
