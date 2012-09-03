@@ -21,6 +21,7 @@ simulated function Tick(float DeltaTime)
 {
 	if(bIsBurning)
 	{
+		`log ("Taking damage");
 		UnFreeze();
 		if (BurningTime != 0)
 		{

@@ -17,8 +17,7 @@ defaultproperties
 	JumpZ=322.0
 	CrouchHeight=29.0
 	CrouchRadius=21.0
-	WalkableFloorZ=0.78
-	
+	WalkableFloorZ=0.78	
 }
 
 simulated event PostBeginPlay()
