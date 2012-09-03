@@ -1,7 +1,7 @@
 class MagicalPawn extends UTPawn;
 
-var float FrostShieldStrength;
-var PostProcessSettings ShieldPPSettings;
+var float SS;
+var float SSMax;
 
 defaultproperties
 {
@@ -18,16 +18,9 @@ defaultproperties
 	CrouchHeight=29.0
 	CrouchRadius=21.0
 	WalkableFloorZ=0.78	
-}
-
-simulated event PostBeginPlay()
-{
-    ShieldPPSettings.bEnableMotionBlur = false;
-    ShieldPPSettings.bOverride_EnableMotionBlur = false;
-    ShieldPPSettings.bOverride_MotionBlur_Amount = false;
-
-    
-    Super.PostBeginPlay();
+<<<<<<< HEAD
+	SS = 0.0;
+	SSMax = 100.0;
 }
 
 
@@ -54,10 +47,10 @@ function int ShieldAbsorb( int Damage )
 		return damage;
 	}
 
-	if ( FrostShieldStrength > 0 )
+	if ( SS > 0 )
 	{
 		bShieldAbsorb = true;
-		FrostShieldStrength = AbsorbDamage(Damage, FrostShieldStrength, 0.75);
+		SS = AbsorbDamage(Damage, SS, 0.75);
 		if ( Damage == 0 )
 		{
 			return 0;
@@ -66,10 +59,14 @@ function int ShieldAbsorb( int Damage )
 	return Damage;
 }
 
-function ActivateFrostShield(float ShieldStrength, float ShieldDuration)
+function ActivateFrostShield(float AddShieldStrength, float ShieldDuration)
 {
 	
-	FrostShieldStrength = ShieldStrength;
+	if (AddShieldStrength < 0)
+	{
+		AddShieldStrength = 0;
+	}
+	SS = SS + AddShieldStrength > SSMax ? SSMax : SS+AddShieldStrength;
 	SetTimer(ShieldDuration, false, 'DeactivateFrostShield');
 	
 	// ShieldPPSettings
@@ -79,13 +76,6 @@ function ActivateFrostShield(float ShieldStrength, float ShieldDuration)
 
 function DeactivateFrostShield()
 {
-
-	local MagicalPlayerController PC;
-	FrostShieldStrength = 0;
-	
-	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
-	{
-		PC.SetFOV(85);
-	}
-}	
+	SS = 0;
+}
 

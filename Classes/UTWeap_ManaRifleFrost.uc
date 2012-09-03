@@ -14,7 +14,7 @@ simulated function CustomFire()
 	
 	ForEach WorldInfo.AllPawns( class 'MagicalPawn', P)
 	{
-		P.ActivateFrostShield(100,3);
+		P.ActivateFrostShield(100,10);
 	}
 
 }

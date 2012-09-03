@@ -11,13 +11,15 @@ function DrawGameHud()
 	
 	
 	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
+	
 	{
 	
 		if ( !PlayerOwner.IsDead() && !UTPlayerOwner.IsInState('Spectating'))
 		{
-			DrawBar("Health",PC.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
+			DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
+			DrawBar("Ammo",MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount(), MagicalInventoryManager(PC.Pawn.InvManager).GetMaxAmmoCount(),20,Canvas.ClipY-40,200,200,80); 
 			DrawBar("Mana",PC.CurrentMana, PC.MaxMana,20,Canvas.ClipY - 60,80,80,200);
-			DrawBar("Ammo",MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount(), MagicalInventoryManager(PC.Pawn.InvManager).GetMaxAmmoCount(),20,Canvas.ClipY-40,200,200,80);  
+			DrawBar("Shield",MagicalPawn(PC.Pawn).SS,MagicalPawn(PC.Pawn).SSMax, 20, Canvas.ClipY - 80, 80, 200, 80);
 		}
 	}
 }

@@ -17,8 +17,6 @@ function AddAmmoToWeapon(int AmountToAdd, class<UTWeapon> WeaponClassToAddTo)
 
 function int AddManaRifleAmmo(int AmountToAdd)
 {
-	`log("Current Ammo "$ManaRifleAmmo);
-	`log("Adding "$AmountToAdd);
 	ManaRifleAmmo = ManaRifleAmmo + AmountToAdd > ManaRifleMaxAmmo ? ManaRifleMaxAmmo : ManaRifleAmmo+AmountToAdd;
 	return ManaRifleAmmo;
 }
