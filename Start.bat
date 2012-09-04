@@ -1,7 +1,7 @@
 @echo off
 C:\UDK\UDK-2012-07\Binaries\Win32\UDK.com make
 IF errorlevel 1 GOTO :ERROR_EXIT
-START C:\UDK\UDK-2012-07\Binaries\Win32\UDK.exe MagicalTestMap.udk?game=MagicalFPSGame.MagicalGameInfo -log
+START C:\UDK\UDK-2012-07\Binaries\Win32\UDK.exe MagicalTestMap.udk?game=MagicalFPSGame.MagicalGameInfo -nomoviestartup -log
 GOTO :GOOD_EXIT
 :ERROR_EXIT
 pause
