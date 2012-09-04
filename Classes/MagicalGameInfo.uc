@@ -1,5 +1,16 @@
 
 class MagicalGameInfo extends UTGame;
+var Pawn BotP;
+
+simulated function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	
+	BotP = Spawn(class'MagicalFPSGame.StupidBotPawn');
+
+
+}
+
 
 defaultproperties
 {

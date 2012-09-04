@@ -21,7 +21,6 @@ simulated function Tick(float DeltaTime)
 {
 	if(bIsBurning)
 	{
-		UnFreeze();
 		if (BurningTime != 0)
 		{
 			TimeToNextBurn -= DeltaTime;
@@ -41,27 +40,32 @@ simulated function Tick(float DeltaTime)
 
 function TakeFire(float SecondsToBurn)
 {
+
+	UnFreeze();
 	bIsBurning = True;
 	BurningTime = SecondsToBurn;
 }
 
-function Freeze(float SecondsToBeFrozen)
+function Freeze(float FreezeAmount, optional float SecondsToBeFrozen = 0)
 {
 	bIsBurning = False;
-	GroundSpeed=220.00;
-	AirSpeed=220.00;
-	WaterSpeed=110.00;
-	Mesh.GlobalAnimRateScale = 0.5f;
+	GroundSpeed *= 0.8;
+	AirSpeed *= FreezeAmount;
+	WaterSpeed *= FreezeAmount;
+	Mesh.GlobalAnimRateScale *= FreezeAmount;
 	ClearTimer('UnFreeze');
-	SetTimer(SecondsToBeFrozen, false, 'UnFreeze');
+	if (SecondsToBeFrozen > 0)
+	{
+		SetTimer(SecondsToBeFrozen, false, 'UnFreeze');
+	}
 }
 
 function UnFreeze()
 {
-	Mesh.GlobalAnimRateScale = 1.0f;
-	GroundSpeed=440.0;
-	AirSpeed=440.0;
-	WaterSpeed=220.0;
+	Mesh.GlobalAnimRateScale = Mesh.Default.GlobalAnimRateScale;
+	GroundSpeed = Default.GroundSpeed;
+	AirSpeed = Default.AirSpeed;
+	WaterSpeed = Default.WaterSpeed;
 }
 
 

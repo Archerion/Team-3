@@ -99,28 +99,25 @@ defaultproperties
 simulated function FireAmmunition()
 {
 	local MagicalPlayerController PC;
-	
-	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
+	PC = MagicalPlayerController(GetALocalPlayerController());
+	if (CurrentFireMode == 0)
 	{
-		if (CurrentFireMode == 0)
+		if (PC.CheckMana() >= WeaponManaCost.Primary)
 		{
-			if (PC.CheckMana() >= WeaponManaCost.Primary)
+			if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
 			{
-				if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-				{
-					PC.TakeMana(WeaponManaCost.Primary);
-					Super.FireAmmunition();
-				}
+				PC.TakeMana(WeaponManaCost.Primary);
+				Super.FireAmmunition();
 			}
 		}
-		else if (CurrentFireMode == 1)
+	}
+	else if (CurrentFireMode == 1)
+	{
+		if (PC.CheckMana() >= WeaponManaCost.Secondary)
 		{
-			if (PC.CheckMana() >= WeaponManaCost.Secondary)
-			{
-				PC.TakeMana(WeaponManaCost.Secondary);
-				Super.FireAmmunition();
-				
-			}
+			PC.TakeMana(WeaponManaCost.Secondary);
+			Super.FireAmmunition();
+			
 		}
 	}
 }
@@ -151,6 +148,5 @@ function int AddAmmo( int Amount )
 
 simulated function int GetAmmoCount()
 {
-	`log("GetAmmoCount: "$MagicalInventoryManager(InvManager).GetAmmoCount());
 	return MagicalInventoryManager(InvManager).GetAmmoCount();
 }

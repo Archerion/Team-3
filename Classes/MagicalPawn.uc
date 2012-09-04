@@ -1,7 +1,7 @@
 class MagicalPawn extends UTPawn;
 
-var float SS;
-var float SSMax;
+var float ShieldStrength;
+var float ShieldStrengthMax;
 
 defaultproperties
 {
@@ -18,14 +18,14 @@ defaultproperties
 	CrouchHeight=29.0
 	CrouchRadius=21.0
 	WalkableFloorZ=0.78
-<<<<<<< HEAD
-	SS = 0.0;
-	SSMax = 100.0;
+	ShieldStrength = 0.0;
+	ShieldStrengthMax = 100.0;
 }
 
 simulated function Tick(float DeltaTime)
 {
 	local MagicalPlayerController PC;
+	
 	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
 	{
 	
@@ -46,10 +46,10 @@ function int ShieldAbsorb( int Damage )
 		return damage;
 	}
 
-	if ( SS > 0 )
+	if ( ShieldStrength > 0 )
 	{
 		bShieldAbsorb = true;
-		SS = AbsorbDamage(Damage, SS, 0.75);
+		ShieldStrength = AbsorbDamage(Damage, ShieldStrength, 0.75);
 		if ( Damage == 0 )
 		{
 			return 0;
@@ -58,19 +58,22 @@ function int ShieldAbsorb( int Damage )
 	return Damage;
 }
 
-function ActivateFrostShield(float AddShieldStrength, float ShieldDuration)
+function ActivateFrostShield(float AddShieldStrength, optional float ShieldDuration  = 0)
 {
 	
 	if (AddShieldStrength < 0)
 	{
 		AddShieldStrength = 0;
 	}
-	SS = SS + AddShieldStrength > SSMax ? SSMax : SS+AddShieldStrength;
-	SetTimer(ShieldDuration, false, 'DeactivateFrostShield');
+	ShieldStrength = ShieldStrength + AddShieldStrength > ShieldStrengthMax ? ShieldStrengthMax : ShieldStrength+AddShieldStrength;
+	if (ShieldDuration > 0)
+	{
+		SetTimer(ShieldDuration, false, 'DeactivateFrostShield');
+	}
 	
 }
 
 function DeactivateFrostShield()
 {
-	SS = 0;
+	ShieldStrength = 0;
 }
