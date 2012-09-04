@@ -8,10 +8,9 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(Other.IsA('MagicalBotPawn'))
 		{
 				MBP = MagicalBotPawn(Other);
-				MBP.TakeFire(5);
+				MBP.TakeFire(5,5,0.5);
 		}
 	}
-
 	Super.ProcessTouch(Other, HitLocation, HitNormal);
 }
 

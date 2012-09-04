@@ -45,11 +45,11 @@ function int ShieldAbsorb( int Damage )
 	{
 		return damage;
 	}
-
+	
 	if ( ShieldStrength > 0 )
 	{
 		bShieldAbsorb = true;
-		ShieldStrength = AbsorbDamage(Damage, ShieldStrength, 0.75);
+		ShieldStrength = AbsorbDamage(Damage, ShieldStrength, 1);
 		if ( Damage == 0 )
 		{
 			return 0;

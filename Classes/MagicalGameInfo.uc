@@ -1,14 +1,16 @@
 
 class MagicalGameInfo extends UTGame;
-var Pawn BotP;
+var MagicalBotPawn BotP;
 
 simulated function PostBeginPlay()
 {
+	local Vector SpawnLocationVector;
 	Super.PostBeginPlay();
+	SpawnLocationVector.X = 0;
+	SpawnLocationVector.Y = 0;
+	SpawnLocationVector.Z = 300;
 	
-	BotP = Spawn(class'MagicalFPSGame.StupidBotPawn');
-
-
+	BotP = Spawn(class'MagicalFPSGame.MagicalBotPawn',,, SpawnLocationVector);
 }
 
 

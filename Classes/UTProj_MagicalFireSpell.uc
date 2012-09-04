@@ -8,7 +8,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(Other.IsA('MagicalBotPawn'))
 		{
 				MBP = MagicalBotPawn(Other);
-				MBP.TakeFire(5);
+				MBP.TakeFire(5,5,0.5);
 		}
 	}
 
@@ -26,6 +26,7 @@ simulated function bool HurtRadius
 	optional Controller InstigatedByController = Instigator != None ? Instigator.Controller : None,
 	optional bool       bDoFullDamage
 )
+
 {
 	local bool bCausedDamage, bResult;
 	local MagicalBotPawn oink;
@@ -39,7 +40,7 @@ simulated function bool HurtRadius
 		if (Victim.IsA('MagicalBotPawn'))
 		{
 			oink = MagicalBotPawn(Victim);
-			oink.TakeFire(5);
+			oink.TakeFire(5,5,0.5);
 			bCausedDamage = true;
 			`log("Burning");
 		}

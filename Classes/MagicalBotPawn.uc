@@ -1,66 +1,49 @@
 
-class MagicalBotPawn extends UTPawn;
+class MagicalBotPawn extends UTPawn 
+	placeable;
 
-var bool bIsBurning;
 var float BurningTime;
-var float TimeToNextBurn;
+var float BurnDamage;
 var vector BurnVector;
 var class<DamageType> BurnDmgType;
 
 defaultproperties
 {
-	
 	ControllerClass=class'MagicalFPSGame.MagicalBot'
-	bIsBurning = false;
 	BurningTime = 0;
-	TimeToNextBurn = 0.5;
+	BurnDamage = 5;
 	BurnDmgType = class'UTDmgType_Burning';
 }
 
-simulated function Tick(float DeltaTime)
+function TakeFire(float Duration, float Damage, optional float TimeBetweenBurns = 1)
 {
-	if(bIsBurning)
+	while (BurningTime > 0)
 	{
-		if (BurningTime != 0)
-		{
-			TimeToNextBurn -= DeltaTime;
-			if (TimeToNextBurn <= 0)
-			{
-				TakeDamage(5, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
-				TimeToNextBurn = 0.5;
-				BurningTime -= 0.5;
-			}
-		}
-		else 
-		{
-			bIsBurning = False;
-		}
+		SetTimer(0.5, true, 'TakeBurnDamage');
+		BurningTime -= TimeBetweenBurns;
 	}
 }
 
-function TakeFire(float SecondsToBurn)
+function TakeBurnDamage()
 {
-
-	UnFreeze();
-	bIsBurning = True;
-	BurningTime = SecondsToBurn;
+		TakeDamage(BurningDamage, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
 }
 
-function Freeze(float FreezeAmount, optional float SecondsToBeFrozen = 0)
+
+function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
 {
-	bIsBurning = False;
-	GroundSpeed *= 0.8;
-	AirSpeed *= FreezeAmount;
-	WaterSpeed *= FreezeAmount;
-	Mesh.GlobalAnimRateScale *= FreezeAmount;
+	GroundSpeed *= 1-SlowAmount;
+	AirSpeed *= 1-SlowAmount;
+	WaterSpeed *= 1-SlowAmount;
+	Mesh.GlobalAnimRateScale *= 1-SlowAmount;
 	ClearTimer('UnFreeze');
-	if (SecondsToBeFrozen > 0)
+	if (SecondsToBeSlowed > 0)
 	{
-		SetTimer(SecondsToBeFrozen, false, 'UnFreeze');
+		SetTimer(SecondsToBeSlowed, false, 'UnSlow');
 	}
 }
 
-function UnFreeze()
+function UnSlow()
 {
 	Mesh.GlobalAnimRateScale = Mesh.Default.GlobalAnimRateScale;
 	GroundSpeed = Default.GroundSpeed;
