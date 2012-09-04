@@ -15,6 +15,41 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 	Super.ProcessTouch(Other, HitLocation, HitNormal);
 }
 
+simulated function bool HurtRadius
+(
+	float				BaseDamage,
+	float				DamageRadiuses,
+	class<DamageType>	DamageType,
+	float				Momentum,
+	vector				HurtOrigin,
+	optional Actor		IgnoredActor,
+	optional Controller InstigatedByController = Instigator != None ? Instigator.Controller : None,
+	optional bool       bDoFullDamage
+)
+{
+	local bool bCausedDamage, bResult;
+	local MagicalBotPawn oink;
+	local Actor Victim;
+	bCausedDamage = false;
+	bResult = false;
+	
+
+	foreach VisibleCollidingActors( class 'Actor', Victim, DamageRadius, HurtOrigin)
+	{
+		if (Victim.IsA('MagicalBotPawn'))
+		{
+			oink = MagicalBotPawn(Victim);
+			oink.TakeFire(5);
+			bCausedDamage = true;
+			`log("Burning");
+		}
+	}
+
+	bResult = Super.HurtRadius(BaseDamage, DamageRadiuses, DamageType, Momentum, HurtOrigin, IgnoredActor, InstigatedByController, bDoFullDamage);
+	return ( bResult || bCausedDamage );
+}
+
+
 defaultproperties
 {
 	MyDamageType=class'UTDmgType_Burning'
