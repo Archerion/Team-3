@@ -5,18 +5,18 @@ var Actor Destination;
 
 defaultproperties
 {	
-	
 }
 
-function Stun(float TimeStunned)
+function Stun(float stunTime )
 {
-	CustomTimeDilation = 0.0f;
+	Pawn.CustomTimeDilation = 0.0f;
 	ClearTimer('UnStun');
+	SetTimer(stunTime, false, 'UnStun');
 }
 
 function UnStun()
 {
-	CustomTimeDilation = 1.0f;
+	Pawn.CustomTimeDilation = 1.0f;
 }
 
 protected event ExecuteWhatToDoNext()

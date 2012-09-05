@@ -1,5 +1,9 @@
-class UTProj_MagicalLightningBullet extends UTProj_MagicalBullet;
+class UTProj_MagicalLightningSpell extends UTProj_MagicalBullet;
 
+DefaultProperties
+{
+	Damage = 10;
+}
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
@@ -9,12 +13,11 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(!Other.IsA('Projectile') || Other.bProjTarget)
 		{
 			MBP = MagicalBotPawn(Other);
-			MBP.TakeLightningDamage(Damage);
+			MagicalBot(MBP.Controller).Stun(10);
 		}
 	}
 	super.ProcessTouch (Other, HitLocation, HitNormal);
 }
-
 simulated function SpawnFlightEffects()
 {
 	local vector FXColor;
@@ -27,12 +30,4 @@ simulated function SpawnFlightEffects()
 	{
 		ProjEffects.SetVectorParameter('LinkProjectileColor', FXColor);
 	}
-}
-
-DefaultProperties
-{
-	Damage = 20;
-
-	Speed=10000;
-	MaxSpeed=10000;
 }

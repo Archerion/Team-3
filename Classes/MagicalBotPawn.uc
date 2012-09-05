@@ -40,6 +40,10 @@ function TakeBurnDamage()
 	}
 }
 
+function TakeLightningDamage(float lDamage)
+{
+
+}
 
  function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
 {
