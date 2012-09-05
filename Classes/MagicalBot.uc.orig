@@ -4,22 +4,38 @@ class MagicalBot extends UTBot;
 var Actor Destination;
 
 defaultproperties
+<<<<<<< HEAD
 {	
-	
 }
 
-<<<<<<< HEAD
-function Stun(float TimeStunned)
+function Stun(float stunTime )
 {
-	CustomTimeDilation = 0.0f;
+	Pawn.CustomTimeDilation = 0.0f;
 	ClearTimer('UnStun');
+	SetTimer(stunTime, false, 'UnStun');
+=======
+{		
+}
+
+
+function Stun()
+{
+Pawn.CustomTimeDilation=0.0;
+SetTimer(10.0, false, 'UnStun');
+>>>>>>> b8c332f8ef77c3aa4b1d9cb67c788a4ad8be898a
 }
 
 function UnStun()
 {
-	CustomTimeDilation = 1.0f;
-}
+<<<<<<< HEAD
+	Pawn.CustomTimeDilation = 1.0f;
 =======
+Pawn.CustomTimeDilation=1.0;
+GoToState('Roaming');
+>>>>>>> b8c332f8ef77c3aa4b1d9cb67c788a4ad8be898a
+}
+
+
 protected event ExecuteWhatToDoNext()
 {	
 	GotoState('Roaming');
@@ -33,11 +49,7 @@ Begin:
 	{
 		Destination = FindRandomDest();
 	}
-
-	//Find a path to the destination and move to the next node in the path
 	MoveToward(FindPathToward(Destination), FindPathToward(Destination));
-
-	//fire off next decision loop
 	LatentWhatToDoNext();
 }
->>>>>>> ec8e0d97eaf4e823981dd6a7e80b78e39cfa312b
+
