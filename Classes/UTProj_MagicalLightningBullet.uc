@@ -9,7 +9,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(!Other.IsA('Projectile') || Other.bProjTarget)
 		{
 			MBP = MagicalBotPawn(Other);
-			MBP.TakeLightningDamage(Damage);
+			MagicalBot(MBP.Controller).Stun(0.5);
 		}
 	}
 	super.ProcessTouch (Other, HitLocation, HitNormal);
@@ -32,7 +32,4 @@ simulated function SpawnFlightEffects()
 DefaultProperties
 {
 	Damage = 20;
-
-	Speed=10000;
-	MaxSpeed=10000;
 }
