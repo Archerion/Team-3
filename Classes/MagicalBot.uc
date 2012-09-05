@@ -4,9 +4,22 @@ class MagicalBot extends UTBot;
 var Actor Destination;
 
 defaultproperties
-{	
-	
+{		
 }
+
+
+function Stun()
+{
+Pawn.CustomTimeDilation=0.0;
+SetTimer(10.0, false, 'UnStun');
+}
+
+function UnStun()
+{
+Pawn.CustomTimeDilation=1.0;
+GoToState('Roaming');
+}
+
 
 protected event ExecuteWhatToDoNext()
 {	
@@ -21,10 +34,7 @@ Begin:
 	{
 		Destination = FindRandomDest();
 	}
-
-	//Find a path to the destination and move to the next node in the path
 	MoveToward(FindPathToward(Destination), FindPathToward(Destination));
-
-	//fire off next decision loop
 	LatentWhatToDoNext();
 }
+
