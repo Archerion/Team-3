@@ -4,8 +4,9 @@ class MagicalBot extends UTBot;
 var Actor Destination;
 
 defaultproperties
-{	
+{		
 }
+
 
 function Stun(float stunTime )
 {
@@ -18,6 +19,7 @@ function UnStun()
 {
 	Pawn.CustomTimeDilation = 1.0f;
 }
+
 
 protected event ExecuteWhatToDoNext()
 {	
@@ -39,3 +41,4 @@ Begin:
 	//fire off next decision loop
 	LatentWhatToDoNext();
 }
+
