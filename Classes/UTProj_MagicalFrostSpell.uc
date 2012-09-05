@@ -13,7 +13,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if ( !Other.IsA('Projectile') || Other.bProjTarget )
 		{
 			MBP = MagicalBotPawn(Other);
-			MagicalBotController(MBP.Controller).Stun();
+			MagicalBot(MBP.Controller).Stun();
 		}
 	}
 	Super.ProcessTouch(Other, HitLocation, HitNormal);

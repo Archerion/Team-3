@@ -41,7 +41,7 @@ defaultproperties
 	
 	InstantHitDamage(0)=45
 	FireInterval(0)=+0.77
-	// FireInterval(1)=+0.6
+	FireInterval(1)=+0.6
 	InstantHitDamageTypes(0)=None
 	InstantHitDamageTypes(1)=None
 
