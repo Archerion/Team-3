@@ -3,8 +3,8 @@ class UTAmmo_ManaRifle extends UTAmmoPickupFactory;
 defaultproperties
 {
 	RespawnTime = 3;
-	AmmoAmount = 50
-	TargetWeapon=class'UTWeap_ManaRifle'
+	AmmoAmount = 50;
+	TargetWeapon=class'UTWeapon'
 	
 	PickupSound=SoundCue'A_Pickups.Ammo.Cue.A_Pickup_Ammo_Rocket_Cue'
 	

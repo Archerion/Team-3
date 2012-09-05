@@ -1,10 +1,9 @@
-class UTProj_MagicalLightningSpell extends UTProj_MagicalBullet;
+class UTProj_MagicalLightningSpell extends UTProj_LinkPlasma;
 
 DefaultProperties
 {
-	Damage = 10;
+	
 }
-
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
 	local MagicalBotPawn MBP;
@@ -13,7 +12,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(!Other.IsA('Projectile') || Other.bProjTarget)
 		{
 			MBP = MagicalBotPawn(Other);
-			//MBP.Take
+			MBP.TakeLightningDamage(Damage);
 		}
 	}
 	super.ProcessTouch (Other, HitLocation, HitNormal);
