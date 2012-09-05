@@ -1,5 +1,8 @@
 class UTProj_MagicalFrostBullet extends UTProj_MagicalBullet;
 
+var float SlowAmount;
+var float SlowDuration;
+
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
 	local MagicalBotPawn MBP;
@@ -8,7 +11,8 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(Other.IsA('MagicalBotPawn'))
 		{
 				MBP = MagicalBotPawn(Other);
-				MBP.Freeze(6.0);		}
+				MBP.Slow(SlowAmount, SlowDuration);		
+		}
 	}
 
 	Super.ProcessTouch(Other, HitLocation, HitNormal);
@@ -30,4 +34,6 @@ simulated function SpawnFlightEffects()
 
 defaultproperties
 {
+	SlowAmount = 0.4
+	SlowDuration = 1
 }

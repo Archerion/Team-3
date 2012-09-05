@@ -8,6 +8,7 @@ defaultproperties
 	
 }
 
+<<<<<<< HEAD
 function Stun(float TimeStunned)
 {
 	CustomTimeDilation = 0.0f;
@@ -18,7 +19,7 @@ function UnStun()
 {
 	CustomTimeDilation = 1.0f;
 }
-
+=======
 protected event ExecuteWhatToDoNext()
 {	
 	GotoState('Roaming');
@@ -39,3 +40,4 @@ Begin:
 	//fire off next decision loop
 	LatentWhatToDoNext();
 }
+>>>>>>> ec8e0d97eaf4e823981dd6a7e80b78e39cfa312b

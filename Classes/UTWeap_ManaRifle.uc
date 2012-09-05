@@ -1,4 +1,5 @@
 class UTWeap_ManaRifle extends UTWeapon abstract;
+
 struct ManaCost
 {
 	var float Primary;
@@ -39,8 +40,8 @@ defaultproperties
 	// WeaponProjectiles(1)=class'UTProj_ScorpionGlob'
 	
 	InstantHitDamage(0)=45
-	FireInterval(0)=+0.2
-	FireInterval(1)=+1.3
+	FireInterval(0)=+0.77
+	// FireInterval(1)=+0.6
 	InstantHitDamageTypes(0)=None
 	InstantHitDamageTypes(1)=None
 
@@ -99,28 +100,25 @@ defaultproperties
 simulated function FireAmmunition()
 {
 	local MagicalPlayerController PC;
-	
-	foreach LocalPlayerControllers(class'MagicalPlayerController', PC)
+	PC = MagicalPlayerController(GetALocalPlayerController());
+	if (CurrentFireMode == 0)
 	{
-		if (CurrentFireMode == 0)
+		if (PC.CheckMana() >= WeaponManaCost.Primary)
 		{
-			if (PC.CheckMana() >= WeaponManaCost.Primary)
+			if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
 			{
-				if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-				{
-					PC.TakeMana(WeaponManaCost.Primary);
-					Super.FireAmmunition();
-				}
+				PC.TakeMana(WeaponManaCost.Primary);
+				Super.FireAmmunition();
 			}
 		}
-		else if (CurrentFireMode == 1)
+	}
+	else if (CurrentFireMode == 1)
+	{
+		if (PC.CheckMana() >= WeaponManaCost.Secondary)
 		{
-			if (PC.CheckMana() >= WeaponManaCost.Secondary)
-			{
-				PC.TakeMana(WeaponManaCost.Secondary);
-				Super.FireAmmunition();
-				
-			}
+			PC.TakeMana(WeaponManaCost.Secondary);
+			Super.FireAmmunition();
+			
 		}
 	}
 }
@@ -151,6 +149,5 @@ function int AddAmmo( int Amount )
 
 simulated function int GetAmmoCount()
 {
-	`log("GetAmmoCount: "$MagicalInventoryManager(InvManager).GetAmmoCount());
 	return MagicalInventoryManager(InvManager).GetAmmoCount();
 }

@@ -1,4 +1,10 @@
-class UTProj_MagicalFireSpell extends UTProjectile;
+class UTProj_MagicalFireSpell extends UTProj_MagicalBullet;
+
+var float BurnDamage;
+var float BurnDuration;
+
+var float SlowAmount;
+var float SlowDuration;
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
@@ -7,76 +13,34 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 	{
 		if(Other.IsA('MagicalBotPawn'))
 		{
-				MBP = MagicalBotPawn(Other);
-				MBP.TakeFire(5);
+			MBP = MagicalBotPawn(Other);
+			MBP.Slow(SlowAmount, SlowDuration);		
+			MBP.TakeFire(BurnDuration, BurnDamage);
 		}
 	}
 
 	Super.ProcessTouch(Other, HitLocation, HitNormal);
 }
 
-simulated function bool HurtRadius
-(
-	float				BaseDamage,
-	float				DamageRadiuses,
-	class<DamageType>	DamageType,
-	float				Momentum,
-	vector				HurtOrigin,
-	optional Actor		IgnoredActor,
-	optional Controller InstigatedByController = Instigator != None ? Instigator.Controller : None,
-	optional bool       bDoFullDamage
-)
+simulated function SpawnFlightEffects()
 {
-	local bool bCausedDamage, bResult;
-	local MagicalBotPawn oink;
-	local Actor Victim;
-	bCausedDamage = false;
-	bResult = false;
+	local vector FXColor;
+	FXColor.x = 1.0;
+	FXColor.y = 0.2;
+	FXColor.z = 0.2;
 	
-
-	foreach VisibleCollidingActors( class 'Actor', Victim, DamageRadius, HurtOrigin)
+	Super.SpawnFlightEffects();
+	if (ProjEffects != None)
 	{
-		if (Victim.IsA('MagicalBotPawn'))
-		{
-			oink = MagicalBotPawn(Victim);
-			oink.TakeFire(5);
-			bCausedDamage = true;
-			`log("Burning");
-		}
+		ProjEffects.SetVectorParameter('LinkProjectileColor', FXColor);
 	}
-
-	bResult = Super.HurtRadius(BaseDamage, DamageRadiuses, DamageType, Momentum, HurtOrigin, IgnoredActor, InstigatedByController, bDoFullDamage);
-	return ( bResult || bCausedDamage );
 }
-
 
 defaultproperties
 {
-	MyDamageType=class'UTDmgType_Burning'
-
-	ProjFlightTemplate=ParticleSystem'VH_Scorpion.Effects.P_Scorpion_Bounce_Projectile'
-	ProjExplosionTemplate=ParticleSystem'VH_Scorpion.Effects.PS_Scorpion_Gun_Impact'
-
-	Explosionsound=SoundCue'A_Weapon_BioRifle.Weapon.A_BioRifle_FireImpactExplode_Cue'
-	ImpactSound=SoundCue'A_Weapon_BioRifle.Weapon.A_BioRifle_FireImpactFizzle_Cue'
-	
-	Speed=4000.0
-	MaxSpeed=4000.0
-	Damage=80.0
-	DamageRadius=220.0
-	MomentumTransfer=40000
-	LifeSpan=1.6
-	MaxEffectDistance=7000.0
-	Buoyancy=1.5
-	TossZ=0.0
-	CheckRadius=48.0
-	Physics=PHYS_Falling
-	ExplosionLightClass=class'UTGame.UTRocketExplosionLight'
-	ExplosionDecal=MaterialInstanceTimeVarying'WP_RocketLauncher.Decals.MITV_WP_RocketLauncher_Impact_Decal01'
-	DecalWidth=128.0
-	DecalHeight=128.0
-	
-	bNetTemporary=false
-	bUpdateSimulatedPosition=false
+	SlowAmount = 0.5
+	SlowDuration = 3.0
+	BurnDamage = 10.0;
+	BurnDuration = 3.0;
 }
 
