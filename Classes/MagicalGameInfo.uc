@@ -11,4 +11,5 @@ defaultproperties
    DefaultInventory(0)=class'UTWeap_ManaRifleBasic'
    DefaultInventory(1)=class'UTWeap_ManaRifleFire'
    DefaultInventory(2)=class'UTWeap_ManaRifleFrost'
+   DefaultInventory(3)=class'UTWeap_ManaRifleLightning'
 }
