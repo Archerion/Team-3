@@ -1,19 +1,5 @@
 class UTProj_MagicalFireBullet extends UTProj_MagicalBullet;
 
-simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
-{
-	local MagicalBotPawn MBP;
-	if ( Other != Instigator )
-	{
-		if(Other.IsA('MagicalBotPawn'))
-		{
-				MBP = MagicalBotPawn(Other);
-				MBP.TakeFire(5,5,0.5);
-		}
-	}
-	Super.ProcessTouch(Other, HitLocation, HitNormal);
-}
-
 simulated function SpawnFlightEffects()
 {
 	local vector FXColor;
@@ -29,6 +15,9 @@ simulated function SpawnFlightEffects()
 }
 
 
+
 defaultproperties
 {
+	ExplosionLightClass=class'UTGame.UTRocketExplosionLight'
+	DamageRadius=100
 }

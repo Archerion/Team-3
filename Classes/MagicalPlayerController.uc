@@ -42,3 +42,9 @@ function float CheckMana()
 {
 	return CurrentMana;
 }
+
+exec function SpawnBot()
+{
+	MagicalGameInfo(WorldInfo.Game).SpawnTestBot();
+	`log("Player Spawned a bot");
+}

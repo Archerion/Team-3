@@ -3,7 +3,8 @@ class MagicalBotPawn extends UTPawn
 	placeable;
 
 var float BurningTime;
-var float BurnDamage;
+var int BurnDamage;
+var float BurnTimer;
 var vector BurnVector;
 var class<DamageType> BurnDmgType;
 
@@ -11,26 +12,36 @@ defaultproperties
 {
 	ControllerClass=class'MagicalFPSGame.MagicalBot'
 	BurningTime = 0;
-	BurnDamage = 5;
+	BurnTimer = 1;
+	BurnDamage = 5;	
 	BurnDmgType = class'UTDmgType_Burning';
 }
 
-function TakeFire(float Duration, float Damage, optional float TimeBetweenBurns = 1)
+function TakeFire(float Duration, int Damage)
 {
-	while (BurningTime > 0)
-	{
-		SetTimer(0.5, true, 'TakeBurnDamage');
-		BurningTime -= TimeBetweenBurns;
-	}
+	`log("Setting bot on fire!");
+	BurnDamage = Damage;
+	BurnTimer = Duration;
+	SetTimer(1, true, 'TakeBurnDamage');
 }
 
 function TakeBurnDamage()
 {
-		TakeDamage(BurningDamage, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
+	`log("TakeBurnDamage! BurnTimer = "$BurnTimer);
+	if (BurnTimer > 0)
+	{	
+		BurnTimer -= 1;
+		TakeDamage(BurnDamage, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
+		`log("Bot took burn damage!");
+	}
+	else 
+	{
+		ClearTimer('TakeBurnDamage');
+	}
 }
 
 
-function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
+ function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
 {
 	GroundSpeed *= 1-SlowAmount;
 	AirSpeed *= 1-SlowAmount;
@@ -50,5 +61,7 @@ function UnSlow()
 	AirSpeed = Default.AirSpeed;
 	WaterSpeed = Default.WaterSpeed;
 }
+
+
 
 

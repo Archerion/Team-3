@@ -1,5 +1,6 @@
 class UTProj_MagicalBullet extends UTProjectile;
 
+
 var vector ColorLevel;
 var vector ExplosionColor;
 

@@ -1,4 +1,5 @@
 class UTWeap_ManaRifle extends UTWeapon abstract;
+
 struct ManaCost
 {
 	var float Primary;
@@ -39,8 +40,8 @@ defaultproperties
 	// WeaponProjectiles(1)=class'UTProj_ScorpionGlob'
 	
 	InstantHitDamage(0)=45
-	FireInterval(0)=+0.2
-	FireInterval(1)=+1.3
+	FireInterval(0)=+0.77
+	// FireInterval(1)=+0.6
 	InstantHitDamageTypes(0)=None
 	InstantHitDamageTypes(1)=None
 
