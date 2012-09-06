@@ -31,5 +31,5 @@ simulated function SpawnFlightEffects()
 
 DefaultProperties
 {
-	Damage = 20;
+	MyDamageType=class'MDmgType_Stun'
 }

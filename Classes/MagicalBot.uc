@@ -2,9 +2,12 @@
 class MagicalBot extends UTBot;
 
 var Actor Destination;
+var() Vector TempDest;
+var vector nextlocation;
 
 defaultproperties
-{		
+{
+	bSpawnedByKismet = true
 }
 
 
@@ -18,9 +21,11 @@ function Stun(float stunTime )
 function UnStun()
 {
 	Pawn.CustomTimeDilation = 1.0f;
+
 }
 
 
+/*
 protected event ExecuteWhatToDoNext()
 {	
 	GotoState('Roaming');
@@ -42,3 +47,10 @@ Begin:
 	LatentWhatToDoNext();
 }
 
+*/
+
+state Dead
+{
+Begin:
+	Destroy();
+}

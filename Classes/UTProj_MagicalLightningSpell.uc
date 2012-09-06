@@ -4,19 +4,7 @@ DefaultProperties
 {
 	
 }
-simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
-{
-	local MagicalBotPawn MBP;
-	if ( Other != Instigator )
-	{
-		if(!Other.IsA('Projectile') || Other.bProjTarget)
-		{
-			MBP = MagicalBotPawn(Other);
-			MBP.TakeLightningDamage(Damage);
-		}
-	}
-	super.ProcessTouch (Other, HitLocation, HitNormal);
-}
+
 simulated function SpawnFlightEffects()
 {
 	local vector FXColor;

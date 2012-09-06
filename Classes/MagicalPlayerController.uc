@@ -45,6 +45,8 @@ function float CheckMana()
 
 exec function SpawnBot()
 {
-	MagicalGameInfo(WorldInfo.Game).SpawnTestBot();
+	local Vector SpawnLocationVector;
+	SpawnLocationVector.Z = 300;
+	Spawn(class'MagicalFPSGame.MagicalBotPawn',,,SpawnLocationVector);
 	`log("Player Spawned a bot");
 }

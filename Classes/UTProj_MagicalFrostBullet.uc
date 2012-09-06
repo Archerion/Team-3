@@ -21,5 +21,5 @@ simulated function SpawnFlightEffects()
 defaultproperties
 {
 	
-	Damage=class'UTMagicalBullet'.default.LightBrightness+10
+	Damage=float(class'UTProj_MagicalBullet'.default.Damage) + 10
 }

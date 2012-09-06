@@ -2,7 +2,7 @@ Class UTProj_MagicalFrostSpell extends UTProj_MagicalBullet;
 
 defaultproperties
 {
-	MyDamageType=class'MDmgType_Freeze'
+	MyDamageType=class'MDmgType_Stun'
 }
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)

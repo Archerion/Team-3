@@ -17,6 +17,14 @@ defaultproperties
 	BurnDmgType = class'UTDmgType_Burning';
 }
 
+simulated function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	Spawn(class'UTWeap_ShockRifle',,,Location).GiveTo(self);
+	SpawnDefaultController();
+	`log(">>>>>>>> Spawned controller:"@Controller);
+}
+
 function TakeFire(float Duration, int Damage)
 {
 	`log("Setting bot on fire!");
@@ -27,7 +35,6 @@ function TakeFire(float Duration, int Damage)
 
 function TakeBurnDamage()
 {
-	`log("TakeBurnDamage! BurnTimer = "$BurnTimer);
 	if (BurnTimer > 0)
 	{	
 		BurnTimer -= 1;
@@ -40,12 +47,7 @@ function TakeBurnDamage()
 	}
 }
 
-function TakeLightningDamage(float lDamage)
-{
-
-}
-
- function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
+function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
 {
 	GroundSpeed *= 1-SlowAmount;
 	AirSpeed *= 1-SlowAmount;
