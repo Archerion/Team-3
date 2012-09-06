@@ -32,7 +32,10 @@ Begin:
 
 	if(Destination == none || Pawn.ReachedDestination(Destination))
 	{
+		do
+		{
 		Destination = FindRandomDest();
+		} until (PointReachable(Destination.Location));
 	}
 	MoveToward(FindPathToward(Destination), FindPathToward(Destination));
 	LatentWhatToDoNext();
