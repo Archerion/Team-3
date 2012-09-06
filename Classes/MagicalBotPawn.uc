@@ -1,12 +1,20 @@
-
 class MagicalBotPawn extends UTPawn 
-	placeable;
+placeable;
 
 var float BurningTime;
 var int BurnDamage;
 var float BurnTimer;
 var vector BurnVector;
 var class<DamageType> BurnDmgType;
+
+enum ArmorType {
+		Unarmored,
+		LightArmor,
+		MediumArmor,
+		HeavyArmor
+};
+
+var ArmorType Armor;
 
 defaultproperties
 {
@@ -15,6 +23,7 @@ defaultproperties
 	BurnTimer = 1;
 	BurnDamage = 5;	
 	BurnDmgType = class'UTDmgType_Burning';
+	Armor = HeavyArmor;
 }
 
 simulated function PostBeginPlay()
@@ -27,6 +36,11 @@ simulated function PostBeginPlay()
 
 function TakeFire(float Duration, int Damage)
 {
+	if (Armor == HeavyArmor)
+	{   
+		Duration *=2;
+	}
+
 	`log("Setting bot on fire!");
 	BurnDamage = Damage;
 	BurnTimer = Duration;
@@ -49,6 +63,11 @@ function TakeBurnDamage()
 
 function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
 {
+	if (Armor == HeavyArmor)
+	{
+		SecondsToBeSlowed *= 2;
+	}
+
 	GroundSpeed *= 1-SlowAmount;
 	AirSpeed *= 1-SlowAmount;
 	WaterSpeed *= 1-SlowAmount;
@@ -66,6 +85,36 @@ function UnSlow()
 	GroundSpeed = Default.GroundSpeed;
 	AirSpeed = Default.AirSpeed;
 	WaterSpeed = Default.WaterSpeed;
+}
+
+event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
+{
+	if (Armor == Unarmored)
+	{
+		/*if (DamageType == FrostDmgType)
+		{
+			Damage *= 2;
+		}*/
+	}
+
+	else if (Armor == LightArmor)
+	{
+
+	}
+
+	else if (Armor == MediumArmor)
+	{
+		/*if (DamageType == LightningDmgType)
+		{ 
+			damage *= 2;
+		}*/
+	}
+
+	else if (Armor == HeavyArmor)
+	{
+
+	}
+	super.TakeDamage( Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 }
 
 

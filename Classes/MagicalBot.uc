@@ -1,4 +1,3 @@
-
 class MagicalBot extends UTBot;
 
 var Actor Destination;

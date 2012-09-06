@@ -47,14 +47,14 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 {
 	local MagicalPlayerController PC;
 	PC = MagicalPlayerController(GetALocalPlayerController());
-	UsedAmmo = BeamAmmoUsePerSecond * DeltaTime + AddedAmmoCostOverTime;
-	/*TimeCounter += DeltaTime;
+	UsedAmmo = BeamAmmoUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
+	TimeCounter += DeltaTime;
 
 	if(TimeCounter >= 0.5)
 	{
 		AddedAmmoCostOverTime += 5;
 		TimeCounter = 0;
-	}*/
+	}
 	if (PC.CheckMana() >= UsedAmmo)
 	{
 		`log("Used Mana:	"$UsedAmmo);
