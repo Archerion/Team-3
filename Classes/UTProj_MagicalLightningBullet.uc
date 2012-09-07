@@ -1,20 +1,5 @@
 class UTProj_MagicalLightningBullet extends UTProj_MagicalBullet;
 
-
-simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
-{
-	local MagicalBotPawn MBP;
-	if ( Other != Instigator )
-	{
-		if(!Other.IsA('Projectile') || Other.bProjTarget)
-		{
-			MBP = MagicalBotPawn(Other);
-			MagicalBot(MBP.Controller).Stun(0.5);
-		}
-	}
-	super.ProcessTouch (Other, HitLocation, HitNormal);
-}
-
 simulated function SpawnFlightEffects()
 {
 	local vector FXColor;
@@ -28,6 +13,21 @@ simulated function SpawnFlightEffects()
 		ProjEffects.SetVectorParameter('LinkProjectileColor', FXColor);
 	}
 }
+
+simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
+{
+	local MagicalBotPawn MBP;
+	if ( Other != Instigator )
+	{
+		if ( !Other.IsA('Projectile') || Other.bProjTarget )
+		{
+			MBP = MagicalBotPawn(Other);
+			MagicalBot(MBP.Controller).Stun(0.5);
+		}
+	}
+	Super.ProcessTouch(Other, HitLocation, HitNormal);
+}
+
 
 DefaultProperties
 {

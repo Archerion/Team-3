@@ -40,10 +40,10 @@ defaultproperties
 	// WeaponProjectiles(1)=class'UTProj_ScorpionGlob'
 	
 	InstantHitDamage(0)=45
-	//FireInterval(0)=+0.77
-	//FireInterval(1)=+0.6
-	FireInterval(0)=+0.1
-	FireInterval(1)=+0.3
+	FireInterval(0)=+0.77
+	FireInterval(1)=+0.6
+	//FireInterval(0)=+0.15
+	//FireInterval(1)=+0.35
 	InstantHitDamageTypes(0)=None
 	InstantHitDamageTypes(1)=None
 
@@ -107,11 +107,12 @@ simulated function FireAmmunition()
 	{
 		if (PC.CheckMana() >= WeaponManaCost.Primary)
 		{
-			if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-			{
-				PC.TakeMana(WeaponManaCost.Primary);
-				Super.FireAmmunition();
-			}
+			PC.TakeMana(WeaponManaCost.Primary);
+			Super.FireAmmunition();
+		}
+		else
+		{
+			EndFire(1);
 		}
 	}
 	else if (CurrentFireMode == 1)
@@ -121,6 +122,10 @@ simulated function FireAmmunition()
 			PC.TakeMana(WeaponManaCost.Secondary);
 			Super.FireAmmunition();
 			
+		}
+		else
+		{
+			EndFire(1);
 		}
 	}
 }
@@ -145,11 +150,10 @@ simulated function Tick(float DeltaTime)
 
 function int AddAmmo( int Amount )
 {
-	MagicalInventoryManager(InvManager).AddManaRifleAmmo(Amount);
-	return MagicalInventoryManager(InvManager).GetAmmoCount();
+	if (MagicalInventoryManager(InvManager) != None)
+	{
+		MagicalInventoryManager(InvManager).AddManaRifleAmmo(Amount);
+	}
 }
 
-simulated function int GetAmmoCount()
-{
-	return MagicalInventoryManager(InvManager).GetAmmoCount();
-}
+

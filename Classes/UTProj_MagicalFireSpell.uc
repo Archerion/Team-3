@@ -38,9 +38,14 @@ simulated function SpawnFlightEffects()
 
 defaultproperties
 {
+
+	ProjFlightTemplate=ParticleSystem'VH_Scorpion.Effects.P_Scorpion_Bounce_Projectile'
+	ProjExplosionTemplate=ParticleSystem'WP_RocketLauncher.Effects.P_WP_RocketLauncher_RocketExplosion'
+
+	Damage=0
 	SlowAmount = 0.5
 	SlowDuration = 3.0
-	BurnDamage = 10.0;
-	BurnDuration = 3.0;
+	BurnDamage = 10.0
+	BurnDuration = 3.0
 }
 

@@ -25,7 +25,6 @@ function UnStun()
 }
 
 
-/*
 protected event ExecuteWhatToDoNext()
 {	
 	GotoState('Roaming');
@@ -37,7 +36,10 @@ Begin:
 
 	if(Destination == none || Pawn.ReachedDestination(Destination))
 	{
+		do
+		{
 		Destination = FindRandomDest();
+		} until (PointReachable(Destination.Location));
 	}
 
 	//Find a path to the destination and move to the next node in the path
@@ -47,7 +49,6 @@ Begin:
 	LatentWhatToDoNext();
 }
 
-*/
 
 state Dead
 {
