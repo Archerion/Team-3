@@ -20,6 +20,7 @@ defaultproperties
 	WalkableFloorZ=0.78
 	ShieldStrength = 0.0;
 	ShieldStrengthMax = 100.0;
+	MaxMultiJump = 0;
 }
 
 simulated function Tick(float DeltaTime)
@@ -77,3 +78,5 @@ function DeactivateFrostShield()
 {
 	ShieldStrength = 0;
 }
+
+function bool Dodge(eDoubleClickDir DoubleClickMove){}

@@ -12,6 +12,7 @@ defaultproperties
 
 function Stun(float stunTime )
 {
+	
 	Pawn.CustomTimeDilation = 0.0f;
 	ClearTimer('UnStun');
 	SetTimer(stunTime, false, 'UnStun');
