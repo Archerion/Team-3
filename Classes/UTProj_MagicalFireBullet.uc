@@ -19,5 +19,6 @@ simulated function SpawnFlightEffects()
 defaultproperties
 {
 	ExplosionLightClass=class'UTGame.UTRocketExplosionLight'
+	ExplosionDecal=MaterialInstanceTimeVarying'WP_RocketLauncher.Decals.MITV_WP_RocketLauncher_Impact_Decal01'
 	DamageRadius=100
 }

@@ -8,5 +8,7 @@ defaultproperties
 	
 	WeaponManaCost=(Primary=2, Secondary=10);
 	InventoryGroup=2
+	WeaponColor=(R=255,G=0,B=0,A=255)
+
 	
 }

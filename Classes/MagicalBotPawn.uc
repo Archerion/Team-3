@@ -41,7 +41,6 @@ function TakeFire(float Duration, int Damage)
 		Duration *=2;
 	}
 
-	`log("Setting bot on fire!");
 	BurnDamage = Damage;
 	BurnTimer = Duration;
 	SetTimer(1, true, 'TakeBurnDamage');
@@ -53,7 +52,6 @@ function TakeBurnDamage()
 	{	
 		BurnTimer -= 1;
 		TakeDamage(BurnDamage, None, BurnVector*0, BurnVector*0, BurnDmgType,, self);
-		`log("Bot took burn damage!");
 	}
 	else 
 	{
@@ -89,6 +87,7 @@ function UnSlow()
 
 event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
 {
+	`log("Took "$Damage);
 	if (Armor == Unarmored)
 	{
 		/*if (DamageType == FrostDmgType)

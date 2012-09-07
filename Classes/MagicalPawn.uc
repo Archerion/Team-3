@@ -5,7 +5,6 @@ var float ShieldStrengthMax;
 
 defaultproperties
 {
-	InventoryManagerClass = class'MagicalFPSGame.MagicalInventoryManager'
 	WalkingPct=+0.4
 	CrouchedPct=+0.4
 	BaseEyeHeight=38.0

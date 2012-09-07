@@ -24,7 +24,6 @@ function UnStun()
 }
 
 
-/*
 protected event ExecuteWhatToDoNext()
 {	
 	GotoState('Roaming');
@@ -49,7 +48,6 @@ Begin:
 	LatentWhatToDoNext();
 }
 
-*/
 
 state Dead
 {
