@@ -2,7 +2,7 @@ Class UTProj_MagicalFrostSpell extends UTProj_MagicalBullet;
 
 defaultproperties
 {
-	MyDamageType=class'MDmgType_Freeze'
+	MyDamageType=class'MDmgType_Stun'
 }
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
@@ -13,7 +13,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if ( !Other.IsA('Projectile') || Other.bProjTarget )
 		{
 			MBP = MagicalBotPawn(Other);
-			MagicalBot(MBP.Controller).Stun();
+			MagicalBot(MBP.Controller).Stun(5);
 		}
 	}
 	Super.ProcessTouch(Other, HitLocation, HitNormal);

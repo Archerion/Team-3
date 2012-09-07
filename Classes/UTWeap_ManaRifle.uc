@@ -40,8 +40,10 @@ defaultproperties
 	// WeaponProjectiles(1)=class'UTProj_ScorpionGlob'
 	
 	InstantHitDamage(0)=45
-	FireInterval(0)=+0.77
-	FireInterval(1)=+0.6
+	//FireInterval(0)=+0.77
+	//FireInterval(1)=+0.6
+	FireInterval(0)=+0.1
+	FireInterval(1)=+0.3
 	InstantHitDamageTypes(0)=None
 	InstantHitDamageTypes(1)=None
 
@@ -51,7 +53,7 @@ defaultproperties
 	WeaponPutDownSnd=SoundCue'A_Weapon_ShockRifle.Cue.A_Weapon_SR_LowerCue'
 	PickupSound=SoundCue'A_Pickups.Weapons.Cue.A_Pickup_Weapons_Shock_Cue'
 	
-	ShotCost(0)=1
+	ShotCost(0)=0
 	ShotCost(1)=0
 
 	FireOffset=(X=20,Y=5)
