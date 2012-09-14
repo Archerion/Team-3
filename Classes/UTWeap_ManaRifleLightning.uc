@@ -12,14 +12,14 @@ DefaultProperties
 	WeaponProjectiles(0)=class'UTProj_MagicalLightningBullet'
 	WeaponProjectiles(1)=class'UTProj_MagicalLightningSpell'
 
-	FireInterval(0)=+0.1
+	FireInterval(0)=+0.77
 	//FireInterval(1)=+0.6
 
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
+	InventoryGroup=1
 
-	AmmoCount = 100;
-	BeamAmmoUsePerSecond = 0;
+	BeamAmmoUsePerSecond = 5;
 	ManaUsePerSecond = 5;
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
@@ -49,6 +49,7 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 {
 	local MagicalPlayerController PC;
 	PC = MagicalPlayerController(GetALocalPlayerController());
+	
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
 	TimeCounter += DeltaTime;
 
@@ -67,9 +68,18 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
 	}
 	else
-	{
-		`log("BeamWeapon out of mana!");
-		EndFire(1);	
+	{	
+		AmmoCount = 0;
+		TempMana = PC.CheckMana();
+		PC.TakeMana(TempMana);
+
+		`log("BeamWeapon out of mana!");		
+		EndFire(1);
+		GotoState('WeaponPuttingDown');
+
+		PC.CurrentMana = TempMana;
+		AmmoCount = 10;
+		
 	}
 }
 

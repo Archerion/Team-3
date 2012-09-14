@@ -1,6 +1,5 @@
 
 class MagicalGameInfo extends UTGame;
-var MagicalBotPawn BotT;
 
 simulated function PostBeginPlay()
 {
@@ -29,8 +28,4 @@ defaultproperties
 	bFinalStartup = true;
 	bOverTimeBroadcast = true;
 	bMustHaveMultiplePlayers = false;
-}
-
-function SpawnTestBot()
-{
 }
