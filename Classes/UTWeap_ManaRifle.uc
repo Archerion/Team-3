@@ -150,10 +150,8 @@ simulated function Tick(float DeltaTime)
 
 function int AddAmmo( int Amount )
 {
-	if (MagicalInventoryManager(InvManager) != None)
-	{
-		MagicalInventoryManager(InvManager).AddManaRifleAmmo(Amount);
-	}
+	MagicalInventoryManager(InvManager).AddManaRifleAmmo(Amount);
+	return MagicalInventoryManager(InvManager).GetAmmoCount();
 }
 
 

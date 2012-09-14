@@ -21,10 +21,8 @@ defaultproperties
 
 function SpawnCopyFor( Pawn Recipient )
 {
-	if ( MagicalInventoryManager(Recipient.InvManager) != none )
-	{
 		MagicalInventoryManager(Recipient.InvManager).AddAmmoToWeapon(AmmoAmount, TargetWeapon);
-	}
+
 
 	Recipient.PlaySound(PickupSound);
 	Recipient.MakeNoise(0.2);

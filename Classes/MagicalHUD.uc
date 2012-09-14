@@ -14,7 +14,7 @@ function DrawGameHud()
 	{
 		DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",PC.CurrentMana, PC.MaxMana,20,Canvas.ClipY - 40,80,80,200);
-		DrawBar("Shield",MagicalPawn(PC.Pawn).ShieldStrength,MagicalPawn(PC.Pawn).ShieldStrengthMax, 20, Canvas.ClipY - 60, 80, 200, 80);
+		// DrawBar("Shield",MagicalPawn(PC.Pawn).ShieldStrength,MagicalPawn(PC.Pawn).ShieldStrengthMax, 20, Canvas.ClipY - 60, 80, 200, 80);
 	}
 }
 

@@ -11,14 +11,14 @@ DefaultProperties
 	WeaponProjectiles(0)=class'UTProj_MagicalLightningBullet'
 	WeaponProjectiles(1)=class'UTProj_MagicalLightningSpell'
 
-	FireInterval(0)=+0.1
+	FireInterval(0)=+0.77
 	//FireInterval(1)=+0.6
 
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
 	InventoryGroup=1
 
-	BeamAmmoUsePerSecond = 0;
+	BeamAmmoUsePerSecond = 5;
 	ManaUsePerSecond = 5;
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
@@ -36,11 +36,8 @@ simulated function FireAmmunition()
 	{
 		if (PC.CheckMana() >= PrimaryCost)
 		{
-			if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-			{
-				PC.TakeMana(PrimaryCost);
-				Super.FireAmmunition();
-			}
+			PC.TakeMana(PrimaryCost);
+			Super.FireAmmunition();
 		}
 	}
 }
@@ -63,13 +60,11 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		`log("Used Mana:	"$UsedAmmo);
 		`log("Mana use per second:	"$UsedAmmo*(1/DeltaTime));
 		`log("Remaining Mana:	"$Pc.CheckMana());
-		if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-		{
-			PC.TakeMana(UsedAmmo);
-			Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
-		}
-	}
-	else
+		PC.TakeMana(UsedAmmo);
+		Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
+
+	
+}	else
 	{
 		AmmoCount = 0;
 		TempMana = PC.CheckMana();
