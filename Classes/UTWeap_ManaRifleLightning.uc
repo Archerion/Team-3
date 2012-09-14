@@ -1,5 +1,6 @@
 class UTWeap_ManaRifleLightning extends UTWeap_LinkGun;
 
+
 var float UsedAmmo;
 var float AddedAmmoCostOverTime;
 var float TimeCounter;
@@ -16,19 +17,21 @@ DefaultProperties
 
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
-	InventoryGroup=1
 
+	AmmoCount = 100;
 	BeamAmmoUsePerSecond = 0;
 	ManaUsePerSecond = 5;
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
-
+	UsedAmmo = 0;
 }
 
+	
 simulated function FireAmmunition()
 {
 	local MagicalPlayerController PC;
 	local float PrimaryCost;
+	
 	PC = MagicalPlayerController(GetALocalPlayerController());	
 	PrimaryCost = 2;
 
@@ -36,18 +39,14 @@ simulated function FireAmmunition()
 	{
 		if (PC.CheckMana() >= PrimaryCost)
 		{
-			if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-			{
 				PC.TakeMana(PrimaryCost);
 				Super.FireAmmunition();
-			}
 		}
 	}
 }
 
 simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactInfo TestImpact, float DeltaTime)
 {
-	local float TempMana;
 	local MagicalPlayerController PC;
 	PC = MagicalPlayerController(GetALocalPlayerController());
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
@@ -58,30 +57,19 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		AddedAmmoCostOverTime += 5;
 		TimeCounter = 0;
 	}
+
 	if (PC.CheckMana() >= UsedAmmo)
 	{
 		`log("Used Mana:	"$UsedAmmo);
 		`log("Mana use per second:	"$UsedAmmo*(1/DeltaTime));
 		`log("Remaining Mana:	"$Pc.CheckMana());
-		if ( MagicalInventoryManager(PC.Pawn.InvManager).GetAmmoCount() > 0)
-		{
-			PC.TakeMana(UsedAmmo);
-			Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
-		}
+		PC.TakeMana(UsedAmmo);
+		Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
 	}
 	else
 	{
-		AmmoCount = 0;
-		TempMana = PC.CheckMana();
-		PC.TakeMana(TempMana);
-
-		`log("BeamWeapon out of mana!");		
-		EndFire(1);
-		GotoState('WeaponPuttingDown');
-
-		PC.CurrentMana = TempMana;
-		AmmoCount = 10;
-		
+		`log("BeamWeapon out of mana!");
+		EndFire(1);	
 	}
 }
 
