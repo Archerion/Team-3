@@ -22,10 +22,9 @@ defaultproperties
 
 	bFirstBlood = true;
 	bSkipPlaySound = true;
-	bReady = true;
 	CountDown = 0;
 	bQuickStart = true;
-	bSkipPlaySound = false;
+	bSkipPlaySound = true;
 	bFinalStartup = true;
 	bOverTimeBroadcast = true;
 	bMustHaveMultiplePlayers = false;

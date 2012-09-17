@@ -1,5 +1,6 @@
 class UTWeap_ManaRifleLightning extends UTWeap_LinkGun;
 
+
 var float UsedAmmo;
 var float AddedAmmoCostOverTime;
 var float TimeCounter;
@@ -22,13 +23,15 @@ DefaultProperties
 	ManaUsePerSecond = 5;
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
-
+	UsedAmmo = 0;
 }
 
+	
 simulated function FireAmmunition()
 {
 	local MagicalPlayerController PC;
 	local float PrimaryCost;
+	
 	PC = MagicalPlayerController(GetALocalPlayerController());	
 	PrimaryCost = 2;
 
@@ -36,17 +39,17 @@ simulated function FireAmmunition()
 	{
 		if (PC.CheckMana() >= PrimaryCost)
 		{
-			PC.TakeMana(PrimaryCost);
-			Super.FireAmmunition();
+				PC.TakeMana(PrimaryCost);
+				Super.FireAmmunition();
 		}
 	}
 }
 
 simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactInfo TestImpact, float DeltaTime)
 {
-	local float TempMana;
 	local MagicalPlayerController PC;
 	PC = MagicalPlayerController(GetALocalPlayerController());
+	
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
 	TimeCounter += DeltaTime;
 
@@ -55,6 +58,7 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		AddedAmmoCostOverTime += 5;
 		TimeCounter = 0;
 	}
+
 	if (PC.CheckMana() >= UsedAmmo)
 	{
 		`log("Used Mana:	"$UsedAmmo);
@@ -62,10 +66,9 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		`log("Remaining Mana:	"$Pc.CheckMana());
 		PC.TakeMana(UsedAmmo);
 		Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
-
-	
-}	else
-	{
+	}
+	else
+	{	
 		AmmoCount = 0;
 		TempMana = PC.CheckMana();
 		PC.TakeMana(TempMana);
