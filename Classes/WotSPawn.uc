@@ -6,6 +6,12 @@ var(Mana) float ManaRechargeRate;
 var(Mana) float MaxMana;
 var float CurrentMana;
 var float TimeSinceRecharged;
+var float ModDamage;
+var float BurnDamage;
+var float BurnTimer;
+var float TimeBetweenIterations;
+var vector BurnVector;
+var WotSArmor ArmorType;
 
 defaultproperties
 {
@@ -14,8 +20,15 @@ defaultproperties
 	TimeSinceRecharged = 0.0;
 	CurrentMana = 100;   
 	MaxMana = 100;
+	BurnDamage = 0;
+	BurnTimer = 0;
 }
 
+simulated function PostBeginPlay()
+{
+	ArmorType.SetArmorType(Unarmored);
+	InitializeArmor();
+}
 
 simulated function Tick(float DeltaTime)
 {
@@ -34,6 +47,14 @@ simulated function Tick(float DeltaTime)
 	Super.Tick(DeltaTime);
 }
 
+event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
+{
+	ModDamage = Damage;
+	ArmorType.ModerateDamage(Damage, DamageType, self);
+
+
+	super.TakeDamage(ModDamage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
+}
 
 function float GiveMana(float Amount)
 {
@@ -60,3 +81,75 @@ function float CheckMana()
 {
 	return CurrentMana;
 }
+
+function TakeFire(float Duration, float DamagePerIteration, float tBtwItr)
+{
+	BurnDamage = DamagePerIteration ;
+	BurnTimer = Duration;
+	TimeBetweenIterations = tBtwItr;
+	SetTimer(TimeBetweenIterations, true, 'TakeBurnDamage');
+}
+
+function TakeBurnDamage()
+{
+	if (BurnTimer > 0)
+	{	
+		BurnTimer -= TimeBetweenIterations;
+		TakeDamage(BurnDamage, None, BurnVector*0, BurnVector*0, class 'WotSPRJBurnDamage',, self);
+	}
+	else 
+	{
+		ClearTimer('TakeBurnDamage');
+	}
+}
+
+function Slow(float SlowAmount, optional float SecondsToBeSlowed = 0)
+{
+	GroundSpeed *= 1-SlowAmount;
+	AirSpeed *= 1-SlowAmount;
+	WaterSpeed *= 1-SlowAmount;
+	Mesh.GlobalAnimRateScale *= 1-SlowAmount;
+	ClearTimer('UnFreeze');
+	if (SecondsToBeSlowed > 0)
+	{
+		SetTimer(SecondsToBeSlowed, false, 'UnSlow');
+	}
+}
+
+function UnSlow()
+{
+	Mesh.GlobalAnimRateScale = Mesh.Default.GlobalAnimRateScale;
+	GroundSpeed = Default.GroundSpeed;
+	AirSpeed = Default.AirSpeed;
+	WaterSpeed = Default.WaterSpeed;
+}
+
+function Stun(float stunTime )
+{
+	
+	CustomTimeDilation = 0.0f;
+	ClearTimer('UnStun');
+	SetTimer(stunTime, false, 'UnStun');
+}
+
+function UnStun()
+{
+	CustomTimeDilation = 1.0f;
+
+}
+
+function InitializeArmor()
+{
+	switch (ArmorType.TypeOfArmor)
+		{
+		case MediumArmor:
+			Health += 30;
+			GroundSpeed *= 0.9;
+			break;
+		case HeavyArmor:
+			Health += 60;
+			GroundSpeed *= 0.8;
+			break;
+		}
+}
+

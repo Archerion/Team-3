@@ -19,17 +19,20 @@ function SetArmorType(Armors armor)
 	TypeOfArmor = armor;
 }
 
-function Moderate (int Damage, class<DamageType> DamageType, Actor DamageTaker)
+function ModerateDamage(int Damage, class<DamageType> DamageType, Actor DamageTaker)
 {		
 	local float SlowDuration;
 	local float BurnDuration;
+
+	local WotSPawn DmgTaker;
+	DmgTaker = WotsPawn(DamageTaker);
 		
-	if (DamageType == PRJBurnDamage)
+	if (DamageType == class 'WotSPRJBurnDamage')
 	{
-		DamageTaker.ModDamage = Damage * 0.7;
+		DmgTaker.ModDamage = Damage * 0.7;
 	}
 		
-	else if (DamageType == SPLBurnDamage)
+	else if (DamageType == class 'WotSSPLBurnDamage')
 	{
 		BurnDuration = 3;
 		SlowDuration = 3;
@@ -39,43 +42,43 @@ function Moderate (int Damage, class<DamageType> DamageType, Actor DamageTaker)
 			BurnDuration = 6;
 			SlowDuration = 6;
 		}
-			DamageTaker.Slow(50, SlowDuration);
-			DamageTaker.TakeFire(BurnDuration, 5, 0.5);		
+			DmgTaker.Slow(50, SlowDuration);
+			DmgTaker.TakeFire(BurnDuration, 5, 0.5);		
 	}
 		
-	else if(DamageType == PRJLightningDamage)
+	else if(DamageType == class 'WotSPRJLightningDamage')
 	{
-		DamageTaker.Stun(0.5);
+		DmgTaker.Stun(0.5);
 	}
 		
-	else if(DamageType == SPLLightningDamage)
+	else if(DamageType == class 'WotSSPLLightningDamage')
 	{
 		if (TypeOfArmor == MediumArmor)
 		{
-			DamageTaker.ModDamage = 10;
+			DmgTaker.ModDamage = 10;
 		}
 			
 		else
 		{
-			DamageTaker.ModDamage = 5;
+			DmgTaker.ModDamage = 5;
 		}
 	}
 		
-	else if(DamageType == PRJFrostDamage)
+	else if(DamageType == class 'WotSPRJFrostDamage')
 	{
 		if (TypeOfArmor == Unarmored)
 		{
-			DamageTaker.ModDamage = 15;
+			DmgTaker.ModDamage = 15;
 		} 
 			
 		else 
 		{
-			DamageTaker.ModDamage = 10;
+			DmgTaker.ModDamage = 10;
 		}
 	}
 		
-	else if(DamageType == SPLFrostDamage)
+	else if(DamageType == class 'WotSSPLFrostDamage')
 	{
-		DamageTaker.Freeze(5);
+		DmgTaker.Stun(5);
 	}		
 }

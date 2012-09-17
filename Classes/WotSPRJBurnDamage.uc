@@ -1,5 +1,6 @@
-class WotSPRJBurnDamage extends DamageType;
+class WotSPRJBurnDamage extends UTDamageType;
 
 DefaultProperties
 {
+	DamageWeaponClass=class'WotSWeapon_ManaRifleFire'
 }
