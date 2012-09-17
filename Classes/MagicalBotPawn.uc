@@ -24,7 +24,7 @@ defaultproperties
 	BurnTimer = 1;
 	BurnDamage = 5;	
 	BurnDmgType = class'UTDmgType_Burning'
-	Armor = LightArmor;
+	Armor = Unarmored;
 	ArmorChanged = false;
 }
 
@@ -34,6 +34,14 @@ simulated function PostBeginPlay()
 	Spawn(class'UTWeap_ShockRifle',,,Location).GiveTo(self);
 	SpawnDefaultController();
 	`log(">>>>>>>> Spawned controller:"@Controller);	
+}
+
+simulated function Tick(float DeltaTime)
+{
+	if (!ArmorChanged)
+	{
+		InitializeArmor();		
+	}
 }
 
 function TakeFire(float Duration, int Damage)
@@ -89,30 +97,11 @@ function UnSlow()
 
 event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
 {
-	`log("Health before change "$Health);
-	`log("Armor before change " $Armor);
-
-	if (!ArmorChanged)
-	{
-		switch (Armor)
-		{
-		case MediumArmor:
-			Health += 30;
-			break;
-		case HeavyArmor:
-			Health += 60;
-			break;
-		}
-		ArmorChanged = true;
-		`log("Health after change "$Health);
-		`log("Armor after change "$Armor);
-	}
-
 	if (Armor == Unarmored)
 	{
 		/*if (DamageType == FrostDmgType)
 		{
-			Damage *= 2;
+			Damage *= 1.5; // 15 damage
 		}*/
 	}
 
@@ -125,7 +114,7 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 	{
 		/*if (DamageType == LightningDmgType)
 		{ 
-			damage *= 2;
+			damage *= 2; //10 damage
 		}*/
 	}
 
@@ -139,6 +128,21 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 	`log("Armor after taking damage "$Armor);
 }
 
+function InitializeArmor()
+{
+	switch (Armor)
+		{
+		case MediumArmor:
+			Health += 30;
+			GroundSpeed *= 0.9;
+			break;
+		case HeavyArmor:
+			Health += 60;
+			GroundSpeed *= 0.8;
+			break;
+		}
+		ArmorChanged = true;
+}
 
 
 

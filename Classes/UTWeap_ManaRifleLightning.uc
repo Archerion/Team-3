@@ -69,17 +69,10 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 	}
 	else
 	{	
-		AmmoCount = 0;
-		TempMana = PC.CheckMana();
-		PC.TakeMana(TempMana);
 
 		`log("BeamWeapon out of mana!");		
 		EndFire(1);
-		GotoState('WeaponPuttingDown');
 
-		PC.CurrentMana = TempMana;
-		AmmoCount = 10;
-		
 	}
 }
 
@@ -87,4 +80,15 @@ simulated function EndFire(byte FireModeNum)
 {
 	AddedAmmoCostOverTime = 0;
 	super.EndFire(FireModeNum);
+}
+
+simulated function UpdateBeamEmitter(vector FlashLocation, vector HitNormal, actor HitActor)
+{
+	local MagicalPlayerController PC;
+	PC = MagicalPlayerController(GetALocalPlayerController());
+	
+	if (PC.CheckMana() >= UsedAmmo)
+	{
+		super.UpdateBeamEmitter(FlashLocation, HitNormal, HitActor);
+	}
 }

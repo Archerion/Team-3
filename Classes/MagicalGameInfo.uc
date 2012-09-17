@@ -24,7 +24,6 @@ defaultproperties
 	bSkipPlaySound = true;
 	CountDown = 0;
 	bQuickStart = true;
-	bSkipPlaySound = true;
 	bFinalStartup = true;
 	bOverTimeBroadcast = true;
 	bMustHaveMultiplePlayers = false;
