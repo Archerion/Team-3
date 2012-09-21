@@ -16,3 +16,14 @@ defaultproperties
     Mesh=WPawnSkeletalMeshComponent
     Components.Add(WPawnSkeletalMeshComponent)
 }
+
+exec function StartSprint()
+{
+	GroundSpeed = super.GroundSpeed * 2;
+	StopFiring();
+}
+
+exec function StopSprint()
+{
+	GroundSpeed = super.GroundSpeed;
+}
