@@ -3,7 +3,6 @@ class SorcererPawn extends WotSPawn;
 defaultproperties
 {
 	bUsesMana = True;
-
     
     Begin Object Name=WPawnSkeletalMeshComponent
         bOwnerNoSee=False
@@ -16,3 +15,4 @@ defaultproperties
     Mesh=WPawnSkeletalMeshComponent
     Components.Add(WPawnSkeletalMeshComponent)
 }
+
