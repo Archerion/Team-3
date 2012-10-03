@@ -9,5 +9,4 @@ defaultproperties
 	
 	WeaponManaCost=(Primary=2, Secondary=10);
 	InventoryGroup=2
-
 }
