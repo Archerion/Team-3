@@ -28,6 +28,7 @@ simulated function PostBeginPlay()
 {
 	ArmorType.SetArmorType(Unarmored);
 	InitializeArmor();
+	super.PostBeginPlay();
 }
 
 simulated function Tick(float DeltaTime)
