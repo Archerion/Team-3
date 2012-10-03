@@ -6,12 +6,18 @@ var(Mana) float ManaRechargeRate;
 var(Mana) float MaxMana;
 var float CurrentMana;
 var float TimeSinceRecharged;
-var float ModDamage;
 var float BurnDamage;
 var float BurnTimer;
 var float TimeBetweenIterations;
 var vector BurnVector;
-var WotSArmor ArmorType;
+
+enum Armors {
+	Unarmored, 
+	LightArmor, 
+	MediumArmor, 
+	HeavyArmor};
+
+var Armors ArmorType;
 
 defaultproperties
 {
@@ -22,12 +28,13 @@ defaultproperties
 	MaxMana = 100;
 	BurnDamage = 0;
 	BurnTimer = 0;
+	ArmorType = LightArmor;
 }
 
 simulated function PostBeginPlay()
 {
-	ArmorType.SetArmorType(Unarmored);
 	InitializeArmor();
+	super.PostBeginPlay();
 }
 
 simulated function Tick(float DeltaTime)
@@ -49,11 +56,65 @@ simulated function Tick(float DeltaTime)
 
 event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
 {
-	ModDamage = Damage;
-	ArmorType.ModerateDamage(Damage, DamageType, self);
+	local float SlowDuration;
+	local float BurnDuration;
 
+	if (DamageType == class 'WotSPRJBurnDamage')
+	{
+		Damage *= 0.7;
+	}
+		
+	else if (DamageType == class 'WotSSPLBurnDamage')
+	{
+		BurnDuration = 3;
+		SlowDuration = 3;
+			
+		if (ArmorType == HeavyArmor)
+		{
+			BurnDuration = 6;
+			SlowDuration = 6;
+		}
+			Slow(50, SlowDuration);
+			TakeFire(BurnDuration, 5, 0.5);		
+	}
+		
+	else if(DamageType == class 'WotSPRJLightningDamage')
+	{
+		Stun(0.5);
+	}
+		
+	else if(DamageType == class 'WotSSPLLightningDamage')
+	{
+		if (ArmorType == MediumArmor)
+		{
+			Damage = 10;
+		}
+			
+		else
+		{
+			Damage = 5;
+		}
+	}
+		
+	else if(DamageType == class 'WotSPRJFrostDamage')
+	{
+		if (ArmorType == Unarmored)
+		{
+			Damage = 15;
+		} 
+			
+		else 
+		{
+			Damage = 10;
+		}
+	}
+		
+	else if(DamageType == class 'WotSSPLFrostDamage')
+	{
+		Stun(5);
+	}	
 
-	super.TakeDamage(ModDamage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
+	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 }
 
 function float GiveMana(float Amount)
@@ -125,8 +186,7 @@ function UnSlow()
 }
 
 function Stun(float stunTime )
-{
-	
+{	
 	CustomTimeDilation = 0.0f;
 	ClearTimer('UnStun');
 	SetTimer(stunTime, false, 'UnStun');
@@ -135,12 +195,11 @@ function Stun(float stunTime )
 function UnStun()
 {
 	CustomTimeDilation = 1.0f;
-
 }
 
 function InitializeArmor()
 {
-	switch (ArmorType.TypeOfArmor)
+	switch (ArmorType)
 		{
 		case MediumArmor:
 			Health += 30;
@@ -151,5 +210,6 @@ function InitializeArmor()
 			GroundSpeed *= 0.8;
 			break;
 		}
+		`log(""$ArmorType);
 }
 

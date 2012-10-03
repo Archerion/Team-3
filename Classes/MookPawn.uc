@@ -5,5 +5,4 @@ class MookPawn extends WotSPawn
 
 defaultproperties
 {
-
 }
