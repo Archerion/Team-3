@@ -1,14 +1,11 @@
 class SorcererPawn extends WotSPawn;
 
-var float TempGroundSpeed;
 var bool isRunning;
 
 defaultproperties
 {
 	bUsesMana = True;
-	TempGroundSpeed = 0;
 	isRunning = false;
-  
     Begin Object Name=WPawnSkeletalMeshComponent
         bOwnerNoSee=False
         AnimTreeTemplate=AnimTree'CH_AnimHuman_Tree.AT_CH_Human' 
@@ -24,16 +21,15 @@ defaultproperties
 
 exec function StartSprint()
 {
-	TempGroundSpeed = GroundSpeed;
-	GroundSpeed = TempGroundSpeed * 2;
+	GroundSpeed = default.GroundSpeed * 2;
 	isRunning = true;
 	StopFiring();
 }
 
 exec function StopSprint()
 {
+	GroundSpeed = default.GroundSpeed;
 	isRunning = false;
-	GroundSpeed = TempGroundSpeed;
 }
 
 simulated function StartFire(byte FireModeNum)

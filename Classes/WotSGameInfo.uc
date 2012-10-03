@@ -1,9 +1,9 @@
 class WotSGameInfo extends UTGame;
 
-/*static event class<GameInfo> SetGameType(string MapName, string Options, string Portal)
+static event class<GameInfo> SetGameType(string MapName, string Options, string Portal)
 {
 	return class'WotSGameInfo';
-}*/
+}
 
 simulated function PostBeginPlay()
 {
@@ -22,6 +22,7 @@ defaultproperties
 	DefaultInventory(1)=class'WotSWeapon_ManaRifleFire'
 	DefaultInventory(2)=class'WotSWeapon_ManaRifleFrost'
 
+	b
 
 	bFirstBlood = false;
 	CountDown = 0;
