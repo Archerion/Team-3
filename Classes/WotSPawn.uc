@@ -14,7 +14,6 @@ var vector BurnVector;
 enum Armors {
 	Unarmored, 
 	LightArmor, 
-	MediumArmor, 
 	HeavyArmor};
 
 var Armors ArmorType;
@@ -85,7 +84,7 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 		
 	else if(DamageType == class 'WotSSPLLightningDamage')
 	{
-		if (ArmorType == MediumArmor)
+		if (ArmorType == LightArmor)
 		{
 			Damage = 10;
 		}
@@ -201,7 +200,7 @@ function InitializeArmor()
 {
 	switch (ArmorType)
 		{
-		case MediumArmor:
+		case LightArmor:
 			Health += 30;
 			GroundSpeed *= 0.9;
 			break;
