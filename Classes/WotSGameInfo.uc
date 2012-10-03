@@ -22,8 +22,6 @@ defaultproperties
 	DefaultInventory(1)=class'WotSWeapon_ManaRifleFire'
 	DefaultInventory(2)=class'WotSWeapon_ManaRifleFrost'
 
-	b
-
 	bFirstBlood = false;
 	CountDown = 0;
 	bQuickStart = true;
