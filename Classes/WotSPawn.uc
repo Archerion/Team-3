@@ -209,6 +209,5 @@ function InitializeArmor()
 			GroundSpeed *= 0.8;
 			break;
 		}
-		`log(""$ArmorType);
 }
 

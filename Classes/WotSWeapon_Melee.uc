@@ -1,12 +1,34 @@
-class WotSWeapon_Melee extends WotSWeapon
-	abstract;
+class WotSWeapon_Melee extends UTWeapon;
+/*
+var array<Actor> HitArray;
 
-var SorcererPawn P;
+var name StartSocket;
+var name EndSocket;
 
 defaultproperties
 {
-	InstantHitDamage(0)=75.0
-	InstantHitDamage(1)=35.0
+	PlayerViewOffset=(X=20.000000,Y=0.000000,Z=-8.000000)
+
+	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
+		bCauseActorAnimEnd=true
+	End Object
+
+	Begin Object Name=FirstPersonMesh
+		SkeletalMesh=SkeletalMesh'WotS.SkeletalMesh.MeleeWeapon'
+		FOV=60
+		Animations=MeshSequenceA
+		AnimSets(0)=AnimSet'WotS.SkeletalMesh.Cylinder'
+		bForceUpdateAttachmentsInTick=true
+		Scale=0.900000
+	End Object
+
+	FireInterval(0)=1
+	FireInterval(1)=1
+
+	bInstantHit=true
+
+	InstantHitDamage(0)=50.0
+	InstantHitDamage(1)=25.0
 
 	DefaultAnimSpeed=0.9
        
@@ -22,31 +44,23 @@ defaultproperties
 	WeaponRange=100
 }
 
-simulated state WeaponEquipping
+simulated state WeaponFiring
 {
-	simulated event BeginState(Name PreviousStateName)
+	simulated event BeginState(name PreviousStateName)
 	{
-		P = SorcererPawn(Instigator);
-		
-		super.BeginState(PreviousStateName);
+		if(!HasAmmo(CurrentFireState))
+		{
+			WeaponEmpty();
+			return;
+		}
+
+		PlayFireEffects(CurrentFireState);
+		SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
 	}
-}
 
-simulated function FireAmmunition()
-{
-	local vector hitLocation, hitNormal, traceEnd, traceStart;
-	local Actor hitActor;
-	
-	traceEnd = hitNormal * 70.f; //P.Location - Vector(P.Controller.Rotation) * 192.f;
-
-	hitActor = Trace(hitLocation, hitNormal, traceEnd );
-
-	if (hitActor != None)
+	simulated event EndFire(name NextStateName)
 	{
-		`log("Hit: "$hitActor);
+		HitArray.Length = 0;
+		ClearTimer('RefireCheckTimer');
 	}
-	else
-	{
-		`log("Hit None");
-	}
-}
+}*/
