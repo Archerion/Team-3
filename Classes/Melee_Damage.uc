@@ -7,5 +7,5 @@ DefaultProperties
 	bCausesBloodSplatterDecals=true
 	bComplainFriendlyFire=false
 
-	DamageWeaponClass=Class'MeleeDamage'
+	DamageWeaponClass=Class'WotSWeapon_Melee'
 }

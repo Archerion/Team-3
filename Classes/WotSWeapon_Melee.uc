@@ -1,6 +1,6 @@
 class WotSWeapon_Melee extends UTWeapon;
-/*
-var array<Actor> HitArray;
+
+var bool PlayerHit;
 
 var name StartSocket;
 var name EndSocket;
@@ -14,16 +14,22 @@ defaultproperties
 	End Object
 
 	Begin Object Name=FirstPersonMesh
-		SkeletalMesh=SkeletalMesh'WotS.SkeletalMesh.MeleeWeapon'
+		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 		FOV=60
 		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'WotS.SkeletalMesh.Cylinder'
+		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
 		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
 	End Object
 
+	StartSocket = Start_socket
+	EndSocket = end_socket
+
 	FireInterval(0)=1
 	FireInterval(1)=1
+
+	WeaponFireTypes(0)=EWFT_Custom
+	WeaponFireTypes(1)=EWFT_Custom
 
 	bInstantHit=true
 
@@ -48,19 +54,70 @@ simulated state WeaponFiring
 {
 	simulated event BeginState(name PreviousStateName)
 	{
-		if(!HasAmmo(CurrentFireState))
+		if(!HasAmmo(CurrentFireMode))
 		{
 			WeaponEmpty();
 			return;
 		}
-
-		PlayFireEffects(CurrentFireState);
+		PlayFireEffects(CurrentFireMode);
 		SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
 	}
 
-	simulated event EndFire(name NextStateName)
+	simulated event EndState(name NextStateName)
 	{
-		HitArray.Length = 0;
+		PlayerHit = false;
 		ClearTimer('RefireCheckTimer');
+		NotifyWeaponFinishedFiring(CurrentFireMode);
+		return;
 	}
-}*/
+
+	simulated function RefireCheckTimer()
+	{
+		if(bWeaponPutDown)
+		{
+			PutDownWeapon();
+			return;
+		}
+
+		if(ShouldRefire())
+		{
+			PlayerHit = false;
+			PlayFireEffects(CurrentFireMode);
+			SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
+		}
+
+		HandleFinishedFiring();
+		return;
+	}
+
+	function Tick(float DeltaTime)
+	{
+		local Vector start;
+		local Vector end;
+
+		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(StartSocket, start);
+		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(EndSocket, end);
+
+		WeaponTrace(start, end);
+
+	}
+
+	simulated event WeaponTrace(Vector start, Vector end)
+	{
+		local Vector HitLocation;
+		local Vector HitNormal;
+		local Actor HitActor;
+		local SorcererPawn SP;
+		SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
+
+		HitActor = Trace(HitLocation, HitNormal, end, start, true);
+
+		if (HitActor == SP && !PlayerHit)
+		{
+			HitActor.TakeDamage(InstantHitDamage[CurrentFireMode], Pawn(Owner).Controller, 
+				HitLocation, Velocity * 100.0f, class 'Melee_Damage');
+			AmmoCount -= ShotCost[CurrentFireMode];
+			PlayerHit = true;
+		}
+	}
+}
