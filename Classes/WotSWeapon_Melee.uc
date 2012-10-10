@@ -22,8 +22,16 @@ defaultproperties
 		Scale=0.900000
 	End Object
 
+	Begin Object Name=PickupMesh
+		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
+	End Object
+
+	AttachmentClass=class'Melee_Attach'
+
 	StartSocket = Start_socket
 	EndSocket = end_socket
+
+	bMeleeWeapon = true
 
 	FireInterval(0)=1
 	FireInterval(1)=1
@@ -48,6 +56,7 @@ defaultproperties
 	AmmoCount=1
 
 	WeaponRange=100
+	InventoryGroup=4
 }
 
 simulated state WeaponFiring

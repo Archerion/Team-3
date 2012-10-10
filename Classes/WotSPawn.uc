@@ -39,7 +39,7 @@ simulated function PostBeginPlay()
 simulated function Tick(float DeltaTime)
 {
 	local SorcererPlayerController PC;
-	
+
 	foreach LocalPlayerControllers(class'SorcererPlayerController', PC)
 	{
 	
