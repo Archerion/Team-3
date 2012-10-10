@@ -62,6 +62,10 @@ defaultproperties
 	Damage=0
 	DamageRadius = 0;
 	
+	Stuns = false
+	Burns = false
+	Slows = false
+	
 	SlowAmount = 0.0
 	SlowDuration = 0.0
 	BurnDamage = 0.0
