@@ -27,11 +27,15 @@ Begin:
            	{
             	//look at it and shoot it
             	Pawn.SetDesiredRotation(Rotator(Normal(Player.Location)));
-                GotoState('Follow');
+                Pawn.StartFire(0);
+           	}
+           	else
+           	{
+            	Pawn.StopFire(0);
            	}
 		}
 	}
-	ExecuteWhatToDoNext();
+	LatentWhatToDoNext();
 }
 
 state Idle
@@ -44,8 +48,7 @@ state Idle
         playerDistance = VSize(Pawn.Location - Target.Location);
         if(playerDistance<70)
         {
-            `log("Firing Weapon at: "@Seen);
-            FireWeaponAt(Seen);
+            GotoState('Shoot');
         }
         else
         {
@@ -63,6 +66,5 @@ Begin:
  
     MoveToward(Target, Target, 128);
  
-    ExecuteWhatToDoNext();
+    LatentWhatToDoNext();
 }
-

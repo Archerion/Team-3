@@ -39,7 +39,7 @@ event PostRender()
 	local float CenterY;
 	
 	CenterX = Canvas.ClipX;
-	CenterY = Canvas.ClipY;
+	//CenterY =
 	if(Activated)
 	{
 		Canvas.SetDrawColor(0, 0, 0, 255);
@@ -47,7 +47,7 @@ event PostRender()
 
 		if(Centered)
 		{
-			Canvas.TextSize(Text, 
+			//Canvas.TextSize(Text, 
 
 		}
 		else

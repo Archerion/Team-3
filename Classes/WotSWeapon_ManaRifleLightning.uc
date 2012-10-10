@@ -1,19 +1,18 @@
 class WotSWeapon_ManaRifleLightning extends UTWeap_LinkGun;
 
-
 var float UsedAmmo;
 var float AddedAmmoCostOverTime;
 var float TimeCounter;
 var float ManaUsePerSecond;
 
-DefaultProperties
+defaultproperties
 {
-	WeaponFireTypes(0) = EWFT_Projectile;
 	WeaponProjectiles(0)=class'Proj_MRLightningBullet'
+	WeaponProjectiles(1)=class'Proj_MRLightningSpell'
+	InventoryGroup=1
 
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
-	InventoryGroup=1
 
 	BeamAmmoUsePerSecond = 5;
 	ManaUsePerSecond = 5;
@@ -22,20 +21,19 @@ DefaultProperties
 	UsedAmmo = 0;
 }
 
-	
 simulated function FireAmmunition()
 {
-	local WotSPawn P;
+	local SorcererPawn SP;
 	local float PrimaryCost;
+	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
 	
-	P = WotSPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
 	PrimaryCost = 2;
 
 	if (CurrentFireMode == 0)
 	{
-		if (P.CheckMana() >= PrimaryCost)
+		if (SP.CheckMana() >= PrimaryCost)
 		{
-				P.TakeMana(PrimaryCost);
+				SP.TakeMana(PrimaryCost);
 				Super.FireAmmunition();
 		}
 	}
@@ -43,8 +41,9 @@ simulated function FireAmmunition()
 
 simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactInfo TestImpact, float DeltaTime)
 {
-	local WotSPawn P;
-	P = WotSPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
+	local SorcererPawn SP;
+	SP = Sorcererpawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
+	
 	
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
 	TimeCounter += DeltaTime;
@@ -55,20 +54,14 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 		TimeCounter = 0;
 	}
 
-	if (P.CheckMana() >= UsedAmmo)
+	if (SP.CheckMana() >= UsedAmmo)
 	{
-		`log("Used Mana:	"$UsedAmmo);
-		`log("Mana use per second:	"$UsedAmmo*(1/DeltaTime));
-		`log("Remaining Mana:	"$P.CheckMana());
-		P.TakeMana(UsedAmmo);
+		SP.TakeMana(UsedAmmo);
 		Super.ProcessBeamHit(StartTrace, AimDir, TestImpact, DeltaTime);
 	}
 	else
-	{	
-
-		`log("BeamWeapon out of mana!");		
+	{			
 		EndFire(1);
-
 	}
 }
 
@@ -80,10 +73,10 @@ simulated function EndFire(byte FireModeNum)
 
 simulated function UpdateBeamEmitter(vector FlashLocation, vector HitNormal, actor HitActor)
 {
-	local WotSPawn P;
-	P = WotSPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
+	local SorcererPawn SP;
+	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
 	
-	if (P.CheckMana() >= UsedAmmo)
+	if (SP.CheckMana() >= UsedAmmo)
 	{
 		super.UpdateBeamEmitter(FlashLocation, HitNormal, HitActor);
 	}
