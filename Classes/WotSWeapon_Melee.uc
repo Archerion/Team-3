@@ -1,48 +1,20 @@
-class WotSWeapon_Melee extends UTWeapon;
+class WotSWeapon_Melee extends WotSWeapon
+	abstract;
 
-var bool PlayerHit;
-
-var name StartSocket;
-var name EndSocket;
+var SorcererPawn P;
 
 defaultproperties
 {
-	PlayerViewOffset=(X=20.000000,Y=0.000000,Z=-8.000000)
-
-	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
-		bCauseActorAnimEnd=true
-	End Object
-
-	Begin Object Name=FirstPersonMesh
-		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
-		FOV=60
-		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
-		bForceUpdateAttachmentsInTick=true
-		Scale=0.900000
-	End Object
-
+	InstantHitDamage(0)=75.0
+	InstantHitDamage(1)=35.0
 	Begin Object Name=PickupMesh
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 	End Object
 
 	AttachmentClass=class'Melee_Attach'
 
-	StartSocket = Start_socket
-	EndSocket = end_socket
-
 	bMeleeWeapon = true
 
-	FireInterval(0)=1
-	FireInterval(1)=1
-
-	WeaponFireTypes(0)=EWFT_Custom
-	WeaponFireTypes(1)=EWFT_Custom
-
-	bInstantHit=true
-
-	InstantHitDamage(0)=50.0
-	InstantHitDamage(1)=25.0
 
 	DefaultAnimSpeed=0.9
        
@@ -59,74 +31,31 @@ defaultproperties
 	InventoryGroup=4
 }
 
-simulated state WeaponFiring
+simulated state WeaponEquipping
 {
-	simulated event BeginState(name PreviousStateName)
+	simulated event BeginState(Name PreviousStateName)
 	{
-		if(!HasAmmo(CurrentFireMode))
-		{
-			WeaponEmpty();
-			return;
-		}
-		PlayFireEffects(CurrentFireMode);
-		SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
+		P = SorcererPawn(Instigator);
+		
+		super.BeginState(PreviousStateName);
 	}
+}
 
-	simulated event EndState(name NextStateName)
+simulated function FireAmmunition()
+{
+	local vector hitLocation, hitNormal, traceEnd, traceStart;
+	local Actor hitActor;
+	
+	traceEnd = hitNormal * 70.f; //P.Location - Vector(P.Controller.Rotation) * 192.f;
+
+	hitActor = Trace(hitLocation, hitNormal, traceEnd );
+
+	if (hitActor != None)
 	{
-		PlayerHit = false;
-		ClearTimer('RefireCheckTimer');
-		NotifyWeaponFinishedFiring(CurrentFireMode);
-		return;
+		`log("Hit: "$hitActor);
 	}
-
-	simulated function RefireCheckTimer()
+	else
 	{
-		if(bWeaponPutDown)
-		{
-			PutDownWeapon();
-			return;
-		}
-
-		if(ShouldRefire())
-		{
-			PlayerHit = false;
-			PlayFireEffects(CurrentFireMode);
-			SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
-		}
-
-		HandleFinishedFiring();
-		return;
-	}
-
-	function Tick(float DeltaTime)
-	{
-		local Vector start;
-		local Vector end;
-
-		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(StartSocket, start);
-		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(EndSocket, end);
-
-		WeaponTrace(start, end);
-
-	}
-
-	simulated event WeaponTrace(Vector start, Vector end)
-	{
-		local Vector HitLocation;
-		local Vector HitNormal;
-		local Actor HitActor;
-		local SorcererPawn SP;
-		SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
-
-		HitActor = Trace(HitLocation, HitNormal, end, start, true);
-
-		if (HitActor == SP && !PlayerHit)
-		{
-			HitActor.TakeDamage(InstantHitDamage[CurrentFireMode], Pawn(Owner).Controller, 
-				HitLocation, Velocity * 100.0f, class 'Melee_Damage');
-			AmmoCount -= ShotCost[CurrentFireMode];
-			PlayerHit = true;
-		}
+		`log("Hit None");
 	}
 }

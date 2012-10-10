@@ -1,1 +1,0 @@
-class WotSWeapon_Melee_Mook extends WotSWeapon_Melee;

@@ -1,6 +1,7 @@
 class Proj_MRBullet extends UTProjectile;
 
 var vector FlightFXColor;
+var vector ColorLevel;
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
@@ -9,7 +10,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if ( !Other.IsA('Projectile') || Other.bProjTarget )
 		{
 			MomentumTransfer = (UTPawn(Other) != None) ? 0.0 : 1.0;
-				Other.TakeDamage(Damage, InstigatorController, HitLocation, MomentumTransfer * Normal(Velocity), MyDamageType,, self);
+			Other.TakeDamage(Damage, InstigatorController, HitLocation, MomentumTransfer * Normal(Velocity), MyDamageType,, self);
 			Explode(HitLocation, HitNormal);
 		}
 	}
@@ -57,5 +58,4 @@ defaultproperties
 
 	ExplosionSound=SoundCue'A_Ambient_NonLoops.Fire.Fire_TorchStart_01_Cue'
 	ColorLevel=(X=0,Y=0,Z=1)
-	ExplosionColor=(X=0,Y=0,Z=1);
 }
