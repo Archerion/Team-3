@@ -1,9 +1,11 @@
 class SorcererPawn extends WotSPawn;
 
+var bool isRunning;
+
 defaultproperties
 {
 	bUsesMana = True;
-    
+	isRunning = false;
     Begin Object Name=WPawnSkeletalMeshComponent
         bOwnerNoSee=False
         AnimTreeTemplate=AnimTree'CH_AnimHuman_Tree.AT_CH_Human' 
@@ -14,15 +16,24 @@ defaultproperties
 
     Mesh=WPawnSkeletalMeshComponent
     Components.Add(WPawnSkeletalMeshComponent)
+	ArmorType = HeavyArmor;
 }
 
 exec function StartSprint()
 {
 	GroundSpeed = default.GroundSpeed * 2;
+	isRunning = true;
 	StopFiring();
 }
 
 exec function StopSprint()
 {
 	GroundSpeed = default.GroundSpeed;
+	isRunning = false;
+}
+
+simulated function StartFire(byte FireModeNum)
+{
+	if (!isRunning)
+		super.StartFire(FireModeNum);
 }

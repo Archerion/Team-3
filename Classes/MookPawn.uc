@@ -7,7 +7,6 @@ defaultproperties
 {
 	ControllerClass=class'WotS.MookBot'
 }
-
 simulated function PostBeginPlay()
 {
 	//Spawn(class'WotSWeapon_ManaRifleFire',,,Location).GiveTo(self);
