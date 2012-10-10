@@ -15,8 +15,6 @@ function LevelUp()
 
 defaultproperties
 {
-	InventoryGroup=2
-
 	WeaponProjectiles(0)=class'Proj_MRFireBullet'
 	WeaponProjectiles(1)=class'Proj_MRSpell_Fire'
 	

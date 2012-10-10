@@ -8,12 +8,11 @@ defaultproperties
 
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
-	local MookPawn MPawn;
 	if ( Other != Instigator )
 	{
 		if(Other.IsA('MookPawn'))
 		{
-			MPawn.Stun(0.5);
+			Other.Stun(0.5);
 		}
 	}
 

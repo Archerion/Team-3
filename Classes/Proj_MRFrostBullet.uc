@@ -1,6 +1,6 @@
 class Proj_MRFrostBullet extends Proj_MRBullet;
 
-defaultproperties
+DefaultProperties
 {
-	FlightFXColor=(X=0.2,Y=0.2,Z=0.8)
+	MyDamageType=class'WotSPRJFrostDamage'
 }
