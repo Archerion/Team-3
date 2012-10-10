@@ -18,11 +18,10 @@ defaultproperties
 	bDelayedStart=false
 	bUseClassicHUD=true //Needed to use traditional HUD instead of ScaleForm HUD
 
-	DefaultInventory(0)=class'WotSWeapon_ManaRifleLightning'
-	DefaultInventory(1)=class'WotSWeapon_ManaRifleFire'
-	DefaultInventory(2)=class'WotSWeapon_ManaRifleFrost'
+	DefaultInventory(0)=class'WotSWeapon_ManaRifleFire'
+	DefaultInventory(1)=class'WotSWeapon_ManaRifleFrost'
+	DefaultInventory(2)=class'WotSWeapon_ManaRifleLightning'
 
-	b
 
 	bFirstBlood = false;
 	CountDown = 0;

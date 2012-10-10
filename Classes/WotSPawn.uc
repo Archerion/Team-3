@@ -50,10 +50,15 @@ simulated function Tick(float DeltaTime)
 
 event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
 {
+	local SorcererPlayerController localPC;
 	ModDamage = Damage;
 	ArmorType.ModerateDamage(Damage, DamageType, self);
-
-
+	localPC = SorcererPlayerController(GetALocalPlayerController());
+	if (EventInstigator == localPC)
+	{
+		`log("Player was source of Damage! Add XP to his weapon.");
+		WotSWeapon_ManaRifleBase(WotSPawn(localPC.Pawn).Weapon).GainExperience(100);
+	}
 	super.TakeDamage(ModDamage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 }
 
@@ -131,12 +136,13 @@ function Stun(float stunTime )
 	CustomTimeDilation = 0.0f;
 	ClearTimer('UnStun');
 	SetTimer(stunTime, false, 'UnStun');
+	`log("Stunned for"$stunTime);
 }
 
 function UnStun()
 {
 	CustomTimeDilation = 1.0f;
-
+	`log("Unstunned!");
 }
 
 function InitializeArmor()

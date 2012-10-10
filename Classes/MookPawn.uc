@@ -10,8 +10,10 @@ defaultproperties
 
 simulated function PostBeginPlay()
 {
-	Super.PostBeginPlay();
+	//Spawn(class'WotSWeapon_ManaRifleFire',,,Location).GiveTo(self);
 	Spawn(class'WotSWeapon_Melee_Mook',,,Location).GiveTo(self);
 	SpawnDefaultController();
-	`log("Spawned controller:"@Controller);	
+	`log("Spawned controller:"@Controller);
+	Super.PostBeginPlay();
+	
 }
