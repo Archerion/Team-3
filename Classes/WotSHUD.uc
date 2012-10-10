@@ -1,5 +1,13 @@
 class WotSHUD extends UTHUD;
 
+var String Text;
+var String Text2;
+var float Time;
+var bool Activated;
+var bool Centered;
+var float CenterX;
+var float CenterY;
+
 function DrawGameHud()
 {
 	
@@ -12,8 +20,40 @@ function DrawGameHud()
 		DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).CurrentMana, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).MaxMana,20,Canvas.ClipY - 40,80,80,200);
 		// DrawBar("Shield",MagicalPawn(PC.Pawn).ShieldStrength,MagicalPawn(PC.Pawn).ShieldStrengthMax, 20, Canvas.ClipY - 60, 80, 200, 80);
-    }
-    
+    }    
+}
+
+function DisplayDialogText(String TextInput, String TextInput2, float TimeInput, bool CenteredInput)
+{
+	Text = TextInput;
+	Text2 = TextInput2;
+	Time = TimeInput;
+	Centered = CenteredInput;
+
+	Activated = true;
+}
+
+event PostRender()
+{
+	local float CenterX;
+	local float CenterY;
+	
+	CenterX = Canvas.ClipX;
+	CenterY = Canvas.ClipY;
+	if(Activated)
+	{
+		Canvas.SetDrawColor(0, 0, 0, 255);
+		Canvas.Font = class'Engine'.static.GetLargeFont();
+
+		if(Centered)
+		{
+			Canvas.TextSize(Text, 
+
+		}
+		else
+		{
+		}
+	}
 }
 
 defaultproperties
