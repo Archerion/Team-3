@@ -5,8 +5,9 @@ var String Text2;
 var float Time;
 var bool Activated;
 var bool Centered;
-var float CenterX;
-var float CenterY;
+var bool TimerSet;
+var float TextSizeCenteredX;
+var float TextSizeCenteredY;
 
 function DrawGameHud()
 {
@@ -20,7 +21,8 @@ function DrawGameHud()
 		DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).CurrentMana, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).MaxMana,20,Canvas.ClipY - 40,80,80,200);
 		// DrawBar("Shield",MagicalPawn(PC.Pawn).ShieldStrength,MagicalPawn(PC.Pawn).ShieldStrengthMax, 20, Canvas.ClipY - 60, 80, 200, 80);
-    }    
+		DisplayDialogText("oink oink", "Piggytrain", 100000, true);
+    }
 }
 
 function DisplayDialogText(String TextInput, String TextInput2, float TimeInput, bool CenteredInput)
@@ -35,29 +37,49 @@ function DisplayDialogText(String TextInput, String TextInput2, float TimeInput,
 
 event PostRender()
 {
-	local float CenterX;
-	local float CenterY;
-	
-	CenterX = Canvas.ClipX;
-	//CenterY =
+	super.PostRender();
 	if(Activated)
 	{
-		Canvas.SetDrawColor(0, 0, 0, 255);
+		Canvas.SetDrawColor(200, 80, 80, 200);
 		Canvas.Font = class'Engine'.static.GetLargeFont();
 
 		if(Centered)
 		{
-			//Canvas.TextSize(Text, 
+			Canvas.TextSize(Text, TextSizeCenteredX, TextSizeCenteredY);
+			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY * 0.9);
+			Canvas.DrawText(Text);
 
+			Canvas.TextSize(Text2, TextSizeCenteredX, TextSizeCenteredY);
+			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY * 0.9 + TextSizeCenteredY);
+			Canvas.DrawText(Text2);
 		}
 		else
 		{
+			Canvas.SetPos(Canvas.ClipX * 0.35, Canvas.ClipY * 0.8);
+			Canvas.DrawText(Text);
+			Canvas.DrawText(Text2);
 		}
+
+		if(!TimerSet)
+		{
+			TimerSet=true;
+			SetTimer(Time, false, 'TimerReset');
+		}
+
 	}
+}
+
+// Deactivates text on screen
+function TimerReset()
+{
+	TimerSet = false;
+	Activated = false;
 }
 
 defaultproperties
 {
+	TimerSet=false
+	Activated=false
 }
 
 function DrawBar(String s, float v, float mv,int X, int Y, int R, int G, int B)
@@ -95,5 +117,4 @@ function DrawBar(String s, float v, float mv,int X, int Y, int R, int G, int B)
     Canvas.SetDrawColor(R,G,B,200);
     Canvas.Font = class'Engine'.static.GetSmallFont();
     Canvas.DrawText(s);
-
 } 

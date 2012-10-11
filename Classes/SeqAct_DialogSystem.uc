@@ -35,10 +35,7 @@ event Activated()
 					`log("No target");
 				}
 			}
-				
-
 		}
-
 	}
 }
 
