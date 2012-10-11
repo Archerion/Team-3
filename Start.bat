@@ -7,4 +7,5 @@ GOTO :GOOD_EXIT
 pause
 exit /b %ERRORLEVEL%
 :GOOD_EXIT
+pause
 exit 0
