@@ -20,6 +20,7 @@ defaultproperties
 		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
 		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
+		Rotation=(Yaw=-16384)
 	End Object
 
 	Begin Object Name=PickupMesh

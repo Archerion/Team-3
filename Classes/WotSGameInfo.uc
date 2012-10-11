@@ -17,6 +17,8 @@ defaultproperties
 	HUDType=class'WotS.WotSHUD'
 	bDelayedStart=false
 	bUseClassicHUD=true //Needed to use traditional HUD instead of ScaleForm HUD
+	
+	SupportedEvents.Add(class'SeqAct_DialogSystem')
 
 	DefaultInventory(0)=class'WotSWeapon_ManaRifleLightning'
 	DefaultInventory(1)=class'WotSWeapon_ManaRifleFire'
