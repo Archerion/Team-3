@@ -14,7 +14,8 @@ var vector BurnVector;
 enum Armors {
 	Unarmored, 
 	LightArmor, 
-	HeavyArmor};
+	HeavyArmor
+};
 
 var Armors ArmorType;
 
