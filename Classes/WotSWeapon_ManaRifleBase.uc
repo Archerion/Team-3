@@ -13,6 +13,7 @@ struct ManaCost
 	}
 };
 
+var bool bIsOnCooldown;
 var int Heat;
 var int MaximumHeat;
 var int WeaponExperience;
@@ -40,23 +41,54 @@ function LevelUp()
 
 simulated function FireAmmunition()
 {
-	Super.FireAmmunition();
-	Heat += 1;
-	if (Heat >= MaximumHeat)
+	local SorcererPawn SP;
+	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
+
+
+	if (CurrentFireMode == 0)
 	{
-		startCooldown(5);
+		if (!bIsOnCooldown)
+		{
+			if (SP.CheckMana() >= WeaponManaCost.Primary)
+			{
+				SP.TakeMana(WeaponManaCost.Primary);
+				Super.FireAmmunition();
+				Heat += 1;
+				`log("heat: "$Heat);
+				if (Heat >= MaximumHeat)
+				{
+					overheat();
+				}
+			}
+		}
 	}
 }
 
-function startCooldown(int seconds)
+
+function overheat()
 {
-	clearTimer(stopCooldown);
-	SetTimer(seconds, false, 'stopCooldown');
+	bIsOnCooldown = true;
+	`log("Weapon is on cooldown for: "$3);
+	for (int i = 0;i < 3*10;)
+	{
+	SetTimer(i, false, 'coolOneHeat');
+	}
+}
+
+function coolOneHeat()
+{
+	Heat-=1;
+	if (Heat == 0)
+	{
+		bIsOnCooldown = false;
+	}
 }
 
 function stopCooldown()
 {
-
+	`log("Weapon no longer on cooldown;");
+	bIsOnCooldown = false;
+	Heat = 0;
 }
 
 defaultproperties
@@ -74,6 +106,7 @@ defaultproperties
 	WeaponLevel = 1
 	WeaponExperience = 0
 	MaximumHeat = 10
+	bIsOnCooldown = false;
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);
