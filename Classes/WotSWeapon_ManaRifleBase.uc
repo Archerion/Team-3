@@ -62,14 +62,25 @@ simulated function FireAmmunition()
 			}
 		}
 	}
+	if (CurrentFireMode == 1)
+	{
+		if (!bIsOnCooldown)
+		{
+			if (SP.CheckMana() >= WeaponManaCost.Secondary)
+			{
+				SP.TakeMana(WeaponManaCost.Secondary);
+				Super.FireAmmunition();
+			}
+		}
+	}
 }
-
 
 function overheat()
 {
+	local int i;
 	bIsOnCooldown = true;
 	`log("Weapon is on cooldown for: "$3);
-	for (int i = 0;i < 3*10;)
+	for (i = 0;i < 3*10;i++)
 	{
 	SetTimer(i, false, 'coolOneHeat');
 	}
