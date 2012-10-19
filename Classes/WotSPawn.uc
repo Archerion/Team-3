@@ -58,6 +58,8 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 {
 	local float SlowDuration;
 	local float BurnDuration;
+	
+	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 
 	if (DamageType == class 'WotSPRJBurnDamage')
 	{
@@ -114,7 +116,6 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 		MookBot(Controller).Stun(5);
 	}	
 
-	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 }
 
 function float GiveMana(float Amount)

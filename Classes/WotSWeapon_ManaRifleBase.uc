@@ -39,6 +39,13 @@ function LevelUp()
 	}
 }
 
+function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	// cool 1 heat per second
+	SetTimer(1, true, 'coolOneHeat');
+}
+
 simulated function FireAmmunition()
 {
 	local SorcererPawn SP;
@@ -79,11 +86,6 @@ function overheat()
 {
 	local int i;
 	bIsOnCooldown = true;
-	`log("Weapon is on cooldown for: "$3);
-	for (i = 0;i < 3*10;i++)
-	{
-	SetTimer(i, false, 'coolOneHeat');
-	}
 }
 
 function coolOneHeat()
