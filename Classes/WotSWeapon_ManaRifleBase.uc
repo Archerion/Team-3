@@ -39,7 +39,7 @@ function LevelUp()
 	}
 }
 
-function PostBeginPlay()
+simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 	// cool 1 heat per second
@@ -66,6 +66,7 @@ simulated function FireAmmunition()
 			{
 				SP.TakeMana(WeaponManaCost.Primary);
 				Super.FireAmmunition();
+				`log("Weapon experience: "$WeaponExperience);
 				Heat += 1;
 				`log("heat: "$Heat);
 				if (Heat >= MaximumHeat)
@@ -110,11 +111,6 @@ function stopCooldown()
 	Heat = 0;
 }
 
-simulated function FireAmmunition()
-{
-	super.FireAmmunition();
-	`log("Weapon experience: "$WeaponExperience);
-}
 defaultproperties
 {
 	WeaponFireTypes(0)=EWFT_Projectile
