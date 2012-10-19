@@ -15,7 +15,8 @@ var float ExpWorth;
 enum Armors {
 	Unarmored, 
 	LightArmor, 
-	HeavyArmor};
+	HeavyArmor
+};
 
 var Armors ArmorType;
 
@@ -89,7 +90,7 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 		
 	else if(DamageType == class 'WotSPRJLightningDamage')
 	{
-		Stun(0.5);
+		MookBot(Controller).Stun(0.5);
 	}
 		
 	else if(DamageType == class 'WotSSPLLightningDamage')
@@ -120,7 +121,7 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 		
 	else if(DamageType == class 'WotSSPLFrostDamage')
 	{
-		Stun(5);
+		MookBot(Controller).Stun(5);
 	}	
 	return Damage;
 }
@@ -206,18 +207,6 @@ function UnSlow()
 	GroundSpeed = Default.GroundSpeed;
 	AirSpeed = Default.AirSpeed;
 	WaterSpeed = Default.WaterSpeed;
-}
-
-function Stun(float stunTime )
-{	
-	CustomTimeDilation = 0.0f;
-	ClearTimer('UnStun');
-	SetTimer(stunTime, false, 'UnStun');
-}
-
-function UnStun()
-{
-	CustomTimeDilation = 1.0f;
 }
 
 function InitializeArmor()

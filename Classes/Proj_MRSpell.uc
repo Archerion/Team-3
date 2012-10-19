@@ -30,7 +30,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 			}
 			if (Stuns)
 			{
-				MPawn.Stun(StunDuration);
+				MookBot(MPawn.Controller).Stun(StunDuration);
 			}
 		}
 	}

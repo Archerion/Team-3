@@ -56,6 +56,4 @@ defaultproperties
 	DrawScale=1.0
 
 	ExplosionSound=SoundCue'A_Ambient_NonLoops.Fire.Fire_TorchStart_01_Cue'
-	ColorLevel=(X=0,Y=0,Z=1)
-	ExplosionColor=(X=0,Y=0,Z=1);
 }
