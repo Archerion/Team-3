@@ -20,8 +20,6 @@ function DrawGameHud()
 	{
 		DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).CurrentMana, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).MaxMana,20,Canvas.ClipY - 40,80,80,200);
-		// DrawBar("Shield",MagicalPawn(PC.Pawn).ShieldStrength,MagicalPawn(PC.Pawn).ShieldStrengthMax, 20, Canvas.ClipY - 60, 80, 200, 80);
-		DisplayDialogText("oink oink", "Piggytrain", 100000, true);
     }
 }
 

@@ -20,7 +20,6 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 		if(Other.IsA('MookPawn'))
 		{
 			MPawn = MookPawn(Other);
-
 			if (Slows) 
 			{
 				MPawn.Slow(SlowAmount, SlowDuration);
