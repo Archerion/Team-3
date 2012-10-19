@@ -10,6 +10,7 @@ var float BurnDamage;
 var float BurnTimer;
 var float TimeBetweenIterations;
 var vector BurnVector;
+var float ExpWorth;
 
 enum Armors {
 	Unarmored, 
@@ -28,6 +29,7 @@ defaultproperties
 	BurnDamage = 0;
 	BurnTimer = 0;
 	ArmorType = LightArmor;
+	ExpWorth = 100;
 }
 
 simulated function PostBeginPlay()
@@ -55,8 +57,16 @@ simulated function Tick(float DeltaTime)
 
 event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vector Momentum, class<DamageType> DamageType, optional TraceHitInfo HitInfo, optional Actor DamageCauser)
 {
+	Damage = ModifyDamage(Damage, EventInstigator, DamageType);
+
+	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
+}
+
+function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageType> DamageType)
+{	
 	local float SlowDuration;
 	local float BurnDuration;
+
 
 	if (DamageType == class 'WotSPRJBurnDamage')
 	{
@@ -112,9 +122,23 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 	{
 		Stun(5);
 	}	
-
-	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
+	return Damage;
 }
+
+function bool died(Controller Killer, class<DamageType> damageType, Vector HitLocation)
+{
+	if(damageType == class'WotSPRJFrostDamage' || damageType == class'WotSSPLFrostDamage')
+		WotSWeapon_ManaRifleFrost(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFrost')).AddXPToWeapon(ExpWorth);
+	
+	else if(damageType == class'WotSPRJLightningDamage' || damageType == class'WotSSPLLightningDamage')
+		WotSWeapon_ManaRifleLightning(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleLightning')).AddXPToWeapon(ExpWorth);
+	
+	else if(damageType == class'WotSPRJBurnDamage' || damageType == class'WotSSPLBurnDamage')
+		WotSWeapon_ManaRifleFire(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFire')).AddXPToWeapon(ExpWorth);
+
+	return super.died(Killer, damageType, HitLocation);
+}
+	
 
 function float GiveMana(float Amount)
 {

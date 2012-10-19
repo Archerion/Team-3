@@ -1,4 +1,4 @@
-class WotSSPLBurnDamage extends UTDamageType;
+class WotSSPLBurnDamage extends WotSDamageType;
 
 DefaultProperties
 {

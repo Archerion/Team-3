@@ -4,6 +4,8 @@ var float UsedAmmo;
 var float AddedAmmoCostOverTime;
 var float TimeCounter;
 var float ManaUsePerSecond;
+var int WeaponExperience;
+var int WeaponLevel;
 
 defaultproperties
 {
@@ -80,4 +82,27 @@ simulated function UpdateBeamEmitter(vector FlashLocation, vector HitNormal, act
 	{
 		super.UpdateBeamEmitter(FlashLocation, HitNormal, HitActor);
 	}
+}
+
+function AddXPToWeapon(int xp)
+{
+	WeaponExperience += xp;
+}
+
+function int GetWeaponXP()
+{
+	return WeaponExperience;
+}
+
+function LevelUp()
+{
+	if (WeaponLevel < 3)
+	{
+		WeaponLevel += 1;
+	}
+}
+
+function int GetLevel()
+{
+	return WeaponLevel;
 }

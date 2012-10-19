@@ -36,7 +36,16 @@ function LevelUp()
 	}
 }
 
+function int GetLevel()
+{
+	return WeaponLevel;
+}
 
+simulated function FireAmmunition()
+{
+	super.FireAmmunition();
+	`log("Weapon experience: "$WeaponExperience);
+}
 defaultproperties
 {
 	WeaponFireTypes(0)=EWFT_Projectile
@@ -50,4 +59,6 @@ defaultproperties
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);
+
+	WeaponLevel = 1;
 }

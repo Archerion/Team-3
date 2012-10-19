@@ -1,4 +1,4 @@
-class WotSPRJFrostDamage extends UTDamageType;
+class WotSPRJFrostDamage extends WotSDamageType;
 
 DefaultProperties
 {

@@ -1,4 +1,4 @@
-class WotSSPLLightningDamage extends UTDamageType;
+class WotSSPLLightningDamage extends WotSDamageType;
 
 DefaultProperties
 {

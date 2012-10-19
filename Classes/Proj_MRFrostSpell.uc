@@ -4,3 +4,4 @@ DefaultProperties
 {
 	MyDamageType=class'WotSSPLFrostDamage'
 }
+

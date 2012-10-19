@@ -1,4 +1,4 @@
-class WotSPRJLightningDamage extends UTDamageType;
+class WotSPRJLightningDamage extends WotSDamageType;
 
 DefaultProperties
 {
