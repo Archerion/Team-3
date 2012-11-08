@@ -10,7 +10,19 @@ defaultproperties
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	Spawn(class'WotSWeapon_Melee_Mook',,,Location).GiveTo(self);
 	SpawnDefaultController();
+	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
 	`log("Spawned controller:"@Controller);
+}
+
+simulated function Tick(Float DeltaTime)
+{
+	super.Tick(DeltaTime);
+}
+
+
+simulated function StartFire(byte FireModeNum)
+{
+	`log("Firing");
+	super.StartFire(FireModeNum);
 }
