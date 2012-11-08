@@ -39,6 +39,13 @@ function LevelUp()
 	}
 }
 
+simulated function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+	// cool 1 heat per second
+	SetTimer(1, true, 'coolOneHeat');
+}
+
 function int GetLevel()
 {
 	return WeaponLevel;
@@ -59,6 +66,7 @@ simulated function FireAmmunition()
 			{
 				SP.TakeMana(WeaponManaCost.Primary);
 				Super.FireAmmunition();
+				`log("Weapon experience: "$WeaponExperience);
 				Heat += 1;
 				`log("heat: "$Heat);
 				if (Heat >= MaximumHeat)
@@ -85,11 +93,6 @@ function overheat()
 {
 	local int i;
 	bIsOnCooldown = true;
-	`log("Weapon is on cooldown for: "$3);
-	for (i = 0;i < 3*10;i++)
-	{
-	SetTimer(i, false, 'coolOneHeat');
-	}
 }
 
 function coolOneHeat()
