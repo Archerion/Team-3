@@ -130,6 +130,4 @@ defaultproperties
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);
-
-	WeaponLevel = 1;
 }
