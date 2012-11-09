@@ -33,6 +33,11 @@ defaultproperties
 	ExpWorth = 100;
 }
 
+function ThrowWeaponOnDeath()
+{
+	// don't.
+}
+
 simulated function PostBeginPlay()
 {
 	InitializeArmor();

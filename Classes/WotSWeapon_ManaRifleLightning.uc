@@ -21,6 +21,8 @@ defaultproperties
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
 	UsedAmmo = 0;
+	
+	FireInterval(0)=+1.25
 }
 
 simulated function FireAmmunition()
