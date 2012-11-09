@@ -6,11 +6,12 @@ var float TimeCounter;
 var float ManaUsePerSecond;
 var int WeaponExperience;
 var int WeaponLevel;
+var float HealthDrain;
 
 defaultproperties
 {
 	WeaponProjectiles(0)=class'Proj_MRLightningBullet'
-	WeaponProjectiles(1)=class'Proj_MRLightningSpell'
+	InstantHitDamageTypes(1)=class'WotSSPLLightningDamage'
 	InventoryGroup=1
 
 	ShotCost(0) = 0;
@@ -21,8 +22,7 @@ defaultproperties
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
 	UsedAmmo = 0;
-	
-	FireInterval(0)=+1.25
+	HealthDrain = 0.6;
 }
 
 simulated function FireAmmunition()
@@ -100,6 +100,7 @@ function LevelUp()
 {
 	if (WeaponLevel < 3)
 	{
+		HealthDrain += 0.3;
 		WeaponLevel += 1;
 	}
 }
