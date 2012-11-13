@@ -301,3 +301,4 @@ simulated function WeaponFired(Weapon InWeapon, bool bViaReplication, optional v
 		}
 	}
 }
+
