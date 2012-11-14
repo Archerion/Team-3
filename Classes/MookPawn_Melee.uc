@@ -1,4 +1,4 @@
-class MookPawn extends WotSPawn 
+class MookPawn_Melee extends WotSPawn 
 	placeable;
 
 // Mooks should have melee attack
@@ -27,13 +27,12 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	SpawnDefaultController();
-	`log("Spawned controller:"@Controller);
+	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
 }
 
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 {
-	Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
+  Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
 }
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)

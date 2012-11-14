@@ -6,7 +6,7 @@ DefaultProperties
 	End Object
 
 	Begin Object Name=SkeletalMeshComponent0
-		SkeletalMesh=SkeletalMesh'Player_Weapon.player_weapon'
+		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_Fire'
 		Animations=MeshSequenceA
 		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'
 		Rotation=(Yaw=-16384)

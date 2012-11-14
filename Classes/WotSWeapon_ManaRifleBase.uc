@@ -97,12 +97,15 @@ function overheat()
 
 function coolOneHeat()
 {
-	Heat-=1;
+	if (Heat > 0)
+	{
+		Heat-=1;
+	}
 	if (Heat == 0)
 	{
 		bIsOnCooldown = false;
-	}
-}
+	
+}}
 
 function stopCooldown()
 {

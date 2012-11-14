@@ -7,7 +7,6 @@ defaultproperties
 function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	ChangeTeam(2);
 }
 
 exec function SpawnBot()
