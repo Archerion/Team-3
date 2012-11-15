@@ -6,7 +6,7 @@ var AnimNodePlayCustomAnim DeathAnimNode;
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	Spawn(class'WotS.WotSWeapon_Mook_Ranged',,,Location).GiveTo(self);
+	Spawn(class'WotS.WotSWeapon_Ranged_Mook',,,Location).GiveTo(self);
 }
 
 

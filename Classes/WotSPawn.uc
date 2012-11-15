@@ -33,11 +33,6 @@ defaultproperties
 	ExpWorth = 100;
 }
 
-function ThrowWeaponOnDeath()
-{
-	// don't.
-}
-
 simulated function PostBeginPlay()
 {
 	InitializeArmor();
@@ -65,12 +60,6 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 {
 	Damage = ModifyDamage(Damage, EventInstigator, DamageType);
 
-	if (DamageType == class'WotSSPLLightningDamage' && EventInstigator.IsA('SorcererPlayerController'))
-	{
-		SorcererPawn(SorcererPlayerController(EventInstigator).pawn).Heal(
-			Damage * WotSWeapon_ManaRifleLightning(EventInstigator.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleLightning')).HealthDrain);
-	}
-
 	super.TakeDamage(Damage, EventInstigator, HitLocation, Momentum,  DamageType, HitInfo, DamageCauser);
 }
 
@@ -78,6 +67,7 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 {	
 	local float SlowDuration;
 	local float BurnDuration;
+
 
 	if (DamageType == class 'WotSPRJBurnDamage')
 	{
@@ -136,21 +126,20 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 	return Damage;
 }
 
-function bool Died(Controller Killer, class<DamageType> damageType, Vector HitLocation)
+function bool died(Controller Killer, class<DamageType> damageType, Vector HitLocation)
 {
-	if(Killer.IsA('SorcererPlayerController'))
-	{
-		if(damageType == class'WotSPRJFrostDamage' || damageType == class'WotSSPLFrostDamage')
-			WotSWeapon_ManaRifleFrost(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFrost')).AddXPToWeapon(ExpWorth);
+	if(damageType == class'WotSPRJFrostDamage' || damageType == class'WotSSPLFrostDamage')
+		WotSWeapon_ManaRifleFrost(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFrost')).AddXPToWeapon(ExpWorth);
 	
-		else if(damageType == class'WotSPRJLightningDamage' || damageType == class'WotSSPLLightningDamage')
-			WotSWeapon_ManaRifleLightning(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleLightning')).AddXPToWeapon(ExpWorth);
+	else if(damageType == class'WotSPRJLightningDamage' || damageType == class'WotSSPLLightningDamage')
+		WotSWeapon_ManaRifleLightning(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleLightning')).AddXPToWeapon(ExpWorth);
 	
-		else if(damageType == class'WotSPRJBurnDamage' || damageType == class'WotSSPLBurnDamage')
-			WotSWeapon_ManaRifleFire(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFire')).AddXPToWeapon(ExpWorth);
-	}
-	return super.Died(Killer, damageType, HitLocation);
-}	
+	else if(damageType == class'WotSPRJBurnDamage' || damageType == class'WotSSPLBurnDamage')
+		WotSWeapon_ManaRifleFire(Killer.Pawn.InvManager.FindInventoryType(class 'WotSWeapon_ManaRifleFire')).AddXPToWeapon(ExpWorth);
+
+	return super.died(Killer, damageType, HitLocation);
+}
+	
 
 function float GiveMana(float Amount)
 {
@@ -233,77 +222,5 @@ function InitializeArmor()
 			GroundSpeed *= 0.8;
 			break;
 		}
-}
-
-function Heal(float HealAmount)
-{
-	Health += HealAmount;
-	if (Health > HealthMax)
-		Health = HealthMax;
-}
-
-simulated function WeaponAttachmentChanged()
-{
-	`log("Attachment changed");
-	if ((CurrentWeaponAttachment == None || CurrentWeaponAttachment.Class != CurrentWeaponAttachmentClass) && Mesh.SkeletalMesh != None)
-	{
-		// Detach/Destroy the current attachment if we have one
-		if (CurrentWeaponAttachment!=None)
-		{
-			`log("destroying previous attachment");
-			CurrentWeaponAttachment.DetachFrom(Mesh);
-			CurrentWeaponAttachment.Destroy();
-		}
-
-		// Create the new Attachment.
-		if (CurrentWeaponAttachmentClass!=None)
-		{
-			`log("Creating new attachment");
-			CurrentWeaponAttachment = Spawn(CurrentWeaponAttachmentClass,self);
-			CurrentWeaponAttachment.Instigator = self;
-		}
-		else
-			CurrentWeaponAttachment = none;
-
-		// If all is good, attach it to the Pawn's Mesh.
-		if (CurrentWeaponAttachment != None)
-		{
-			`log("Attaching weapon to pawn");
-			CurrentWeaponAttachment.AttachTo(self);
-			CurrentWeaponAttachment.SetSkin(ReplicatedBodyMaterial);
-			CurrentWeaponAttachment.ChangeVisibility(bWeaponAttachmentVisible);
-			`log("Mesh: "$Mesh);
-			`log("Current Weapon Attachment: "$CurrentWeaponAttachment);
-		}
-	}
-}
-
-simulated function WeaponFired(Weapon InWeapon, bool bViaReplication, optional vector HitLocation)
-{
-	`log("Weapon fired");
-	if (CurrentWeaponAttachment != None)
-	{
-		`log("Current weapon attachment: " $CurrentWeaponAttachment);
-		if ( !IsFirstPerson() )
-		{
-			`log("Firing third person");
-			CurrentWeaponAttachment.ThirdPersonFireEffects(HitLocation);
-		}
-		else
-		{
-			`log("Firing first person");
-			CurrentWeaponAttachment.FirstPersonFireEffects(Weapon, HitLocation);
-	                if ( class'Engine'.static.IsSplitScreen() && CurrentWeaponAttachment.EffectIsRelevant(CurrentWeaponAttachment.Location,false,CurrentWeaponAttachment.MaxFireEffectDistance) )
-	                {
-		                // third person muzzle flash
-		                CurrentWeaponAttachment.CauseMuzzleFlash();
-	                }
-		}
-
-		if ( HitLocation != Vect(0,0,0) && (WorldInfo.NetMode == NM_ListenServer || WorldInfo.NetMode == NM_Standalone || bViaReplication) )
-		{
-			CurrentWeaponAttachment.PlayImpactEffects(HitLocation);
-		}
-	}
 }
 

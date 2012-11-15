@@ -7,6 +7,21 @@ defaultproperties
 
 	WeaponManaCost=(primary=2, secondary=10);
 	InventoryGroup=3
+
+	PlayerViewOffset=(X=20.000000,Y=-10.000000,Z=-10.000000)
+
+	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
+		bCauseActorAnimEnd=true
+	End Object
+
+	Begin Object Name=FirstPersonMesh
+		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_ice'		
+		Animations=MeshSequenceA
+		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'		
+		Scale=0.900000
+		FOV=60
+	End Object
+
 }
 
 function LevelUp()

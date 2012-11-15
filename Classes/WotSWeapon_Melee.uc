@@ -4,11 +4,10 @@ var bool PlayerHit;
 
 var name StartSocket;
 var name EndSocket;
-var name WeaponSocket;
 
 defaultproperties
 {
-	PlayerViewOffset=(X=20.000000,Y=0.000000,Z=-10.000000)
+	PlayerViewOffset=(X=20.000000,Y=0.000000,Z=-8.000000)
 
 	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
 		bCauseActorAnimEnd=true
@@ -16,9 +15,10 @@ defaultproperties
 
 	Begin Object Name=FirstPersonMesh
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
+		FOV=60
 		Animations=MeshSequenceA
 		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
-		//AnimTreeTemplate=AnimTree'Melee_Weapon.Melee_Weapon_Animtree'		
+		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
 		Rotation=(Yaw=-16384)
 	End Object
@@ -26,8 +26,6 @@ defaultproperties
 	Begin Object Name=PickupMesh
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 	End Object
-
-	Mesh=FirstPersonMesh
 
 	AttachmentClass=class'Melee_Attach'
 
@@ -39,8 +37,8 @@ defaultproperties
 	FireInterval(0)=1
 	FireInterval(1)=1
 
-	WeaponFireTypes(0)=EWFT_InstantHit
-	WeaponFireTypes(1)=EWFT_None
+	WeaponFireTypes(0)=EWFT_Custom
+	WeaponFireTypes(1)=EWFT_Custom
 
 	bInstantHit=true
 
@@ -58,26 +56,14 @@ defaultproperties
 	MaxAmmoCount=1
 	AmmoCount=1
 
-	WeaponRange=200
-	CachedMaxRange = 1000
-	InventoryGroup=4;
-}
-
-simulated function SendToFiringState(byte FireModeNum)
-{
-	super.SendToFiringState(FireModeNum);
-}
-
-simulated function FireAmmunition()
-{
-	super.FireAmmunition();
+	WeaponRange=100
+	InventoryGroup=4
 }
 
 simulated state WeaponFiring
-{/*
+{
 	simulated event BeginState(name PreviousStateName)
 	{
-		`log("Beginning firing state");
 		if(!HasAmmo(CurrentFireMode))
 		{
 			WeaponEmpty();
@@ -89,7 +75,6 @@ simulated state WeaponFiring
 
 	simulated event EndState(name NextStateName)
 	{
-		`log("Ending firing state");
 		PlayerHit = false;
 		ClearTimer('RefireCheckTimer');
 		NotifyWeaponFinishedFiring(CurrentFireMode);
@@ -113,24 +98,22 @@ simulated state WeaponFiring
 
 		HandleFinishedFiring();
 		return;
-	}*/
+	}
 
 	function Tick(float DeltaTime)
 	{
 		local Vector start;
 		local Vector end;
-		
+
 		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(StartSocket, start);
 		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(EndSocket, end);
-		`log("Socket start location: " $start);
 
 		WeaponTrace(start, end);
-		super.Tick(DeltaTime);
 
 	}
 
 	simulated event WeaponTrace(Vector start, Vector end)
-	{		
+	{
 		local Vector HitLocation;
 		local Vector HitNormal;
 		local Actor HitActor;
