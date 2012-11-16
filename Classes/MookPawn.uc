@@ -38,7 +38,33 @@ simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
+
+
 	SetCollisionType(COLLIDE_NoCollision);
 	Fitte.PlayCustomAnim('enemy_ninja_deathanimation',  1.0, 0.05, 0.0, false, false);		
 	LifeSpan =1.0;
+}
+
+function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLocation)
+{
+	local WotSPickup DroppedPickup;
+	local int PickupToDrop;
+	Super.Died(Killer, DamageType, HitLocation);
+
+	PickupToDrop = int(RandRange(1,200));
+	if (PickupToDrop < 30)
+	{
+		if (PickupToDrop>12)
+		{
+			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Small',,, HitLocation,);
+		}
+		else if (PickupToDrop>3)
+		{
+			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Medium',,, HitLocation,);
+		}
+		else 
+		{
+			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
+		}
+	}
 }

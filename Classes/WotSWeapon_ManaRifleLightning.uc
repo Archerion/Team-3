@@ -34,6 +34,7 @@ defaultproperties
 		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'		
 		Scale=0.900000
 		FOV=60
+		Rotation=(Yaw=-16384)
 	End Object
 }
 

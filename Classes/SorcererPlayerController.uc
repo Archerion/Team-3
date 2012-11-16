@@ -4,7 +4,7 @@ defaultproperties
 {
 }
 
-function PostBeginPlay()
+simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 }
@@ -12,9 +12,7 @@ function PostBeginPlay()
 exec function SpawnBot()
 {
 	local Vector SpawnLocationVector;
-	SpawnLocationVector.X = self.Pawn.Mesh.getPosition().X + 200;
-	SpawnLocationVector.Y = self.Pawn.Mesh.getPosition().Y;
 	SpawnLocationVector.Z = 300;
-	Spawn(class'WotS.WotSPickup',,,SpawnLocationVector);
-	`log("Player Spawned a pickup");
+	Spawn(class'WotS.MookPawn',,,SpawnLocationVector);
+	`log("Player Spawned a Mook");
 }
