@@ -17,6 +17,8 @@ defaultproperties
     Mesh=WPawnSkeletalMeshComponent
     Components.Add(WPawnSkeletalMeshComponent)
 	ArmorType = HeavyArmor;
+	MaxMultiJump = 0
+	MultiJumpRemaining = 0
 }
 
 exec function StartSprint()

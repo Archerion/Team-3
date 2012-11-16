@@ -1,4 +1,5 @@
-class WotSPickup extends Actor;
+class WotSPickup extends Actor
+abstract;
 
 var int HealthAmount;
 var int ManaAmount;
@@ -19,7 +20,7 @@ defaultproperties
     CollisionComponent=CylinderComp  
 
 	Begin Object Class=StaticMeshComponent Name=WActorStaticMeshComponent
-		StaticMesh=StaticMesh'Pickups.Health_Medium.Mesh.S_Pickups_Health_Medium'
+		StaticMesh=StaticMesh'TheVillage.hppotion'
 		BlockRigidBody=TRUE
 	End Object
 
