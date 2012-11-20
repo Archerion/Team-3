@@ -8,6 +8,7 @@ var bool Centered;
 var bool TimerSet;
 var float TextSizeCenteredX;
 var float TextSizeCenteredY;
+var float DialogScaling;
 
 function DrawGameHud()
 {
@@ -20,6 +21,8 @@ function DrawGameHud()
 	{
 		DrawBar("Health",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Health, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).CurrentMana, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).MaxMana,20,Canvas.ClipY - 40,80,80,200);
+		DrawBar("Weapon XP",WotSWeapon_ManaRifleBase(SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Weapon).WeaponExperience, 
+							WotSWeapon_ManaRifleBase(SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Weapon).RequiredExpToLevel,20,Canvas.ClipY - 60,173,255,47);
     }
 }
 
@@ -31,6 +34,8 @@ function DisplayDialogText(String TextInput, String TextInput2, float TimeInput,
 	Centered = CenteredInput;
 
 	Activated = true;
+
+	`log("Drawing text: " $TextInput);
 }
 
 event PostRender()
@@ -38,17 +43,17 @@ event PostRender()
 	super.PostRender();
 	if(Activated)
 	{
-		Canvas.SetDrawColor(200, 80, 80, 200);
-		Canvas.Font = class'Engine'.static.GetLargeFont();
+		Canvas.SetDrawColor(255, 200, 0, 200);
+		Canvas.Font = class'Engine'.static.GetSubtitleFont();
 
 		if(Centered)
 		{
 			Canvas.TextSize(Text, TextSizeCenteredX, TextSizeCenteredY);
-			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY * 0.9);
+			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY / 2);
 			Canvas.DrawText(Text);
 
 			Canvas.TextSize(Text2, TextSizeCenteredX, TextSizeCenteredY);
-			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY * 0.9 + TextSizeCenteredY);
+			Canvas.SetPos(Canvas.ClipX / 2 - TextSizeCenteredX / 2, Canvas.ClipY / 2 + TextSizeCenteredY);
 			Canvas.DrawText(Text2);
 		}
 		else
@@ -78,6 +83,7 @@ defaultproperties
 {
 	TimerSet=false
 	Activated=false
+	DialogScaling=1.2f;
 }
 
 function DrawBar(String s, float v, float mv,int X, int Y, int R, int G, int B)

@@ -14,6 +14,18 @@ defaultproperties
 	InstantHitDamageTypes(1)=class'WotSSPLLightningDamage'
 	InventoryGroup=1
 
+	
+	BeamTemplate[1]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+
+	TeamMuzzleFlashTemplates[0]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	TeamMuzzleFlashTemplates[1]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	TeamMuzzleFlashTemplates[2]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	HighPowerMuzzleFlashTemplate=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+
+	MuzzleFlashPSCTemplate=ParticleSystem'WotS_Particles.Particles.Muzzleflash_Lightning'
+	MuzzleFlashAltPSCTemplate=ParticleSystem'WotS_Particles.Particles.Muzzleflash_Lightning'
+
+
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
 
@@ -22,13 +34,15 @@ defaultproperties
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
 	UsedAmmo = 0;
-	HealthDrain = 0.6;
+	HealthDrain = 0.0
+
+	AttachmentClass=class'Lightning_Attach';
 }
 
 simulated function FireAmmunition()
 {
 	local SorcererPawn SP;
-	local float PrimaryCost;
+	local float PrimaryCost;	
 	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
 	
 	PrimaryCost = 2;
@@ -47,7 +61,6 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 {
 	local SorcererPawn SP;
 	SP = Sorcererpawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
-	
 	
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
 	TimeCounter += DeltaTime;

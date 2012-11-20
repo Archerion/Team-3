@@ -20,10 +20,16 @@ var int WeaponExperience;
 var int WeaponLevel;
 var ManaCost WeaponManaCost;
 var float TimeToUpdateAmmo;
+var float RequiredExpToLevel;
 
 function AddXPToWeapon(int xp)
 {
 	WeaponExperience += xp;
+	if(WeaponExperience >= RequiredExpToLevel && WeaponLevel < 3)
+	{
+		WeaponExperience -= RequiredExpToLevel;
+		LevelUp();		
+	}	
 }
 
 function int GetWeaponXP()
@@ -35,7 +41,9 @@ function LevelUp()
 {
 	if (WeaponLevel < 3)
 	{
+		RequiredExpToLevel += 300;
 		WeaponLevel += 1;
+		WotSHUD(SorcererPlayerController(Instigator.Controller).myHUD).DisplayDialogText("Weapon level up!", "", 3.0f, true);
 	}
 }
 
@@ -127,6 +135,7 @@ defaultproperties
 	WeaponExperience = 0
 	MaximumHeat = 10
 	bIsOnCooldown = false;
+	RequiredExpToLevel = 700;
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);

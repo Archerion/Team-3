@@ -226,10 +226,12 @@ function InitializeArmor()
 		{
 		case LightArmor:
 			Health += 30;
+			HealthMax += 30;
 			GroundSpeed *= 0.9;
 			break;
 		case HeavyArmor:
 			Health += 60;
+			HealthMax += 60;
 			GroundSpeed *= 0.8;
 			break;
 		}
@@ -297,6 +299,7 @@ simulated function WeaponFired(Weapon InWeapon, bool bViaReplication, optional v
 	                {
 		                // third person muzzle flash
 		                CurrentWeaponAttachment.CauseMuzzleFlash();
+						`log("Firing flash from weapon attachment");
 	                }
 		}
 

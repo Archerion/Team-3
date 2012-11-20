@@ -1,6 +1,10 @@
 class Proj_MRFrostBullet extends Proj_MRBullet;
 
-DefaultProperties
+defaultproperties
 {
-	MyDamageType=class'WotSPRJFrostDamage'
+	ProjExplosionTemplate=ParticleSystem'WotS_Particles.Particles.Ice_Hit'
+	ProjFlightTemplate=ParticleSystem'WotS_Particles.Particles.IcePEffect'
+	MyDamageType=class'WotSPRJFrostDamage';
 }
+
+

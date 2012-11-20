@@ -44,7 +44,7 @@ defaultproperties
 
 	bInstantHit=true
 
-	InstantHitDamage(0)=50.0
+	InstantHitDamage(0)=25.0
 	InstantHitDamage(1)=25.0
 
 	DefaultAnimSpeed=0.9
@@ -74,47 +74,7 @@ simulated function FireAmmunition()
 }
 
 simulated state WeaponFiring
-{/*
-	simulated event BeginState(name PreviousStateName)
-	{
-		`log("Beginning firing state");
-		if(!HasAmmo(CurrentFireMode))
-		{
-			WeaponEmpty();
-			return;
-		}
-		PlayFireEffects(CurrentFireMode);
-		SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
-	}
-
-	simulated event EndState(name NextStateName)
-	{
-		`log("Ending firing state");
-		PlayerHit = false;
-		ClearTimer('RefireCheckTimer');
-		NotifyWeaponFinishedFiring(CurrentFireMode);
-		return;
-	}
-
-	simulated function RefireCheckTimer()
-	{
-		if(bWeaponPutDown)
-		{
-			PutDownWeapon();
-			return;
-		}
-
-		if(ShouldRefire())
-		{
-			PlayerHit = false;
-			PlayFireEffects(CurrentFireMode);
-			SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
-		}
-
-		HandleFinishedFiring();
-		return;
-	}*/
-
+{
 	function Tick(float DeltaTime)
 	{
 		local Vector start;
