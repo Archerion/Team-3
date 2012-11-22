@@ -1,70 +1,91 @@
 class MookBot extends WotSBot;
 
-var Pawn Target;
+var Actor Destination;
+var float AttackDistance;
+var float SightDistance;
 
-defaultproperties
-{
-	bSpawnedByKismet = true	
-}
+var float farAway;
 
 protected event ExecuteWhatToDoNext()
 {
-	GotoState('Idle');
+   //Go to the roaming state
+   GotoState('Roaming');
 }
 
-
-
-state Searching
+state Roaming
 {
-	local SorcererPawn Player;
-Begin:
-	foreach WorldInfo.AllPawns(class'SorcererPawn', Player)
-	{
-		if (Player != None)   //if there is a player pawn
-      	{
-
-        	if (CanSee(Player))
-           	{
-            	//look at it and shoot it
-            	Pawn.SetDesiredRotation(Rotator(Normal(Player.Location)));
-                Pawn.StartFire(0);
-           	}
-           	else
-           	{
-            	Pawn.StopFire(0);
-           	}
-		}
-	}
-	LatentWhatToDoNext();
-}
-
-state Idle
-{
-	local float playerDistance;
-    event SeePlayer (Pawn Seen)
+    ignores SeePlayer;
+    //This function just returns the first player it finds
+    function SorcererPawn FindEnemy()
     {
-        super.SeePlayer(Seen);
-        Target = Seen;
-        playerDistance = VSize(Pawn.Location - Target.Location);
-        if(playerDistance<70)
+        local SorcererPawn P;
+
+        P = SorcererPawn(GetALocalPlayerController().Pawn);
+        if (SorcererPlayerController(P.Controller) != None)
         {
-            GotoState('Shoot');
+            return P;
+        }
+        Return None;
+    }
+
+    Begin:
+    if(Enemy == None)
+    {
+        //If the bot has no enemy, find one
+        Enemy = FindEnemy();
+        if (Enemy.Class == class'SorcererPawn')
+        {
+            farAway = vsize(Pawn.Location - Enemy.Location);
+            if (farAway > SightDistance)
+            {
+                Enemy = None;
+            }
+        }
+    }
+
+    if(Enemy != None)
+    {
+        farAway = vsize(Pawn.Location - Enemy.Location);
+        if (farAway > SightDistance)
+        {
+            Enemy = None;
+            goto('Begin');
+        }
+
+        if(farAway > AttackDistance)
+        {
+            if(FindBestPathToward(Enemy, false, false))
+            {
+                MoveToward(MoveTarget,,,False);
+            }
+            else
+            {
+                MoveToward(Enemy, , ,False);
+            }
         }
         else
         {
-            GotoState('Follow');
+            GotoState('Attack');
         }
     }
+    else
+    {
+        //Find a random pathnode and go to it
+        MoveTo(FindRandomDest().Location);
+    }
+    goto('Begin');
 }
 
-state Follow
+state Attack
 {
-Begin:
-    Target = GetALocalPlayerController().Pawn;
-    //Target is an Actor variable defined in my custom AI Controller.
-    //Of course, you would normally verify that the Pawn is not None before proceeding.
- 
-    MoveToward(Target, Target, 128);
- 
-    LatentWhatToDoNext();
+    Begin:
+    FireWeaponAt(Focus);
+    GotoState('Roaming');
+}
+
+defaultproperties
+{
+    SightDistance=1200
+    AttackDistance=100
+    bSpawnedByKismet = true
 }

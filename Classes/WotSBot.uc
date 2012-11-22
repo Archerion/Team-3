@@ -1,14 +1,10 @@
 class WotSBot extends UTBot
 	abstract;
 
-defaultproperties
-{
-	
-}
 
 function Stun(float stunTime )
 {	
-	Pawn.CustomTimeDilation = 0.0f;
+	Pawn.CustomTimeDilation = 0.001f;
 	ClearTimer('UnStun');
 	SetTimer(stunTime, false, 'UnStun');
 }

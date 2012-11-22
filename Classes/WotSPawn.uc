@@ -68,7 +68,6 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 	local float SlowDuration;
 	local float BurnDuration;
 
-
 	if (DamageType == class 'WotSPRJBurnDamage')
 	{
 		Damage *= 0.7;
@@ -84,7 +83,7 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 			BurnDuration = 6;
 			SlowDuration = 6;
 		}
-			Slow(50, SlowDuration);
+			Slow(0.5, SlowDuration);
 			TakeFire(BurnDuration, 5, 0.5);		
 	}
 		
@@ -215,10 +214,12 @@ function InitializeArmor()
 		{
 		case LightArmor:
 			Health += 30;
+			HealthMax += 30;
 			GroundSpeed *= 0.9;
 			break;
 		case HeavyArmor:
 			Health += 60;
+			HealthMax += 60;
 			GroundSpeed *= 0.8;
 			break;
 		}

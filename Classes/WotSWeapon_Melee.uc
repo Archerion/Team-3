@@ -17,7 +17,7 @@ defaultproperties
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 		FOV=60
 		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
+		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anim'
 		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
 		Rotation=(Yaw=-16384)

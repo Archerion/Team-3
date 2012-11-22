@@ -1,7 +1,6 @@
 class MookPawn extends WotSPawn 
 	placeable;
 
-// Mooks should have melee attack
 var AnimNodePlayCustomAnim Fitte;
 defaultproperties
 {
@@ -31,6 +30,11 @@ simulated function PostBeginPlay()
 	`log("Spawned controller:"@Controller);
 }
 
+simulated function ThrowWeaponOnDeath()
+{
+	// don't
+}
+
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 {
 	Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
@@ -38,8 +42,6 @@ simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
-
-
 	SetCollisionType(COLLIDE_NoCollision);
 	Fitte.PlayCustomAnim('enemy_ninja_deathanimation',  1.0, 0.05, 0.0, false, false);		
 	LifeSpan =1.0;
@@ -49,7 +51,6 @@ function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLo
 {
 	local WotSPickup DroppedPickup;
 	local int PickupToDrop;
-	Super.Died(Killer, DamageType, HitLocation);
 
 	PickupToDrop = int(RandRange(1,200));
 	if (PickupToDrop < 30)
@@ -67,4 +68,6 @@ function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLo
 			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
 		}
 	}
+
+	return Super.Died(Killer, DamageType, HitLocation);
 }
