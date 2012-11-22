@@ -5,7 +5,7 @@ placeable;
 defaultproperties
 {
 	Begin Object Name=WActorStaticMeshComponent
-		StaticMesh=StaticMesh'TheVillage.manapotion'
+		StaticMesh=StaticMesh'TheVillage.Pickup.manapotion'
 		Scale=0.7
 	End Object
 	HealthAmount = 0;

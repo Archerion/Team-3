@@ -1,6 +1,8 @@
 class Proj_MRFireSpell extends Proj_MRBullet;
 
-DefaultProperties
+defaultproperties
 {
+	ProjExplosionTemplate=ParticleSystem'WotS_Particles.Particles.Fire_hit'
+	ProjFlightTemplate=ParticleSystem'WotS_Particles.Particles.Fire_particle'
 	MyDamageType=class'WotsSPLBurnDamage'
 }

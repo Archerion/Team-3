@@ -1,5 +1,5 @@
 class WotSWeapon_ManaRifleBase extends WotSWeapon
-	abstract;
+abstract;
 
 struct ManaCost
 {
@@ -13,17 +13,20 @@ struct ManaCost
 	}
 };
 
-var bool bIsOnCooldown;
-var int Heat;
-var int MaximumHeat;
 var int WeaponExperience;
 var int WeaponLevel;
 var ManaCost WeaponManaCost;
 var float TimeToUpdateAmmo;
+var float RequiredExpToLevel;
 
 function AddXPToWeapon(int xp)
 {
 	WeaponExperience += xp;
+	if(WeaponExperience >= RequiredExpToLevel && WeaponLevel < 3)
+	{
+		WeaponExperience -= RequiredExpToLevel;
+		LevelUp();		
+	}	
 }
 
 function int GetWeaponXP()
@@ -35,7 +38,9 @@ function LevelUp()
 {
 	if (WeaponLevel < 3)
 	{
+		RequiredExpToLevel += 300;
 		WeaponLevel += 1;
+		WotSHUD(SorcererPlayerController(Instigator.Controller).myHUD).DisplayDialogText("Weapon level up!", "", 3.0f, true);
 	}
 }
 
@@ -57,61 +62,23 @@ simulated function FireAmmunition()
 	local SorcererPawn SP;
 	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
 
-
 	if (CurrentFireMode == 0)
 	{
-		if (!bIsOnCooldown)
+		if (SP.CheckMana() >= WeaponManaCost.Primary)
 		{
-			if (SP.CheckMana() >= WeaponManaCost.Primary)
-			{
-				SP.TakeMana(WeaponManaCost.Primary);
-				Super.FireAmmunition();
-				`log("Weapon experience: "$WeaponExperience);
-				Heat += 1;
-				`log("heat: "$Heat);
-				if (Heat >= MaximumHeat)
-				{
-					overheat();
-				}
-			}
+			SP.TakeMana(WeaponManaCost.Primary);
+			Super.FireAmmunition();
+			`log("Weapon experience: "$WeaponExperience);
 		}
 	}
 	if (CurrentFireMode == 1)
 	{
-		if (!bIsOnCooldown)
+		if (SP.CheckMana() >= WeaponManaCost.Secondary)
 		{
-			if (SP.CheckMana() >= WeaponManaCost.Secondary)
-			{
-				SP.TakeMana(WeaponManaCost.Secondary);
-				Super.FireAmmunition();
-			}
+			SP.TakeMana(WeaponManaCost.Secondary);
+			Super.FireAmmunition();
 		}
 	}
-}
-
-function overheat()
-{
-	local int i;
-	bIsOnCooldown = true;
-}
-
-function coolOneHeat()
-{
-	if (Heat > 0)
-	{
-		Heat-=1;
-	}
-	if (Heat == 0)
-	{
-		bIsOnCooldown = false;
-	
-}}
-
-function stopCooldown()
-{
-	`log("Weapon no longer on cooldown;");
-	bIsOnCooldown = false;
-	Heat = 0;
 }
 
 defaultproperties
@@ -125,14 +92,10 @@ defaultproperties
 	ShotCost(0)=0
 	ShotCost(1)=0
 
-	Heat = 0
 	WeaponLevel = 1
 	WeaponExperience = 0
-	MaximumHeat = 10
-	bIsOnCooldown = false;
+	RequiredExpToLevel = 700;
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);
-
-	WeaponLevel = 1;
 }

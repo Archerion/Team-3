@@ -6,12 +6,25 @@ var float TimeCounter;
 var float ManaUsePerSecond;
 var int WeaponExperience;
 var int WeaponLevel;
+var float HealthDrain;
 
 defaultproperties
 {
 	WeaponProjectiles(0)=class'Proj_MRLightningBullet'
 	WeaponProjectiles(1)=class'Proj_MRLightningSpell'
 	InventoryGroup=1
+
+	
+	BeamTemplate[1]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+
+	TeamMuzzleFlashTemplates[0]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	TeamMuzzleFlashTemplates[1]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	TeamMuzzleFlashTemplates[2]=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+	HighPowerMuzzleFlashTemplate=ParticleSystem'WotS_Particles.Particles.Lightning_Particle'
+
+	MuzzleFlashPSCTemplate=ParticleSystem'WotS_Particles.Particles.Muzzleflash_Lightning'
+	MuzzleFlashAltPSCTemplate=ParticleSystem'WotS_Particles.Particles.Muzzleflash_Lightning'
+
 
 	ShotCost(0) = 0;
 	ShotCost(1) = 0;
@@ -21,9 +34,9 @@ defaultproperties
 	AddedAmmoCostOverTime = 0;
 	TimeCounter = 0;
 	UsedAmmo = 0;
+	HealthDrain = 0.0
 
-	PlayerViewOffset=(X=20.000000,Y=-10.000000,Z=-10.000000)
-
+	AttachmentClass=class'Lightning_Attach';
 	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
 		bCauseActorAnimEnd=true
 	End Object
@@ -41,7 +54,7 @@ defaultproperties
 simulated function FireAmmunition()
 {
 	local SorcererPawn SP;
-	local float PrimaryCost;
+	local float PrimaryCost;	
 	SP = SorcererPawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);	
 	
 	PrimaryCost = 2;
@@ -113,6 +126,7 @@ function LevelUp()
 {
 	if (WeaponLevel < 3)
 	{
+		HealthDrain += 0.3;
 		WeaponLevel += 1;
 	}
 }

@@ -4,6 +4,7 @@ var bool PlayerHit;
 
 var name StartSocket;
 var name EndSocket;
+var name WeaponSocket;
 
 defaultproperties
 {
@@ -17,7 +18,7 @@ defaultproperties
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 		FOV=60
 		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anim'
+		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
 		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
 		Rotation=(Yaw=-16384)
@@ -27,22 +28,25 @@ defaultproperties
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 	End Object
 
+	Mesh=FirstPersonMesh
+
 	AttachmentClass=class'Melee_Attach'
 
 	StartSocket = Start_socket
 	EndSocket = end_socket
 
 	bMeleeWeapon = true
+	PlayerHit = false;
 
 	FireInterval(0)=1
 	FireInterval(1)=1
 
-	WeaponFireTypes(0)=EWFT_Custom
-	WeaponFireTypes(1)=EWFT_Custom
+	WeaponFireTypes(0)=EWFT_InstantHit
+	WeaponFireTypes(1)=EWFT_None
 
 	bInstantHit=true
 
-	InstantHitDamage(0)=50.0
+	InstantHitDamage(0)=25.0
 	InstantHitDamage(1)=25.0
 
 	DefaultAnimSpeed=0.9
@@ -56,48 +60,28 @@ defaultproperties
 	MaxAmmoCount=1
 	AmmoCount=1
 
-	WeaponRange=100
-	InventoryGroup=4
+	WeaponRange=200
+	CachedMaxRange = 1000
+	InventoryGroup=4;
+}
+
+simulated function SendToFiringState(byte FireModeNum)
+{
+	super.SendToFiringState(FireModeNum);
+}
+
+simulated function FireAmmunition()
+{
+	super.FireAmmunition();
 }
 
 simulated state WeaponFiring
 {
-	simulated event BeginState(name PreviousStateName)
-	{
-		if(!HasAmmo(CurrentFireMode))
-		{
-			WeaponEmpty();
-			return;
-		}
-		PlayFireEffects(CurrentFireMode);
-		SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
-	}
-
 	simulated event EndState(name NextStateName)
 	{
 		PlayerHit = false;
 		ClearTimer('RefireCheckTimer');
 		NotifyWeaponFinishedFiring(CurrentFireMode);
-		return;
-	}
-
-	simulated function RefireCheckTimer()
-	{
-		if(bWeaponPutDown)
-		{
-			PutDownWeapon();
-			return;
-		}
-
-		if(ShouldRefire())
-		{
-			PlayerHit = false;
-			PlayFireEffects(CurrentFireMode);
-			SetTimer(GetFireInterval(CurrentFireMode), false, 'RefireCheckTimer');
-		}
-
-		HandleFinishedFiring();
-		return;
 	}
 
 	function Tick(float DeltaTime)
@@ -109,7 +93,7 @@ simulated state WeaponFiring
 		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(EndSocket, end);
 
 		WeaponTrace(start, end);
-
+		//super.Tick(DeltaTime);
 	}
 
 	simulated event WeaponTrace(Vector start, Vector end)

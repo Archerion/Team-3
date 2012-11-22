@@ -49,23 +49,24 @@ simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 
 function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLocation)
 {
-	//local WotSPickup DroppedPickup;
 	local int PickupToDrop;
-
+	local Vector DropLocation;
+	DropLocation = self.Location;
+	DropLocation.Z -= 35;
 	PickupToDrop = int(RandRange(1,200));
 	if (PickupToDrop < 200)
 	{
 		if (PickupToDrop>12)
 		{
-			Spawn(Class'WotS.WotSPickup_Health_Small',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Small',,, DropLocation,);
 		}
 		else if (PickupToDrop>3)
 		{
-			Spawn(Class'WotS.WotSPickup_Health_Medium',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Medium',,, DropLocation,);
 		}
 		else 
 		{
-			Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Large',,, DropLocation,);
 		}
 	}
 

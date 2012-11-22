@@ -224,4 +224,3 @@ function InitializeArmor()
 			break;
 		}
 }
-

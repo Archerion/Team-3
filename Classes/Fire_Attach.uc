@@ -1,4 +1,4 @@
-class Test_Attach extends UTWeaponAttachment;
+class Fire_Attach extends UTWeaponAttachment;
 
 DefaultProperties
 {
@@ -6,7 +6,7 @@ DefaultProperties
 	End Object
 
 	Begin Object Name=SkeletalMeshComponent0
-		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_Fire'
+		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_fire'
 		Animations=MeshSequenceA
 		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'
 		Rotation=(Yaw=-16384)
@@ -18,3 +18,4 @@ DefaultProperties
 
 	WeaponClass=Class'WotSWeapon_ManaRifleFire';
 }
+

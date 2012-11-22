@@ -27,10 +27,8 @@ simulated function PostBeginPlay()
 	Super.PostBeginPlay();
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
-
-	SetCollisionType(COLLIDE_NoCollision);	
+	
 	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
-	LifeSpan =1.0;
 }
 
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
