@@ -1,5 +1,5 @@
 class MookPawn extends WotSPawn 
-	placeable;
+	abstract;
 
 var AnimNodePlayCustomAnim Fitte;
 
@@ -27,8 +27,7 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	SpawnDefaultController();
-	`log("Spawned controller:"@Controller);
+	ControllerClass=class'WotS.MookBot';
 }
 
 simulated function ThrowWeaponOnDeath()
@@ -50,23 +49,23 @@ simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 
 function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLocation)
 {
-	local WotSPickup DroppedPickup;
+	//local WotSPickup DroppedPickup;
 	local int PickupToDrop;
 
 	PickupToDrop = int(RandRange(1,200));
-	if (PickupToDrop < 30)
+	if (PickupToDrop < 200)
 	{
 		if (PickupToDrop>12)
 		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Small',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Small',,, HitLocation,);
 		}
 		else if (PickupToDrop>3)
 		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Medium',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Medium',,, HitLocation,);
 		}
 		else 
 		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
+			Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
 		}
 	}
 

@@ -1,4 +1,4 @@
-class MookPawn_Melee extends WotSPawn 
+class MookPawn_Melee extends MookPawn 
 	placeable;
 
 defaultproperties
@@ -25,7 +25,12 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
+	SpawnDefaultController();
+	`log("Spawned controller:"@Controller);
+
+	SetCollisionType(COLLIDE_NoCollision);	
 	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
+	LifeSpan =1.0;
 }
 
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
