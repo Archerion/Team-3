@@ -9,7 +9,7 @@ simulated function PostBeginPlay()
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
 
-	Spawn(class'WotS.WotSWeapon_Ranged_Mook',,,Location).GiveTo(self);
+	Spawn(class'WotS.WotSWeapon_Spike',,,Location).GiveTo(self);
 }
 
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)

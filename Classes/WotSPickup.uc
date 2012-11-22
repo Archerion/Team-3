@@ -24,11 +24,7 @@ defaultproperties
 		BlockRigidBody=TRUE
 	End Object
 
-	Mesh=WActorStaticMeshComponent
 	Components.Add(WActorStaticMeshComponent)
-
-	Mesh=WPawnSkeletalMeshComponent
-	StaticMesh=StaticMesh'Pickups.Health_Medium.Mesh.S_Pickups_Health_Medium'
 
 	HealthAmount = 10;
 	ManaAmount = 10;
@@ -40,8 +36,20 @@ event Touch( Actor Other, PrimitiveComponent OtherComp, vector HitLocation, vect
 	if (Other.Class == class'SorcererPawn')
 	{
 		SP = SorcererPawn(Other);
-		SP.Health += HealthAmount;
-		SP.CurrentMana += ManaAmount;
+		if(SP.Health + HealthAmount >= SP.HealthMax)
+		{
+			SP.Health = SP.HealthMax;
+		} else
+		{
+			SP.Health += HealthAmount;
+		}
+		if(SP.CurrentMana + ManaAmount >= SP.MaxMana)
+		{
+			SP.CurrentMana = SP.MaxMana;
+		} else
+		{
+			SP.CurrentMana += ManaAmount;
+		}
 		self.Destroy();
 	}	
 }

@@ -3,5 +3,5 @@ class WotSWeapon extends UTWeap_ShockRifle
 
 defaultproperties
 {
-
+	bSuppressSounds= true;
 }

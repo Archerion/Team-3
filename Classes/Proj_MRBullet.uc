@@ -48,12 +48,14 @@ defaultproperties
 	MomentumTransfer=0
 	CheckRadius=26.0
 
+
+	AmbientSound=SoundCue'WotS_Sound.silence_Cue'
+	ExplosionSound=SoundCue'WotS_Sound.silence_Cue'
+
 	MyDamageType=class'UTDmgType_LinkPlasma'
 	LifeSpan=3.0
 	NetCullDistanceSquared=+144000000.0
 
 	bCollideWorld=true
 	DrawScale=1.0
-
-	ExplosionSound=SoundCue'A_Ambient_NonLoops.Fire.Fire_TorchStart_01_Cue'
 }

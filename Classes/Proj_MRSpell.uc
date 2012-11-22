@@ -60,6 +60,9 @@ defaultproperties
 
 	Damage=0
 	DamageRadius = 0;
+
+	AmbientSound=SoundCue'WotS_Sound.silence_Cue'
+	ExplosionSound=SoundCue'WotS_Sound.silence_Cue'
 	
 	Stuns = false
 	Burns = false

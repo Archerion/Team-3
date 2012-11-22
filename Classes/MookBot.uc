@@ -14,8 +14,8 @@ protected event ExecuteWhatToDoNext()
 
 state Roaming
 {
-    ignores SeePlayer;
-    //This function just returns the first player it finds
+
+    ignores SeePlayer, HearNoise, Touch;
     function SorcererPawn FindEnemy()
     {
         local SorcererPawn P;
@@ -40,6 +40,9 @@ state Roaming
             {
                 Enemy = None;
             }
+        }
+        else {
+            Enemy = None;
         }
     }
 

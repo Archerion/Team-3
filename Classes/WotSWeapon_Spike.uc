@@ -12,4 +12,8 @@ defaultproperties
 
 
 	AttachmentClass=class'Spike_Attach';
+
+	
+	WeaponFireTypes(0)=EWFT_Projectile
+	WeaponFireTypes(1)=EWFT_None
 }

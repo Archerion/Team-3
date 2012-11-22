@@ -10,6 +10,11 @@ simulated function PostBeginPlay()
 	Super.PostBeginPlay();
 }
 
+function BroadcastDeathMessage(Controller Killer, Controller Other, class<DamageType> DamageType)
+{
+	// no.
+}
+
 defaultproperties
 {
 	PlayerControllerClass=class'WotS.SorcererPlayerController'
@@ -20,7 +25,7 @@ defaultproperties
 
 	DefaultInventory(0)=class'WotSWeapon_ManaRifleFire'
 	DefaultInventory(1)=class'WotSWeapon_ManaRifleFrost'
-
+	bSkipPlaySound = true
 	bFirstBlood = false;
 	CountDown = 0;
 	bQuickStart = true;

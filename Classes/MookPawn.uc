@@ -18,6 +18,9 @@ defaultproperties
 simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 {
 	Super.SetCharacterClassFromInfo(Info);
+
+	self.SoundGroupClass=class'WotSSoundGroup_Silence';
+
 	self.Mesh.SetSkeletalMesh(SkeletalMesh'enemy_ninja_pack.enemy_ninja_mesh');	
 	self.Mesh.AnimSets[0]=AnimSet'enemy_ninja_pack.enemy_ninja_animset';	
 	self.Mesh.SetAnimTreeTemplate(AnimTree'enemy_ninja_pack.enemy_ninja_animtree');
