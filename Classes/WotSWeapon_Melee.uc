@@ -18,7 +18,7 @@ defaultproperties
 		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 		FOV=60
 		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anim'
+		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
 		bForceUpdateAttachmentsInTick=true
 		Scale=0.900000
 		Rotation=(Yaw=-16384)
@@ -36,12 +36,13 @@ defaultproperties
 	EndSocket = end_socket
 
 	bMeleeWeapon = true
+	PlayerHit = false;
 
 	FireInterval(0)=1
 	FireInterval(1)=1
 
-	WeaponFireTypes(0)=EWFT_Custom
-	WeaponFireTypes(1)=EWFT_Custom
+	WeaponFireTypes(0)=EWFT_InstantHit
+	WeaponFireTypes(1)=EWFT_None
 
 	bInstantHit=true
 
@@ -76,6 +77,12 @@ simulated function FireAmmunition()
 
 simulated state WeaponFiring
 {
+	simulated event EndState(name NextStateName)
+	{
+		PlayerHit = false;
+		ClearTimer('RefireCheckTimer');
+		NotifyWeaponFinishedFiring(CurrentFireMode);
+	}
 
 	function Tick(float DeltaTime)
 	{
@@ -86,8 +93,7 @@ simulated state WeaponFiring
 		SkeletalMeshComponent(Mesh).GetSocketWorldLocationAndRotation(EndSocket, end);
 
 		WeaponTrace(start, end);
-		super.Tick(DeltaTime);
-
+		//super.Tick(DeltaTime);
 	}
 
 	simulated event WeaponTrace(Vector start, Vector end)

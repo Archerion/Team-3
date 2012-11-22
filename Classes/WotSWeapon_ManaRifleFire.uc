@@ -22,7 +22,7 @@ defaultproperties
 	WeaponManaCost=(Primary=2, Secondary=10);
 	InventoryGroup=1
 
-	AttachmentClass=class'Test_Attach';
+	AttachmentClass=class'Fire_Attach';
 
 	MuzzleFlashSocket=MFSocket
 	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire

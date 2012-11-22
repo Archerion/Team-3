@@ -20,7 +20,7 @@ defaultproperties
     CollisionComponent=CylinderComp  
 
 	Begin Object Class=StaticMeshComponent Name=WActorStaticMeshComponent
-		StaticMesh=StaticMesh'TheVillage.hppotion'
+		StaticMesh=StaticMesh'TheVillage.Pickup.hppotion'
 		BlockRigidBody=TRUE
 	End Object
 

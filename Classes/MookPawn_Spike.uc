@@ -1,8 +1,5 @@
 class MookPawn_Spike extends MookPawn;
 
-
-var AnimNodePlayCustomAnim DeathAnimNode;
-
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();

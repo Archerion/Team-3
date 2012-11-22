@@ -27,6 +27,7 @@ simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 	SpawnDefaultController();
+	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
 	`log("Spawned controller:"@Controller);
 }
 

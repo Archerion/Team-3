@@ -224,5 +224,3 @@ function InitializeArmor()
 			break;
 		}
 }
-
-						`log("Firing flash from weapon attachment");
