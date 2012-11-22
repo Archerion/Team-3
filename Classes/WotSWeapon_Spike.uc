@@ -6,7 +6,6 @@ defaultproperties
 		SkeletalMesh=SkeletalMesh'WeaponVill.Weapon'
 		bForceUpdateAttachmentsInTick=true
 		AnimSets(0)=AnimSet'WeaponVill.b_weapon_grip'
-		bForceUpdateAttachmentsInTick=true
 	End Object
 
 	InventoryGroup=4

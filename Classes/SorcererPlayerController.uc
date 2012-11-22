@@ -13,6 +13,6 @@ exec function SpawnBot()
 {
 	local Vector SpawnLocationVector;
 	SpawnLocationVector.Z = 300;
-	Spawn(class'WotS.MookPawn_Spike',,,SpawnLocationVector);
+	Spawn(class'WotS.MookPawn_Ogg',,,SpawnLocationVector);
 	`log("Player spawned spike");
 }
