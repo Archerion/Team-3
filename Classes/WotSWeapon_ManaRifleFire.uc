@@ -26,5 +26,5 @@ defaultproperties
 
 	MuzzleFlashSocket=MFSocket
 	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire
-	MuzzleFlashAltPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire;
+	MuzzleFlashAltPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire
 }

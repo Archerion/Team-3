@@ -2,13 +2,9 @@ class Melee_Attach extends UTWeaponAttachment;
 
 defaultproperties
 {
-	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
-	End Object
 
 	Begin Object Name=SkeletalMeshComponent0
-		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon_3rd'
-		Animations=MeshSequenceA
-		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
+		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
 		Rotation=(Yaw=-16384)
 	End Object
 

@@ -122,3 +122,45 @@ function DrawBar(String s, float v, float mv,int X, int Y, int R, int G, int B)
     Canvas.Font = class'Engine'.static.GetSmallFont();
     Canvas.DrawText(s);
 } 
+
+exec function ShowMenu()
+{
+	TogglePauseMenu();
+}
+
+function TogglePauseMenu()
+{
+	if(PauseMenuMovie != none && PauseMenuMovie.bMovieIsOpen)
+    {
+    PauseMenuMovie.Close();
+    }
+
+	else
+    {
+        PlayerOwner.SetPause(true); 
+
+        if (PauseMenuMovie == none)
+        {
+            PauseMenuMovie = new class'WotS_PauseMenu';
+            PauseMenuMovie.MovieInfo = SwfMovie'WotSPauseMenu.PauseMenu.WotS_PauseMenu';
+            PauseMenuMovie.bEnableGammaCorrection = false;
+            PauseMenuMovie.LocalPlayerOwnerIndex = class'Engine'.static.GetEngine().GamePlayers.Find(LocalPlayer(PlayerOwner.Player));
+            PauseMenuMovie.SetTimingMode(TM_Real);
+        }
+
+        PauseMenuMovie.Start();
+        PauseMenuMovie.AddFocusIgnoreKey('Escape');
+    }
+}
+
+function CompletePauseMenuClose()
+{
+	PlayerOwner.SetPause(false);
+    PauseMenuMovie.Close(false);
+}
+
+function FlashToConsole(string command)
+{
+	`log("Flashing to console");
+	ConsoleCommand(command);
+}

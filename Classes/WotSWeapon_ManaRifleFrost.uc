@@ -24,8 +24,10 @@ defaultproperties
 
 	AttachmentClass=class'Empty_Attach'
 
+	MuzzleFlashSocket=MuzzleFlashSocket;
 	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Ice
 	MuzzleFlashAltPSCTemplate=WotS_Particles.Particles.Muzzleflash_Ice;
+	CrosshairImage=
 }
 
 function LevelUp()
