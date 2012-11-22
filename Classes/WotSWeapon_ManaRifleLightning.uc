@@ -11,7 +11,7 @@ var float HealthDrain;
 defaultproperties
 {
 	WeaponProjectiles(0)=class'Proj_MRLightningBullet'
-	InstantHitDamageTypes(1)=class'WotSSPLLightningDamage'
+	WeaponProjectiles(1)=class'Proj_MRLightningSpell'
 	InventoryGroup=1
 
 	
@@ -37,6 +37,18 @@ defaultproperties
 	HealthDrain = 0.0
 
 	AttachmentClass=class'Lightning_Attach';
+	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
+		bCauseActorAnimEnd=true
+	End Object
+
+	Begin Object Name=FirstPersonMesh
+		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_elec'		
+		Animations=MeshSequenceA
+		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'		
+		Scale=0.900000
+		FOV=60
+		Rotation=(Yaw=-16384)
+	End Object
 }
 
 simulated function FireAmmunition()
@@ -61,6 +73,7 @@ simulated function ProcessBeamHit(vector StartTrace, vector AimDir, out ImpactIn
 {
 	local SorcererPawn SP;
 	SP = Sorcererpawn(SorcererPlayerController(GetALocalPlayerController()).Pawn);
+	
 	
 	UsedAmmo = ManaUsePerSecond * DeltaTime + AddedAmmoCostOverTime * DeltaTime;
 	TimeCounter += DeltaTime;

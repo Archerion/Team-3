@@ -26,8 +26,8 @@ defaultproperties
 
 	MuzzleFlashSocket=MuzzleFlashSocket;
 	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Ice
-	MuzzleFlashAltPSCTemplate=WotS_Particles.Particles.Muzzleflash_Ice;
-	CrosshairImage=
+	MuzzleFlashAltPSCTemplate=WotS_Particles.Particles.Muzzleflash_Ice;	
+
 }
 
 function LevelUp()

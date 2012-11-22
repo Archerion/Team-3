@@ -105,12 +105,15 @@ function overheat()
 
 function coolOneHeat()
 {
-	Heat-=1;
+	if (Heat > 0)
+	{
+		Heat-=1;
+	}
 	if (Heat == 0)
 	{
 		bIsOnCooldown = false;
-	}
-}
+	
+}}
 
 function stopCooldown()
 {
@@ -139,4 +142,6 @@ defaultproperties
 
 	TimeToUpdateAmmo = 1.5
 	WeaponManaCost=(Primary=0, Secondary=0);
+
+	WeaponLevel = 1;
 }

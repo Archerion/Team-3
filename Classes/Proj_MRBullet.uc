@@ -1,7 +1,7 @@
 class Proj_MRBullet extends UTProjectile;
 
 var vector FlightFXColor;
-/*
+
 simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNormal)
 {
 	if ( Other != Instigator )
@@ -13,7 +13,7 @@ simulated function ProcessTouch (Actor Other, vector HitLocation, vector HitNorm
 			Explode(HitLocation, HitNormal);
 		}
 	}
-}*/
+}
 
 simulated event HitWall(vector HitNormal, Actor Wall, PrimitiveComponent WallComp)
 {
@@ -24,7 +24,6 @@ simulated event HitWall(vector HitNormal, Actor Wall, PrimitiveComponent WallCom
 
 simulated function SpawnFlightEffects()
 {
-	`log("Radius: "$DamageRadius);
 	Super.SpawnFlightEffects();
 	if (ProjEffects != None)
 	{

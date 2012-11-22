@@ -2,17 +2,21 @@ class Melee_Attach extends UTWeaponAttachment;
 
 defaultproperties
 {
+	Begin Object Class=AnimNodeSequence Name=MeshSequenceA
+	End Object
 
 	Begin Object Name=SkeletalMeshComponent0
-		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon'
+		SkeletalMesh=SkeletalMesh'Melee_Weapon.Melee_Weapon_3rd'
+		Animations=MeshSequenceA
+		AnimSets(0)=AnimSet'Melee_Weapon.Melee_Anime'
 		Rotation=(Yaw=-16384)
 	End Object
 
 	Mesh=SkeletalMeshComponent0
 
+	WeaponClass=Class'WotSWeapon_Melee'
 	FireAnim = WeaponFire;
 
-	WeaponClass=Class'WotSWeapon_Melee';
 }
 
 simulated function ThirdPersonFireEffects(vector HitLocation)
@@ -48,6 +52,4 @@ simulated function ThirdPersonFireEffects(vector HitLocation)
 		Mesh.PlayAnim(FireAnim,,, false);
 	}
 }
-
-
 

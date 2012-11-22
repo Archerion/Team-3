@@ -8,8 +8,8 @@ defaultproperties
 		bCauseActorAnimEnd=true
 	End Object
 
-	Begin Object Name=FirstPersonMesh
-		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_fire'
+	Begin Object Name=FirstPersonMesh		
+		SkeletalMesh=SkeletalMesh'Player_Weapon.Player_Weapon_fire'		
 		Animations=MeshSequenceA
 		AnimSets(0)=AnimSet'Player_Weapon.Player_Weapon_AnimSet'	
 		Scale=0.900000
@@ -22,7 +22,7 @@ defaultproperties
 	WeaponManaCost=(Primary=2, Secondary=10);
 	InventoryGroup=1
 
-	AttachmentClass=class'Fire_Attach'
+	AttachmentClass=class'Test_Attach';
 
 	MuzzleFlashSocket=MFSocket
 	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire

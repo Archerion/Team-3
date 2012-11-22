@@ -1,6 +1,7 @@
-class MookPawn extends WotSPawn 
+class MookPawn_Melee extends WotSPawn 
 	placeable;
 
+// Mooks should have melee attack
 var AnimNodePlayCustomAnim Fitte;
 defaultproperties
 {
@@ -26,18 +27,12 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
-	SpawnDefaultController();
-	`log("Spawned controller:"@Controller);
-}
-
-simulated function ThrowWeaponOnDeath()
-{
-	// don't
+	Spawn(class'WotS.WotSWeapon_Melee',,,Location).GiveTo(self);
 }
 
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 {
-	Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
+  Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
 }
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
@@ -45,29 +40,4 @@ simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 	SetCollisionType(COLLIDE_NoCollision);
 	Fitte.PlayCustomAnim('enemy_ninja_deathanimation',  1.0, 0.05, 0.0, false, false);		
 	LifeSpan =1.0;
-}
-
-function bool Died(Controller Killer, class<DamageType> DamageType, vector HitLocation)
-{
-	local WotSPickup DroppedPickup;
-	local int PickupToDrop;
-
-	PickupToDrop = int(RandRange(1,200));
-	if (PickupToDrop < 30)
-	{
-		if (PickupToDrop>12)
-		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Small',,, HitLocation,);
-		}
-		else if (PickupToDrop>3)
-		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Medium',,, HitLocation,);
-		}
-		else 
-		{
-			DroppedPickup = Spawn(Class'WotS.WotSPickup_Health_Large',,, HitLocation,);
-		}
-	}
-
-	return Super.Died(Killer, DamageType, HitLocation);
 }

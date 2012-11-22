@@ -19,7 +19,7 @@ function DrawGameHud()
 	
 	if ( !PlayerOwner.IsDead() && !UTPlayerOwner.IsInState('Spectating'))
 	{
-		DrawBar("Health",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Health, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).HealthMax,20,Canvas.ClipY - 20,200,80,80);
+		DrawBar("Health",PlayerOwner.Pawn.Health, PlayerOwner.Pawn.HealthMax,20,Canvas.ClipY - 20,200,80,80);
 		DrawBar("Mana",SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).CurrentMana, SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).MaxMana,20,Canvas.ClipY - 40,80,80,200);
 		DrawBar("Weapon XP",WotSWeapon_ManaRifleBase(SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Weapon).WeaponExperience, 
 							WotSWeapon_ManaRifleBase(SorcererPawn(SorcererPlayerController(PlayerOwner).Pawn).Weapon).RequiredExpToLevel,20,Canvas.ClipY - 60,173,255,47);

@@ -17,11 +17,13 @@ defaultproperties
     Mesh=WPawnSkeletalMeshComponent
     Components.Add(WPawnSkeletalMeshComponent)
 	ArmorType = HeavyArmor;
+	MaxMultiJump = 0
+	MultiJumpRemaining = 0
 }
 
 exec function StartSprint()
 {
-	GroundSpeed = default.GroundSpeed * 2;
+	GroundSpeed = default.GroundSpeed * 1.5;
 	isRunning = true;
 	StopFiring();
 }

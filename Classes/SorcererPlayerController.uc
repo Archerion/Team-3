@@ -4,10 +4,15 @@ defaultproperties
 {
 }
 
+simulated function PostBeginPlay()
+{
+	Super.PostBeginPlay();
+}
+
 exec function SpawnBot()
 {
 	local Vector SpawnLocationVector;
 	SpawnLocationVector.Z = 300;
-	Spawn(class'WotS.MookPawn',,,SpawnLocationVector);
-	`log("Player Spawned a bot");
+	Spawn(class'WotS.MookPawn_Spike',,,SpawnLocationVector);
+	`log("Player spawned spike");
 }
