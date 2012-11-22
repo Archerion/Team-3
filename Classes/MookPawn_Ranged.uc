@@ -1,7 +1,5 @@
 class MookPawn_Ranged extends MookPawn;
 
-var AnimNodePlayCustomAnim Fitte;
-
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
