@@ -1,8 +1,6 @@
 class MookPawn_Melee extends WotSPawn 
 	placeable;
 
-// Mooks should have melee attack
-var AnimNodePlayCustomAnim Fitte;
 defaultproperties
 {
 	ControllerClass=class'WotS.MookBot'

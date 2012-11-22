@@ -86,6 +86,6 @@ state Attack
 defaultproperties
 {
     SightDistance=1200
-    AttackDistance=100
+    AttackDistance=150
     bSpawnedByKismet = true
 }

@@ -2,6 +2,7 @@ class MookPawn extends WotSPawn
 	placeable;
 
 var AnimNodePlayCustomAnim Fitte;
+
 defaultproperties
 {
 	ControllerClass=class'WotS.MookBot'
