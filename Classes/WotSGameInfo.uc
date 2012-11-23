@@ -24,6 +24,11 @@ function ScoreKill(Controller Killer, Controller Other)
 	// No scoring please.
 }
 
+function ScoreKill(Controller Killer, Controller Other)
+{
+	// No scoring please.
+}
+
 function BroadcastDeathMessage(Controller Killer, Controller Other, class<DamageType> DamageType)
 {
 	// no.
@@ -52,6 +57,8 @@ defaultproperties
 	bSkipPlaySound = true
 	bFirstBlood = true;
 	CountDown = 0;
+	bFirstBlood = false;
+	bSkipPlaySound = true;
 	bQuickStart = true;
 	bFinalStartup = true;
 	bOverTimeBroadcast = true;
