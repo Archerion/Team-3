@@ -8,14 +8,14 @@ simulated function PostBeginPlay()
 	ControllerClass=class'WotS.MookBot_Ranged';
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
-	
-	Spawn(class'WotS.WotSWeapon_Spike',,,Location).GiveTo(self);
+
+	Spawn(class'WotS.WotSWeapon_Ranged_Mook',,,Location).GiveTo(self);
 }
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
 	SetCollisionType(COLLIDE_NoCollision);	
-	LifeSpan =0.0;
+	LifeSpan =1.0;
 }
 
 simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
@@ -25,4 +25,11 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 	self.Mesh.AnimSets[0]=AnimSet'Jonatan.ogg_animset';
 	self.Mesh.SetAnimTreeTemplate(AnimTree'Jonatan.Ogg_animtree');
 	self.Mesh.SetMaterial(0, Material'Jonatan.Materials.ogg_material');
+}
+
+
+defaultproperties
+{
+	HealthMax = 800
+	Health = 800
 }

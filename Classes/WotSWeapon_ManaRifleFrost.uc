@@ -36,11 +36,11 @@ function LevelUp()
 
 	if(WeaponLevel == 2)
 	{
-		FireInterval[0] = default.FireInterval[0] * 1.2;
+		FireInterval[0] = default.FireInterval[0] / 1.2;
 	}
 
 	else if(WeaponLevel == 3)
 	{
-		FireInterval[1] = default.FireInterval[1] * 1.4;
+		FireInterval[0] = default.FireInterval[0] / 1.4;
 	}
 }

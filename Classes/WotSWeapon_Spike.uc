@@ -10,10 +10,18 @@ defaultproperties
 
 	InventoryGroup=4
 
+	WeaponFireTypes(0)=EWFT_Projectile
+	WeaponFireTypes(1)=EWFT_Projectile
+
+	ShotCost(0) = 0;
+	ShotCost(1) = 99990;
 
 	AttachmentClass=class'Spike_Attach';
 
-	
-	WeaponFireTypes(0)=EWFT_Projectile
-	WeaponFireTypes(1)=EWFT_None
+	WeaponProjectiles(0)=class'Proj_FireSpellSpike'
+	MuzzleFlashSocket=MuzzleFlashSocket
+	MuzzleFlashPSCTemplate=WotS_Particles.Particles.Muzzleflash_Fire
+
+	//WeaponFireTypes(0)=EWFT_Projectile
+	//WeaponFireTypes(1)=EWFT_None
 }

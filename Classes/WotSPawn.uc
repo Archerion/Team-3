@@ -65,12 +65,14 @@ event TakeDamage(int Damage, Controller EventInstigator, vector HitLocation, vec
 
 function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageType> DamageType)
 {	
+
+	// Default damage: 35
 	local float SlowDuration;
 	local float BurnDuration;
 
 	if (DamageType == class 'WotSPRJBurnDamage')
 	{
-		Damage *= 0.7;
+		Damage = 35;
 	}
 		
 	else if (DamageType == class 'WotSSPLBurnDamage')
@@ -109,12 +111,11 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 	{
 		if (ArmorType == Unarmored)
 		{
-			Damage = 15;
+			Damage = 45;
 		} 
-			
 		else 
 		{
-			Damage = 10;
+			Damage = 35;
 		}
 	}
 		
@@ -122,6 +123,14 @@ function int ModifyDamage(int Damage, Controller EventInstigator, class <DamageT
 	{
 		MookBot(Controller).Stun(5);
 	}	
+	else if(DamageType == class 'WotSPRJSpikeDamage')
+	{
+		Damage = 75;
+	}
+	else if (DamageType == class'WotSPRJRangedMookDamage')
+	{
+		Damage = 20;
+	}
 	return Damage;
 }
 

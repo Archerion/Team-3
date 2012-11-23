@@ -6,7 +6,7 @@ defaultproperties
 	DoubleJumpSound=SoundCue'WotS_Sound.silence_Cue'
 	LandSound=SoundCue'WotS_Sound.silence_Cue'
 	DefaultLandingSound=SoundCue'WotS_Sound.silence_Cue'
-	DefaultFootStepSound=SoundCue'WotS_Sound.silence_Cue'
+	DefaultFootStepSound=SoundCue'WotS_Sound.Footstep_Cue'
 	DyingSound=SoundCue'WotS_Sound.silence_Cue'
 	HitSounds[0]=SoundCue'WotS_Sound.silence_Cue'
 	HitSounds[1]=SoundCue'WotS_Sound.silence_Cue'

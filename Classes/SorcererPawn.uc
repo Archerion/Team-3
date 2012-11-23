@@ -34,6 +34,7 @@ function bool Died(Controller Killer, class<DamageType> damageType, vector HitLo
 	local string mapname;
 	mapname = WorldInfo.GetMapName(false);	
 	ConsoleCommand("open "@mapname);
+	return true;
 }
 
 simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)

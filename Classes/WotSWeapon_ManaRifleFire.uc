@@ -1,5 +1,7 @@
 class WotSWeapon_ManaRifleFire extends WotSWeapon_ManaRifleBase;
 
+
+
 defaultproperties
 {
 	PlayerViewOffset=(X=20.000000,Y=-10.000000,Z=-10.000000)
@@ -15,6 +17,9 @@ defaultproperties
 		Scale=0.900000
 		FOV=60
 	End Object
+
+
+	FireInterval(0)=+0.6
 
 	WeaponProjectiles(0)=class'Proj_MRFireBullet'
 	WeaponProjectiles(1)=class'Proj_MRFireSpell'

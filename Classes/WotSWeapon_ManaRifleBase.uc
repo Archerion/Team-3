@@ -1,4 +1,5 @@
 class WotSWeapon_ManaRifleBase extends WotSWeapon
+config(WotSConfig)
 abstract;
 
 struct ManaCost
@@ -13,11 +14,12 @@ struct ManaCost
 	}
 };
 
-var int WeaponExperience;
-var int WeaponLevel;
+var config int WeaponExperience;
+var config int WeaponLevel;
+var config float RequiredExpToLevel;
+
 var ManaCost WeaponManaCost;
 var float TimeToUpdateAmmo;
-var float RequiredExpToLevel;
 
 function AddXPToWeapon(int xp)
 {
@@ -27,6 +29,7 @@ function AddXPToWeapon(int xp)
 		WeaponExperience -= RequiredExpToLevel;
 		LevelUp();		
 	}	
+	SaveConfig();
 }
 
 function int GetWeaponXP()
@@ -86,8 +89,8 @@ defaultproperties
 	WeaponFireTypes(0)=EWFT_Projectile
 	WeaponFireTypes(1)=EWFT_Projectile
 
-	FireInterval(0)=+0.5
-	FireInterval(1)=+1.25
+	FireInterval(0)=+0.8
+	FireInterval(1)=+2
 
 	ShotCost(0)=0
 	ShotCost(1)=0

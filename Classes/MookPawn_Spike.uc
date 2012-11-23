@@ -5,7 +5,7 @@ simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
-	ControllerClass=class'WotS.MookBot_Ranged';
+	ControllerClass=class'WotS.MookBot_Spike';
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
 
@@ -15,7 +15,7 @@ simulated function PostBeginPlay()
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
 	SetCollisionType(COLLIDE_NoCollision);
-	LifeSpan =0.0;
+	LifeSpan =1.0;
 }
 
 simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
@@ -25,4 +25,10 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 	self.Mesh.AnimSets[0]=AnimSet'KarakterSpike.spike_animset';
 	self.Mesh.SetAnimTreeTemplate(AnimTree'KarakterSpike.spike_animtree');
 	self.Mesh.SetMaterial(0, Material'KarakterSpike.Spike.SpikeTextur_Mat');
+}
+
+defaultproperties
+{
+	HealthMax = 800
+	Health = 800
 }

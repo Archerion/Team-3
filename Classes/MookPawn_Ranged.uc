@@ -8,7 +8,7 @@ simulated function PostBeginPlay()
 	ControllerClass=class'WotS.MookBot_Ranged';
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
-	
+
 	Spawn(class'WotS.WotSWeapon_Ranged_Mook',,,Location).GiveTo(self);
 }
 
@@ -16,7 +16,6 @@ simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 {
 	Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
 }
-
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {

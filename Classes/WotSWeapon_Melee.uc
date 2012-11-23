@@ -46,8 +46,8 @@ defaultproperties
 
 	bInstantHit=true
 
-	InstantHitDamage(0)=25.0
-	InstantHitDamage(1)=25.0
+	InstantHitDamage(0)=40.0
+	InstantHitDamage(1)=40.0
 
 	DefaultAnimSpeed=0.9
        
