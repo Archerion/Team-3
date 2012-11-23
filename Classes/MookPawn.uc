@@ -3,6 +3,8 @@ class MookPawn extends WotSPawn
 
 var AnimNodePlayCustomAnim Fitte;
 
+//var UTAnimBlendByWeapon UTAnimBlendByWeapon;
+
 defaultproperties
 {
 	ControllerClass=class'WotS.MookBot'
@@ -27,6 +29,13 @@ simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)
 	self.Mesh.SetMaterial(0, Material'enemy_ninja_pack.Materials.Default');
 }
 
+simulated event Destroyed()
+{
+  Super.Destroyed();
+  //UTAnimBlendByWeapon = None;
+}
+
+
 simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
@@ -41,10 +50,12 @@ simulated function ThrowWeaponOnDeath()
 simulated event PostInitAnimTree(SkeletalMeshComponent SkelComp)
 {
 	Fitte = AnimNodePlayCustomAnim(SkelComp.FindAnimNode('CustomAnim'));
+	// UTAnimBlendByWeapon = UTAnimBlendByWeapon(SkelComp.FindAnimNode('UTAnimBlendByWeapon'));
 }
 
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
+	UnSlow();
 	SetCollisionType(COLLIDE_NoCollision);
 	Fitte.PlayCustomAnim('enemy_ninja_deathanimation',  1.0, 0.05, 0.0, false, false);		
 	LifeSpan =1.0;

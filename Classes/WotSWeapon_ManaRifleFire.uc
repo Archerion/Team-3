@@ -16,6 +16,9 @@ defaultproperties
 		FOV=60
 	End Object
 
+
+	FireInterval(0)=+0.6
+
 	WeaponProjectiles(0)=class'Proj_MRFireBullet'
 	WeaponProjectiles(1)=class'Proj_MRFireSpell'
 	

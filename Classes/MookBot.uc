@@ -1,10 +1,8 @@
 class MookBot extends WotSBot;
 
 var Actor Destination;
-var float AttackDistance;
-var float SightDistance;
 
-var float farAway;
+var float attackRange;
 
 protected event ExecuteWhatToDoNext()
 {
@@ -14,81 +12,50 @@ protected event ExecuteWhatToDoNext()
 
 state Roaming
 {
-
-    ignores SeePlayer, HearNoise, Touch;
-    function SorcererPawn FindEnemy()
+    function SetDestination()
     {
-        local SorcererPawn P;
-
-        P = SorcererPawn(GetALocalPlayerController().Pawn);
-        if (SorcererPlayerController(P.Controller) != None)
-        {
-            return P;
-        }
-        Return None;
+        Destination = GetALocalPlayerController().Pawn;
     }
-
-    Begin:
-    if(Enemy == None)
+    function float getDistance(Actor Dest)
     {
-        //If the bot has no enemy, find one
-        Enemy = FindEnemy();
-        if (Enemy.Class == class'SorcererPawn')
-        {
-            farAway = vsize(Pawn.Location - Enemy.Location);
-            if (farAway > SightDistance)
-            {
-                Enemy = None;
-            }
-        }
-        else {
-            Enemy = None;
-        }
+       return vsize(Pawn.Location - Dest.Location);
     }
-
-    if(Enemy != None)
+Begin:
+    if (Destination==None)
     {
-        farAway = vsize(Pawn.Location - Enemy.Location);
-        if (farAway > SightDistance)
-        {
-            Enemy = None;
-            goto('Begin');
-        }
-
-        if(farAway > AttackDistance)
-        {
-            if(FindBestPathToward(Enemy, false, false))
-            {
-                MoveToward(MoveTarget,,,False);
-            }
-            else
-            {
-                MoveToward(Enemy, , ,False);
-            }
-        }
-        else
-        {
-            GotoState('Attack');
-        }
+       SetDestination(); 
     }
-    else
+    else if (getDistance(Destination) > attackRange)
     {
-        //Find a random pathnode and go to it
-        MoveTo(FindRandomDest().Location);
+        if (FindBestPathToward(Destination, false, false))
+        {
+            MoveToward(MoveTarget,,,False);
+        }
+        else 
+        {
+            MoveToward(Destination);
+        }
+    } else
+    {
+        GotoState('Attack');
     }
-    goto('Begin');
+    ExecuteWhatToDoNext();
 }
 
 state Attack
 {
     Begin:
-    FireWeaponAt(Focus);
-    GotoState('Roaming');
+        FireWeaponAt(Focus);
+    ExecuteWhatToDoNext();
+}
+
+event SeePlayer(Pawn SeenPlayer)
+{
+    // NO!
 }
 
 defaultproperties
 {
-    SightDistance=1200
-    AttackDistance=100
+    attackRange = 130
     bSpawnedByKismet = true
 }

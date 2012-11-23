@@ -10,11 +10,16 @@ defaultproperties
 
 	InventoryGroup=4
 
+	WeaponProjectiles(0)=class'Proj_RangedMookBullet'
+
+	FireInterval(0)=+0.8
+	FireInterval(1)=+2
+
 	ShotCost(0) = 0;
 	ShotCost(1) = 99990;
 
 	AttachmentClass=class'Ranged_Attach';
 
-	WeaponFireTypes(0)=EWFT_Projectile
-	WeaponFireTypes(1)=EWFT_None
+	//WeaponFireTypes(0)=EWFT_Projectile
+	//WeaponFireTypes(1)=EWFT_None
 }

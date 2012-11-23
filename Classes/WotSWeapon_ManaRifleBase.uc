@@ -86,8 +86,8 @@ defaultproperties
 	WeaponFireTypes(0)=EWFT_Projectile
 	WeaponFireTypes(1)=EWFT_Projectile
 
-	FireInterval(0)=+0.5
-	FireInterval(1)=+1.25
+	FireInterval(0)=+0.8
+	FireInterval(1)=+2
 
 	ShotCost(0)=0
 	ShotCost(1)=0

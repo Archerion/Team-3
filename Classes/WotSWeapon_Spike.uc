@@ -10,10 +10,12 @@ defaultproperties
 
 	InventoryGroup=4
 
+	ShotCost(0) = 0;
+	ShotCost(1) = 99990;
 
 	AttachmentClass=class'Spike_Attach';
 
-	
-	WeaponFireTypes(0)=EWFT_Projectile
-	WeaponFireTypes(1)=EWFT_None
+
+	//WeaponFireTypes(0)=EWFT_Projectile
+	//WeaponFireTypes(1)=EWFT_None
 }

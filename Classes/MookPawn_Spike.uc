@@ -5,7 +5,7 @@ simulated function PostBeginPlay()
 {
 	Super.PostBeginPlay();
 
-	ControllerClass=class'WotS.MookBot_Ranged';
+	ControllerClass=class'WotS.MookBot_Spike';
 	SpawnDefaultController();
 	`log("Spawned controller:"@Controller);
 
@@ -15,7 +15,7 @@ simulated function PostBeginPlay()
 simulated function PlayDying(class<DamageType> DamageType, Vector HitLoc)
 {
 	SetCollisionType(COLLIDE_NoCollision);
-	LifeSpan =0.0;
+	LifeSpan =1.0;
 }
 
 simulated function SetCharacterClassFromInfo(class<UTFamilyInfo> Info)

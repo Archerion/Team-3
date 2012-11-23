@@ -9,6 +9,5 @@ defaultproperties
 	End Object
 
 	Mesh=SkeletalMeshComponent0
-
 	WeaponClass=Class'WotSWeapon_Ranged_Mook'
 }
